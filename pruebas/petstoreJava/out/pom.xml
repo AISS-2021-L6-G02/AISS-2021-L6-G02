@@ -122,17 +122,16 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.10</version>
+				<version>3.1.0</version>
 				<executions>
 					<execution>
-						<id>add_sources</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>add-source</goal>
 						</goals>
 						<configuration>
 							<sources>
-								<source>src/main/java</source>
+								<source>src/main/gen</source>
 							</sources>
 						</configuration>
 					</execution>
