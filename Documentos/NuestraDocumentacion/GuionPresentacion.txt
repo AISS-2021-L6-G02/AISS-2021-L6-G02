@@ -4,11 +4,11 @@
 	y más de 40 colaboradores bifurcaron todo el código
 	hacia un proyecto llamado OpenAPI Generator
    ·Para que sirve
-	OpenAPI Generator es una herramienta para generar clientes API,
-	documentación y configuración a partir de una especificación
+	OpenAPI Generator es una herramienta para generar  APIS,
+	documentación , configuración  y tests a partir de una especificación
 	OpenAPI
 -Flujo de trabajo
-	
+
 -Vista de contexto
 	
 -Vista de despliegue
