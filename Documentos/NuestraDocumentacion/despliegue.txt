@@ -1,0 +1,5 @@
+En el propio equipo
+Requiere instalacion de jdk11 y maven
+Ejecutado por maven
+
+Nota: Se puede utilizar contenedores docker para no instalar el jdk o maven. Ejecutado dentro del contenedor. 
