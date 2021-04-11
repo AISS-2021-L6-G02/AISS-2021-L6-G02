@@ -1,8 +1,0 @@
-Diferentes componentes:
-Funciones: 
-Configurar ejecución
-Generación APIs genéricas y específicas
-Generación de casos de prueba genéricos y específicos
-Generación de la documentación y modelos
-Documentación generada en el lenguaje indicado
-Otras utilidades

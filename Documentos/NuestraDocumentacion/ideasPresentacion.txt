@@ -1,9 +1,0 @@
--en que se basa el proyecto y por quienes fueron creados
--Para que sirve el proyecto
--Introduccion (historia, para que sirve, quienes han realizado el proyecto)
--Presentar el flujo de trabajo
-- vista de contexto
-- vista de despliegue
-- por encima enseñar el ejemplo de springboot (tenerlo ejecutado en el pc)
--conclusiones a sacar ()
--cierre de la presentacion: poner 1 enlace a nuestra documentacion y a la oficial como referencia
