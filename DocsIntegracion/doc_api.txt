@@ -5,7 +5,13 @@ metodos
 	delete
 
 	ordenacion
-	paginacion
+		year
+		publisher
+		title
+		description
+		platform
+		genre
+		paginacion
 
 
 
