@@ -1,0 +1,52 @@
+TENEMOS UNA APLICACION QUE IMITA A RASTREATOR, SI BUSCAS POR UN JUEGO O COLECCION DE JUEGOS TE VA A INDICAR LAS TIENDAS ELIGIENDO POR MAS CERCANAS DEPENDIENDO DE TU UBICACION O POR PRECIO Y DISPONIBILIDAD
+
+
+VAMOS A PODER HACER EL CRUD DE VIDEOJUEGOS FILTRANDO POR CUALQUIERA DE SUS CAMPOS
+
+CRUD DE TIENDAS
+
+se va a poder comprar en una tienda en especifico
+
+
+
+JUEGO
+
+year
+developer
+title
+description
+puntuation
+platform
+genre
+modes
+
+
+
+
+GENRE
+name
+id
+description
+
+
+TIENDA
+
+name
+ubication
+horarioAbierto
+Map<Juego, Tupla2<Precio,Stock> listaJuegos //preguntar al profesor
+telefono
+
+
+
+MVC
+
+
+MODELOS MODELAN LOS JSON
+CONTROLADORES QUE HACEN LAS OPERACIONES LOGICAS Y TRANSFORMAN DATO
+REPOSITORIOS SON LOS QUE HACEN LOS CRUDS
+
+
+
+
+
