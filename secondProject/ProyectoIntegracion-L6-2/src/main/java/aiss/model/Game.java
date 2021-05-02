@@ -7,7 +7,7 @@ public class Game {
 	private String title;
 	private String description;
 	private Integer year;
-	private String developer;
+	private Developer developer;
 	private Double score;
 	private List<Platform> platforms;
 	private List<Genre> genres;
