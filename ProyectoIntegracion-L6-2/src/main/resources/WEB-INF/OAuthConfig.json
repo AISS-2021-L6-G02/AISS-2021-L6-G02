@@ -1,0 +1,9 @@
+{	
+    "Spotify": {
+        "tokenUrl": "",
+        "clientId": "",
+        "clientSecret": "",
+        "authorizationFormUrl": "",
+        "scopes": []
+    }
+}		
