@@ -1,0 +1,20 @@
+metodos
+	get
+	post
+	put
+	delete
+
+	ordenacion
+	paginacion
+
+
+
+
+atributos
+
+	year
+	publisher
+	title
+	description
+	platform
+	genre
