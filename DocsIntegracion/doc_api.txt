@@ -1,26 +1,70 @@
-metodos
+metodos games
 	get
-	post
-	put
+		all
+		byId
+	add
+		
+	update
+		
+	delete
+		
+
+metodos collections
+	get
+	
+	add
+		
+	update
+		
 	delete
 
-	ordenacion
+	removeGame
+	addGame
+
+
+
+ordenacion(ascendente/descendente)
+	-games
 		year
-		publisher
+		developer
+		title
+	-collections
+		title
+		number of games
+paginacion
+filtro
+	-games
+		year
+		developer
 		title
 		description
 		platform
 		genre
-		paginacion
+		modes
 
+	-collections
+		title
+		description
+		gameId
 
+atributos games
 
-
-atributos
-
-	year
-	publisher
+	id
 	title
 	description
+	year
+	developer
+	description
+
+	genres
 	platform
-	genre
+	language
+	modes
+
+atributos collections
+	
+	id
+	title
+	descripcion
+
+	gamesList
