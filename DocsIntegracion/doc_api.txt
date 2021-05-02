@@ -11,7 +11,8 @@ metodos games
 
 metodos collections
 	get
-	
+		all
+		byId
 	add
 		
 	update
@@ -55,6 +56,8 @@ atributos games
 	year
 	developer
 	description
+	price
+	stock
 
 	genres
 	platform
