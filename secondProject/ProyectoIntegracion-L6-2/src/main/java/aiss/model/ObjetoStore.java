@@ -42,6 +42,9 @@ public class ObjetoStore {
 	}
 	
 	//Setters
+	public void setId(String id) {
+		this.id=id;
+	}
 	public void setGame(Game game) {
 		this.game = game;
 	}

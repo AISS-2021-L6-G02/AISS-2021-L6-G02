@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import aiss.model.Game;
+import aiss.model.ObjetoStore;
+import aiss.model.Store;
 
 
 
 public class MapGameStoreRepository implements GameStoreRepository{
 
+	Map<String,Store> storeMap;
+	private int index=0;
 	@Override
 	public void addGame(Game g) {
 		// TODO Auto-generated method stub
@@ -36,6 +40,60 @@ public class MapGameStoreRepository implements GameStoreRepository{
 
 	@Override
 	public void deleteGame(String gameId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addStore(Store s) {
+		// TODO Auto-generated method stub
+		String id = "shop"+index++;
+		s.setId(id);
+		storeMap.put(s.getId(), s);
+		
+	}
+
+	@Override
+	public Collection<Store> getAllStores() {
+		// TODO Auto-generated method stub
+		return storeMap.values();
+	}
+
+	@Override
+	public Store getStore(String storeId) {
+		// TODO Auto-generated method stub
+		return storeMap.get(storeId);
+	}
+
+	@Override
+	public void updateStore(Store s) {
+		// TODO Auto-generated method stub
+		storeMap.put(s.getId(), s);
+	}
+
+	@Override
+	public void deleteStore(String storeId) {
+		// TODO Auto-generated method stub
+		storeMap.remove(storeId);
+	}
+
+	@Override
+	public Collection<ObjetoStore> getAllObjects(String storeId) {
+		// TODO Auto-generated method stub
+		return storeMap.get(storeId).getGames();
+	}
+
+	@Override
+	public void addObjeto(String storeId, ObjetoStore o) {
+		// TODO Auto-generated method stub
+		String id="o"+index++;
+		o.setId(id);
+		storeMap.get(storeId).addGame(o);
+		
+	}
+
+	@Override
+	public void deleteObjeto(String storeId, String objectId) {
 		// TODO Auto-generated method stub
 		
 	}
