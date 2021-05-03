@@ -20,13 +20,14 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
+
 import javax.ws.rs.core.Response.ResponseBuilder;
+
 
 import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 
 import aiss.model.Platform;
-import aiss.model.Playlist;
 import aiss.model.repository.MapPlatformRepository;
 import aiss.model.repository.PlatformRepository;
 
@@ -35,7 +36,7 @@ public class PlatformResource {
 	private static PlatformResource _instance = null;
 	PlatformRepository repository;
 
-	private PlatformResource() {
+	public PlatformResource() {
 		repository = MapPlatformRepository.getInstance();
 	}
 
@@ -104,6 +105,7 @@ public class PlatformResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response addPlatform(@Context UriInfo uriInfo, Platform p) {
+		
 		if (p.getName() == null || "".equals(p.getName()))
 			throw new BadRequestException("The name of the platform must not be null");
 		
@@ -145,6 +147,7 @@ public class PlatformResource {
 		}
 		return Response.noContent().build();
 	}
+	
 	
 	
 	

@@ -10,7 +10,7 @@ public class MapPlatformRepository implements PlatformRepository {
 	Map<String, Platform> mapPlatformRepository;
 
 	private static MapPlatformRepository instance = null;
-	private int index = 0; // Index to create playlists and songs' identifiers.
+	private int index = 0; 
 
 	public static MapPlatformRepository getInstance() {
 
@@ -26,7 +26,6 @@ public class MapPlatformRepository implements PlatformRepository {
 
 		mapPlatformRepository = new HashMap<String, Platform>();
 
-		// Create songs
 		Platform p1 = new Platform();
 
 		p1.setName("Program computer");
@@ -60,7 +59,6 @@ public class MapPlatformRepository implements PlatformRepository {
 
 	@Override
 	public Collection<Platform> getAllPlatforms() {
-		// TODO Auto-generated method stub
 		return this.mapPlatformRepository.values();
 	}
 
@@ -71,7 +69,6 @@ public class MapPlatformRepository implements PlatformRepository {
 
 	@Override
 	public void updatePlatform(Platform p) {
-		// TODO Auto-generated method stub
 		this.mapPlatformRepository.put(p.getId(), p);
 
 	}

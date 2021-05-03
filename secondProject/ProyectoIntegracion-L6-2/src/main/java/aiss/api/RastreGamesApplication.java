@@ -5,9 +5,7 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
-import aiss.api.resources.GameResource;
 import aiss.api.resources.PlatformResource;
-import aiss.api.resources.SongResource;
 
 
 public class RastreGamesApplication extends Application{
