@@ -33,6 +33,12 @@ public class Platform {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "Platform [id=" + id + ", name=" + name + "]";
+	}
+	
+
 
 	
 }

@@ -87,7 +87,7 @@ public class PlatformResourceTest {
 	@Test
 	public void testAddPlatform() {
 		String platformName = "Add platform test title";
-		r.addPlatform(uriInfo, p)
+		r.addPlatform(uriInfo, new Platform(platformName));
 		assertNotNull("Error when adding the playlist", playlist4);
 		assertEquals("The playlist's name has not been setted correctly", playlistName, playlist4.getName());
 		assertEquals("The playlist's description has not been setted correctly", playlistDescription, playlist4.getDescription());
