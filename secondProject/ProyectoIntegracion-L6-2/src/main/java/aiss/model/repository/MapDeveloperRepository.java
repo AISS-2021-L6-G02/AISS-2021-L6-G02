@@ -75,11 +75,11 @@ public class MapDeveloperRepository implements DeveloperRepository {
 	}
 	
 	@Override
-	public void addDeveloper(Developer d) {
+	public Developer addDeveloper(Developer d) {
 		String id = "d" + index++;
 		d.setId(id);
 		developerMap.put(id, d);
-		
+		return d;
 	}
 
 	@Override

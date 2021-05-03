@@ -1,6 +1,5 @@
 package aiss.api.resources;
 
-import java.net.URI;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.stream.Stream;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
@@ -32,6 +30,14 @@ public class DeveloperResource {
 		}
 		return instance;
 	}
+	
+	@GET
+	@Produces("application/json")
+	public Collection<Developer> getAll(){
+		return getAll(null, null, null, null, null, null);
+	}
+	
+	
 	@GET
 	@Produces("application/json")
 	public Collection<Developer> getAll(@QueryParam("order") String order, @QueryParam("name") String name, @QueryParam("country") String country, @QueryParam("year") Integer year, @QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset){
@@ -84,6 +90,7 @@ public class DeveloperResource {
 		if(limit==null || limit+offset>res.size()) {
 			limit = res.size();
 		}
+		
 		else{
 			limit += offset;
 		}
@@ -100,16 +107,12 @@ public class DeveloperResource {
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response addDeveloper(@Context UriInfo uriInfo, Developer dev) {
+	public Response addDeveloper(Developer dev) {
 		if(dev.getName()==null || "".equals(dev.getName())) {
 			throw new BadRequestException("The name of the developer must not be null");
 		}
 		repository.addDeveloper(dev);
-		UriBuilder ub = uriInfo.getAbsolutePathBuilder().path(this.getClass(), "get");
-		URI uri = ub.build(dev.getId());
-		ResponseBuilder resp = Response.created(uri);
-		resp.entity(dev);			
-		return resp.build();
+		return Response.noContent().build();
 	}
 	
 	@PUT
@@ -135,6 +138,7 @@ public class DeveloperResource {
 	@Path("/{id}")
 	public Response deleteDeveloper(@PathParam("id") String id) {
 		Developer toRemove = repository.getDeveloper(id);
+		
 		if (toRemove == null) {
 			throw new NotFoundException("The playlist with id="+ id +" was not found");
 		}
