@@ -52,6 +52,11 @@ public class Developer {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
+	@Override
+	public String toString() {
+		return "Developer [id=" + id + ", name=" + name + ", year=" + year + ", country=" + country + "]";
+	}
 	
 	
 }
