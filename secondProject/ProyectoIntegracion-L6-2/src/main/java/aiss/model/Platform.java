@@ -3,21 +3,18 @@ package aiss.model;
 public class Platform {
 	private String id;
 	private String name;
-	private String company;
 	
 	
 	
 	public Platform() {}
 	
-	public Platform(String name, String company) {
+	public Platform(String name) {
 		this.name = name;
-		this.company = company;
 	}
 	
-	public Platform(String id, String name, String company) {
+	public Platform(String id, String name) {
 		this.id = id;
 		this.name = name;
-		this.company = company;
 	}
 
 	public String getId() {
@@ -36,13 +33,6 @@ public class Platform {
 		this.name = name;
 	}
 
-	public String getCompany() {
-		return company;
-	}
 
-	public void setCompany(String company) {
-		this.company = company;
-	}
-	
 	
 }
