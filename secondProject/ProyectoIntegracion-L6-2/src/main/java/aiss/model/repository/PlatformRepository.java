@@ -11,7 +11,7 @@ public interface PlatformRepository {
 		public Collection<Platform> getAllPlatforms();
 		public Platform getPlatform(String platformId);
 		public void updatePlatform(Platform p);
-		public void deleteGame(String gameId);
+		public void deletePlatform(String id);
 		
 		
 		

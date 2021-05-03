@@ -77,8 +77,8 @@ public class MapPlatformRepository implements PlatformRepository {
 	}
 
 	@Override
-	public void deleteGame(String gameId) {
-		this.mapPlatformRepository.remove(gameId);
+	public void deletePlatform(String id) {
+		this.mapPlatformRepository.remove(id);
 
 	}
 }
