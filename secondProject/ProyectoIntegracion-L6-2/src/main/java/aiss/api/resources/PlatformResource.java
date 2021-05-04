@@ -1,6 +1,5 @@
 package aiss.api.resources;
 
-import java.net.URI;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -16,13 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
-
-import javax.ws.rs.core.Response.ResponseBuilder;
-
 
 import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
@@ -30,6 +23,7 @@ import org.jboss.resteasy.spi.NotFoundException;
 import aiss.model.Platform;
 import aiss.model.repository.MapPlatformRepository;
 import aiss.model.repository.PlatformRepository;
+
 
 @Path("/platforms")
 public class PlatformResource {
@@ -104,7 +98,7 @@ public class PlatformResource {
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response addPlatform(@Context UriInfo uriInfo, Platform p) {
+	public Response addPlatform(Platform p) {
 		
 		if (p.getName() == null || "".equals(p.getName()))
 			throw new BadRequestException("The name of the platform must not be null");
@@ -112,11 +106,7 @@ public class PlatformResource {
 
 		repository.addPlatform(p);
 
-		UriBuilder ub = uriInfo.getAbsolutePathBuilder().path(this.getClass(), "get");
-		URI uri = ub.build(p.getId());
-		ResponseBuilder resp = Response.created(uri);
-		resp.entity(p);			
-		return resp.build();
+		return Response.noContent().build();
 	}
 	@PUT
 	@Consumes("application/json")
