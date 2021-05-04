@@ -42,16 +42,16 @@ public class DeveloperResource {
 	@Produces("application/json")
 	public Collection<Developer> getAll(@QueryParam("order") String order, @QueryParam("name") String name, @QueryParam("country") String country, @QueryParam("year") Integer year, @QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset){
 		Stream<Developer> result = repository.getAllDevelopers().stream();
-		if(name!=null) {
-			result = result.filter(x->x.getName().toLowerCase().contains(name.toLowerCase()));
+		if(!(name==null || name.equals(""))) {
+			result = result.filter(x->x.getName().toLowerCase().contains(name.toLowerCase()) || x.getName().toLowerCase().equals(name.toLowerCase()));
 		}
-		if(country!=null) {
+		if(!(country==null || country.equals(""))) {
 			result = result.filter(x-> x.getCountry().toLowerCase().equals(country.toLowerCase()));
 		}
 		if(year!=null) {
 			result = result.filter(x-> x.getYear()>=year);
 		}
-		if(order!=null) {
+		if(!(order==null || order.equals(""))) {
 			Boolean noValido = false;
 			switch(order) {
 			default:
@@ -140,7 +140,7 @@ public class DeveloperResource {
 		Developer toRemove = repository.getDeveloper(id);
 		
 		if (toRemove == null) {
-			throw new NotFoundException("The playlist with id="+ id +" was not found");
+			throw new NotFoundException("The developer with id="+ id +" was not found");
 		}
 		else {
 			repository.deleteDeveloper(id);

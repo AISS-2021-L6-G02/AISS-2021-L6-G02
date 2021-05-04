@@ -1,3 +1,4 @@
+package aiss.model.resource;
 import static org.junit.Assert.*;
 
 import java.util.Collection;
@@ -15,9 +16,11 @@ public class DeveloperResourceTest {
 	
 	@BeforeClass
 	public static void setUp() throws Exception {
+		Developer d;
+		
 		Collection<Developer> test;
 		
-		Developer d = new Developer();
+		d = new Developer();
 		d.setName("Test name");
 		d.setCountry("Test country");
 		d.setYear(2000);
@@ -26,6 +29,7 @@ public class DeveloperResourceTest {
 		test = dr.getAll("", d.getName(), d.getCountry(), d.getYear(), null, null);
 		d1 = test.stream().findFirst().get();
 		
+		d = new Developer();
 		d.setName("Test name2");
 		d.setCountry("Test country2");
 		d.setYear(2001);
@@ -34,6 +38,7 @@ public class DeveloperResourceTest {
 		test = dr.getAll("", d.getName(), d.getCountry(), d.getYear(), null, null);
 		d2 = test.stream().findFirst().get();
 		
+		d = new Developer();
 		d.setName("Test name3");
 		d.setCountry("Test country3");
 		d.setYear(2002);
@@ -94,12 +99,14 @@ public class DeveloperResourceTest {
 		d.setCountry("Add dev test country");
 		d.setYear(2020);
 		
-		Developer d2 = dr.getAll("", d.getName(), d.getCountry(), d.getYear(), null, null).stream().findFirst().get();
+		dr.addDeveloper(d);
 		
-		assertNotNull("Error when adding the developer", d2);
-		assertEquals("The developer's name has not been setted correctly", d.getName(), d2.getName());
-		assertEquals("The developer's year has not been setted correctly", d.getYear(), d2.getYear());
-		assertEquals("The developer's country has not been setted correctly", d.getCountry(), d2.getCountry());
+		Developer dTest = dr.getAll("", d.getName(), d.getCountry(), d.getYear(), null, null).stream().findFirst().get();
+		
+		assertNotNull("Error when adding the developer", dTest);
+		assertEquals("The developer's name has not been setted correctly", d.getName(), dTest.getName());
+		assertEquals("The developer's year has not been setted correctly", d.getYear(), dTest.getYear());
+		assertEquals("The developer's country has not been setted correctly", d.getCountry(), dTest.getCountry());
 		
 	}
 	@Test
@@ -108,13 +115,14 @@ public class DeveloperResourceTest {
 		String devCountry = "Update dev country test";
 		Integer devYear = 1900;
 		
-		
-		d1.setName(devName);
-		d1.setCountry(devCountry);
-		d1.setYear(devYear);
-		
-		dr.updateDeveloper(d1);
 		Developer d = d1;
+		
+		d.setName(devName);
+		d.setCountry(devCountry);
+		d.setYear(devYear);
+		
+		dr.updateDeveloper(d);
+//		Developer d = d1;
 		
 		assertEquals("The developer's name has not been updated correctly", devName, d.getName());
 		assertEquals("The developer's country has not been updated correctly", devCountry, d.getCountry());
