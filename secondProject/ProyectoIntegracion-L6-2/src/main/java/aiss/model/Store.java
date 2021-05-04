@@ -33,7 +33,7 @@ public class Store {
 		this.openHour = openHour;
 		this.closeHour = closeHour;
 		this.games = games;
-		this.phone = phone;
+		setPhone(phone);
 	}
 	public Store(String name, String location, DateTime openHour, DateTime closeHour, List<ObjetoStore> games,
 			String phone) {
@@ -43,7 +43,7 @@ public class Store {
 		this.openHour = openHour;
 		this.closeHour = closeHour;
 		this.games = games;
-		this.phone = phone;
+		setPhone(phone);
 	}
 	//Getters
 	public String getId() {
@@ -92,8 +92,10 @@ public class Store {
 		String patterns = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3}[- .]?\\d{3}[- .]?\\d{4}$"+
 		"|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"+
 				"|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$";
+		
 		Pattern regex = Pattern.compile(patterns);
 		Matcher match = regex.matcher(phone);
+		
 		if(match.matches()) this.phone = phone;
 		else throw new BadRequestException("Phone number not suported");
 	}
@@ -109,6 +111,9 @@ public class Store {
 		games.remove(game);
 	}
 	
+	public Integer getGamesSize() {
+		return this.games.size();
+	}
 	
 	
 	

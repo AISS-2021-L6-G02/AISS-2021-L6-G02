@@ -24,6 +24,7 @@ public interface GameStoreRepository {
 	public void updateStore(Store s);
 	public void deleteStore(String storeId);
 	public Collection<ObjetoStore> getAllObjects(String storeId);
+	public ObjetoStore getObject(String storeId, String itemId);
 	public void addObjeto(String storeId, ObjetoStore o);
 	public void deleteObjeto(String storeId,String objectId);
 	

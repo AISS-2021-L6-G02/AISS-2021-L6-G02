@@ -98,6 +98,12 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		
 	}
 
+	@Override
+	public ObjetoStore getObject(String storeId, String itemId) {
+		// TODO Auto-generated method stub
+		return getAllObjects(storeId).stream().filter(x->x.getId().equals(itemId)).findFirst().get();
+	}
+
 //	Map<String, Playlist> playlistMap;
 //	Map<String, Song> songMap;
 //	private static MapPlaylistRepository instance=null;
