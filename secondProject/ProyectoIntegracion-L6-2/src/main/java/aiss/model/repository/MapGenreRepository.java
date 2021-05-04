@@ -61,31 +61,30 @@ public class MapGenreRepository implements GenreRepository {
 
 	@Override
 	public void addGenre(Genre g) {
-		// TODO Auto-generated method stub
-		
+		String id = "g" + index++;
+		g.setId(id);
+		genreMap.put(id, g);
 	}
 
 	@Override
 	public Collection<Genre> getAllGenre() {
-		// TODO Auto-generated method stub
-		return null;
+		return genreMap.values();
 	}
 
 	@Override
-	public Genre getGenre(String Id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Genre getGenre(String id) {
+		return genreMap.get(id);
 	}
 
 	@Override
 	public void updateGenre(Genre g) {
-		// TODO Auto-generated method stub
+		genreMap.put(g.getId(), g);
 		
 	}
 
 	@Override
-	public void deleteGenre(String Id) {
-		// TODO Auto-generated method stub
+	public void deleteGenre(String id) {
+		genreMap.remove(id);
 		
 	}
 
