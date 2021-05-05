@@ -50,7 +50,7 @@ public class GameResource {
 	@GET
 	@Produces("application/json")
 	public Collection<Game> getAll(@QueryParam("order") String order, @QueryParam("title") String title,
-			@QueryParam("year") String year, @QueryParam("developerName") String developerName,
+			@QueryParam("year") Integer year, @QueryParam("developerName") String developerName,
 			@QueryParam("score") Double score, @QueryParam("platformName") Double platformName,
 			@QueryParam("genreName") String genreName, @QueryParam("mode") String mode,
 			@QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset) {
@@ -60,7 +60,7 @@ public class GameResource {
 					|| x.getTitle().toLowerCase().equals(title.toLowerCase()));
 		}
 		if (!(year.equals(null) || !year.equals(0))) {
-			result = result.filter(x -> x.getYear().equals(year.toLowerCase()));
+			result = result.filter(x -> x.getYear().equals(year));
 		}
 		if (!(developerName == null || developerName.equals(""))) {
 			result = result.filter(x -> x.getDeveloper().getName().toLowerCase().contains(developerName.toLowerCase())
