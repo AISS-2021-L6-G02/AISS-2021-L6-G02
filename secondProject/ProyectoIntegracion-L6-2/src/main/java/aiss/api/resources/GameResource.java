@@ -1,13 +1,10 @@
 package aiss.api.resources;
 
-import java.security.cert.CollectionCertStoreParameters;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,7 +26,6 @@ import aiss.model.Developer;
 import aiss.model.Game;
 import aiss.model.Genre;
 import aiss.model.Mode;
-import aiss.model.Platform;
 import aiss.model.repository.GameRepository;
 import aiss.model.repository.MapGameRepository;
 import utils.GameDeveloperSorter;
@@ -50,18 +46,7 @@ public class GameResource {
 		return instance;
 	}
 
-	@GET
-	@Produces("application/json")
-	public Collection<Game> getAll() {
-		return getAll(null, null, null, null, null, null);
-	}
-
-	/*
-	 * private String id; private String title; private String description; private
-	 * Integer year; private Developer developer; private Double score; private
-	 * List<Platform> platforms; private List<Genre> genres; private List<Mode>
-	 * modes;
-	 */
+	
 	@GET
 	@Produces("application/json")
 	public Collection<Game> getAll(@QueryParam("order") String order, @QueryParam("title") String title,
@@ -126,8 +111,11 @@ public class GameResource {
 				result.sorted(new GameDeveloperSorter().reversed());
 				break;
 			case "score":
+				result = result.sorted(Comparator.comparing(Game::getScore));
 				break;
 			case "-score":
+				result = result.sorted(Comparator.comparing(Game::getScore).reversed());
+
 				break;
 			}
 			if (noValido) {
@@ -136,7 +124,7 @@ public class GameResource {
 			}
 		}
 
-		List<Developer> res = result.collect(Collectors.toList());
+		List<Game> res = result.collect(Collectors.toList());
 
 		if (offset == null) {
 			offset = 0;
@@ -155,18 +143,18 @@ public class GameResource {
 	@GET
 	@Path("/{id}")
 	@Produces("application/json")
-	public Developer get(@PathParam("id") String id) {
-		return repository.getDeveloper(id);
+	public Game get(@PathParam("id") String id) {
+		return repository.getGame(id);
 	}
 
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response addDeveloper(Developer dev) {
-		if (dev.getName() == null || "".equals(dev.getName())) {
-			throw new BadRequestException("The name of the developer must not be null");
+	public Response add(Game g) {
+		if (g.getTitle() == null || "".equals(g.getTitle())) {
+			throw new BadRequestException("The name of the game must not be null");
 		}
-		repository.addDeveloper(dev);
+		repository.addGame(g);
 		return Response.noContent().build();
 	}
 
