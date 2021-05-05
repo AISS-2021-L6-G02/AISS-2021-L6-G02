@@ -6,8 +6,12 @@ public class Genre {
 		private String description;
 	
 		/*Constructores*/
-		public Genre() {
+		public Genre(String string) {
 			
+		}
+
+		public Genre() {
+			super();
 		}
 
 		public Genre(String id, String name, String description) {

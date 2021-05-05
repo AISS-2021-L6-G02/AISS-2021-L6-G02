@@ -25,7 +25,7 @@ public class GenreResource {
 	private static GenreResource _instance=null;
 	GenreRepository repository;
 
-	private GenreResource(){
+	public GenreResource(){
 		repository=MapGenreRepository.getInstance();
 	}
 
@@ -106,7 +106,7 @@ public class GenreResource {
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response addGenre(@Context UriInfo uriInfo, Genre genre) {
+	public Response addGenre(Genre genre) {
 		if(genre.getName()==null||genre.getDescription().equals("")) {
 			throw new BadRequestException("The title of the song must not be null");
 		}
