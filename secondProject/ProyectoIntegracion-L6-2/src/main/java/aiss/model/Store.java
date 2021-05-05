@@ -1,5 +1,6 @@
 package aiss.model;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
@@ -7,15 +8,14 @@ import java.util.regex.*;
 
 import org.jboss.resteasy.spi.BadRequestException;
 
-import com.google.api.client.util.DateTime;
 
 public class Store {
 	//TODO NURIA Y ALBERTO
 	private String id;
 	private String name;
 	private String location;
-	private DateTime openHour;
-	private DateTime closeHour;
+	private LocalTime openHour;
+	private LocalTime closeHour;
 	private List<ObjetoStore> games;
 	private String phone;
 	
@@ -24,7 +24,7 @@ public class Store {
 	public Store() {
 		
 	}
-	public Store(String id, String name, String location, DateTime openHour, DateTime closeHour,
+	public Store(String id, String name, String location, LocalTime openHour, LocalTime closeHour,
 			List<ObjetoStore> games, String phone) {
 		super();
 		this.id = id;
@@ -35,7 +35,7 @@ public class Store {
 		this.games = games;
 		setPhone(phone);
 	}
-	public Store(String name, String location, DateTime openHour, DateTime closeHour, List<ObjetoStore> games,
+	public Store(String name, String location, LocalTime openHour, LocalTime closeHour, List<ObjetoStore> games,
 			String phone) {
 		super();
 		this.name = name;
@@ -55,10 +55,10 @@ public class Store {
 	public String getLocation() {
 		return location;
 	}
-	public DateTime getOpenHour() {
+	public LocalTime getOpenHour() {
 		return openHour;
 	}
-	public DateTime getCloseHour() {
+	public LocalTime getCloseHour() {
 		return closeHour;
 	}
 	public List<ObjetoStore> getGames() {
@@ -78,10 +78,10 @@ public class Store {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public void setOpenHour(DateTime openHour) {
+	public void setOpenHour(LocalTime openHour) {
 		this.openHour = openHour;
 	}
-	public void setCloseHour(DateTime closeHour) {
+	public void setCloseHour(LocalTime closeHour) {
 		this.closeHour = closeHour;
 	}
 	public void setGames(List<ObjetoStore> games) {
@@ -89,9 +89,7 @@ public class Store {
 	}
 	public void setPhone(String phone) {
 		//Aplicar regex
-		String patterns = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3}[- .]?\\d{3}[- .]?\\d{4}$"+
-		"|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"+
-				"|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$";
+		String patterns = "^(\\+34|0034|34)?[6789]\\d{8}$";
 		
 		Pattern regex = Pattern.compile(patterns);
 		Matcher match = regex.matcher(phone);
@@ -113,6 +111,11 @@ public class Store {
 	
 	public Integer getGamesSize() {
 		return this.games.size();
+	}
+	@Override
+	public String toString() {
+		return "Store [id=" + id + ", name=" + name + ", location=" + location + ", openHour=" + openHour
+				+ ", closeHour=" + closeHour + ", games=" + games + ", phone=" + phone + "]";
 	}
 	
 	

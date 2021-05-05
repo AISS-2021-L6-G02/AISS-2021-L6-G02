@@ -35,7 +35,7 @@ public class StoreResource {
 	
 	public static StoreResource _instance = null;
 	GameStoreRepository repository;
-	private StoreResource() {
+	public StoreResource() {
 		repository = MapGameStoreRepository.getInstance();
 		
 	}
@@ -181,7 +181,7 @@ public class StoreResource {
 		//Lanza error si nombre o lugar null o vacio o si hora de cierre < hora de apertura
 		if(store.getName()==null||store.getName().equals("")
 				||store.getLocation()==null||store.getLocation().equals("")
-				||store.getOpenHour().getValue()>=store.getCloseHour().getValue())
+				||store.getOpenHour().compareTo(store.getCloseHour())<0)
 			throw new BadRequestException("Can not add the store with id "+store.getId());
 		
 		repository.addStore(store);
@@ -203,7 +203,7 @@ public class StoreResource {
 			old.setName(store.getName());
 		if(store.getLocation()!=null&&!store.getLocation().equals(""))
 			old.setLocation(store.getLocation());
-		if(store.getOpenHour().getValue()<store.getCloseHour().getValue())
+		if(store.getOpenHour().compareTo(store.getCloseHour())<0)
 			old.setOpenHour(store.getOpenHour());
 			old.setCloseHour(store.getCloseHour());
 		if(store.getPhone()!=null)

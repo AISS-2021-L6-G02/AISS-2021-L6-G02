@@ -1,5 +1,6 @@
 package aiss.model.repository;
 
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,18 @@ public class MapGameStoreRepository implements GameStoreRepository{
 	}
 	
 	public void iniData() {
-		
+		storeMap = new HashMap<String, Store>();
+		//init gamesMap
+		//Create games
+		//Create stores
+		Store game = new Store();
+		game.setName("GAME");
+		game.setLocation("Los Arcos Sevilla");
+		game.setOpenHour(LocalTime.of(8, 0));
+		game.setCloseHour(LocalTime.of(20, 30));
+		game.setPhone("955323867");
+		//anyadir juegos
+		addStore(game);
 	}
 	
 	@Override
@@ -72,11 +84,12 @@ public class MapGameStoreRepository implements GameStoreRepository{
 
 	@Override
 	public void deleteObjeto(String storeId, String objectId) {
-		
+		storeMap.get(storeId).deleteGame(getObject(storeId, objectId));
 	}
 
 	@Override
 	public ObjetoStore getObject(String storeId, String itemId) {
 		return getAllObjects(storeId).stream().filter(x->x.getId().equals(itemId)).findFirst().get();
 	}
+	
 }
