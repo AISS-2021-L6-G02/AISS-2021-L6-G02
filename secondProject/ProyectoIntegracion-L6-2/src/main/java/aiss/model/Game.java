@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-	private Integer id;
+	private String id;
 	private String title;
 	private String description;
 	private Integer year;
@@ -15,7 +15,7 @@ public class Game {
 	private List<Mode> modes;
 	
 	//Getters
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 	public String getTitle() {
@@ -44,6 +44,9 @@ public class Game {
 	}
 	
 	//Setters
+	public void setId(String id) {
+		this.id=id;
+	}
 	public void setTitle(String title) {
 		this.title = title;
 	}
