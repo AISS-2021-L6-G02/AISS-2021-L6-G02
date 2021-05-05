@@ -29,6 +29,7 @@ import aiss.model.Mode;
 import aiss.model.repository.GameRepository;
 import aiss.model.repository.MapGameRepository;
 import utils.GameDeveloperSorter;
+import utils.GameGenreSorter;
 
 @Path("/games")
 public class GameResource {
@@ -46,7 +47,6 @@ public class GameResource {
 		return instance;
 	}
 
-	
 	@GET
 	@Produces("application/json")
 	public Collection<Game> getAll(@QueryParam("order") String order, @QueryParam("title") String title,
@@ -117,6 +117,12 @@ public class GameResource {
 				result = result.sorted(Comparator.comparing(Game::getScore).reversed());
 
 				break;
+			case "genreName":
+				result.sorted(new GameGenreSorter());
+				break;
+			case "-genreName":
+				result.sorted(new GameGenreSorter().reversed());
+				break;
 			}
 			if (noValido) {
 				throw new BadRequestException(
@@ -154,39 +160,54 @@ public class GameResource {
 		if (g.getTitle() == null || "".equals(g.getTitle())) {
 			throw new BadRequestException("The name of the game must not be null");
 		}
+		if (g.getDescription() == null || "".equals(g.getDescription())) {
+			throw new BadRequestException("The name of the game must not be null");
+		}
+		if (g.getScore() == null || g.getScore().equals(0.0)) {
+			throw new BadRequestException("The score of the game must not be null");
+		}
+		if (g.getDeveloper().equals(null)) {
+			throw new BadRequestException("The developer of the game must not be null");
+		}
+		if (g.getGenres().isEmpty()) {
+			throw new BadRequestException("The genres of the game must not be empty");
+		}
+		if (g.getModes().isEmpty()) {
+			throw new BadRequestException("The modes of the game must not be empty");
+		}
 		repository.addGame(g);
 		return Response.noContent().build();
 	}
 
 	@PUT
 	@Consumes("application/json")
-	public Response updateDeveloper(Developer dev) {
-		Developer oldDev = repository.getDeveloper(dev.getId());
-		if (oldDev == null) {
-			throw new NotFoundException("The developer with id=" + dev.getId() + " was not found");
+	public Response update(Game g) {
+		Game old = repository.getGame(g.getId());
+		if (old.equals(null)) {
+			throw new NotFoundException("The game with id=" + g.getId() + " was not found");
 		}
-		if (dev.getName() != null && !dev.getName().equals("")) {
-			oldDev.setName(dev.getName());
+		if (g.getTitle() != null && !g.getTitle().equals("")) {
+			old.setTitle(g.getTitle());
 		}
-		if (dev.getYear() != null) {
-			oldDev.setYear(dev.getYear());
+		if (old.getYear() != null) {
+			old.setYear(g.getYear());
 		}
-		if (dev.getCountry() != null && !dev.getCountry().equals("")) {
-			oldDev.setCountry(dev.getCountry());
+		if (old.getScore() != null && !g.getScore().equals(0.0)) {
+			old.setScore(g.getScore());
 		}
-		repository.updateDeveloper(oldDev);
+		repository.updateGame(old);
 		return Response.noContent().build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteDeveloper(@PathParam("id") String id) {
-		Developer toRemove = repository.getDeveloper(id);
+	public Response delete(@PathParam("id") String id) {
+		Game toRemove = repository.getGame(id);
 
 		if (toRemove == null) {
-			throw new NotFoundException("The developer with id=" + id + " was not found");
+			throw new NotFoundException("The game with id=" + id + " was not found");
 		} else {
-			repository.deleteDeveloper(id);
+			repository.deleteGame(id);
 		}
 		return Response.noContent().build();
 	}
