@@ -28,7 +28,7 @@ public class MapPlatformRepository implements PlatformRepository {
 
 		Platform p1 = new Platform();
 
-		p1.setName("Program computer");
+		p1.setName("Personal Computer");
 		Platform p2 = new Platform();
 
 		p2.setName("Nintendo switch");
