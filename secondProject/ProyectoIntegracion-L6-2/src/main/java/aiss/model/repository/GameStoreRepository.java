@@ -10,14 +10,7 @@ import aiss.model.Store;
 public interface GameStoreRepository {
 	
 	
-	// Games
-	public void addGame(Game g);
-	public Collection<Game> getAllSongs();
-	public Game getGame(String gameId);
-	public void updateGame(Game g);
-	public void deleteGame(String gameId);
 	
-	//Store
 	public void addStore(Store s);
 	public Collection<Store> getAllStores();
 	public Store getStore(String storeId);

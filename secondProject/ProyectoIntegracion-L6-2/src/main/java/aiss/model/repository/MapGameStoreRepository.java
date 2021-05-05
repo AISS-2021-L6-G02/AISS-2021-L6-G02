@@ -13,37 +13,22 @@ import aiss.model.Store;
 public class MapGameStoreRepository implements GameStoreRepository{
 
 	Map<String,Store> storeMap;
+	private static MapGameStoreRepository instance = null;
 	private int index=0;
-	@Override
-	public void addGame(Game g) {
-		// TODO Auto-generated method stub
+
+	
+	public static MapGameStoreRepository getInstance() {
+		if(instance==null) {
+			instance = new MapGameStoreRepository();
+			instance.iniData();
+		}
+		return instance;
+	}
+	
+	public void iniData() {
 		
 	}
-
-	@Override
-	public Collection<Game> getAllSongs() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Game getGame(String gameId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateGame(Game g) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteGame(String gameId) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public void addStore(Store s) {
 		// TODO Auto-generated method stub
