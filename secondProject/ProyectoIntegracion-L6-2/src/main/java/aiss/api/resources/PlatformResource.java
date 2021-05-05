@@ -41,45 +41,49 @@ public class PlatformResource {
 	}
 	@GET
 	@Produces("application/json")
-	public Collection<Platform> getAll(@QueryParam("order") String order, @QueryParam("q") String q, @QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset)
-	{
-		Stream<Platform> data = repository.getAllPlatforms().stream();
-		boolean validFormat;
-		if(order!=null) {
-			validFormat = false;
-			if(order.toLowerCase().equals("name")) {
-				data.sorted(Comparator.comparing(Platform::getName));
-				validFormat=true;
-			}else if(order.toLowerCase().equals("-name")) {
-				data.sorted(Comparator.comparing(Platform::getName).reversed());
-				validFormat=true;
+	public Collection<Platform> getAll(@QueryParam("order") String order, @QueryParam("name") String name,  
+			@QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset){
+		Stream<Platform> result = repository.getAllPlatforms().stream();
+		if(!(name==null || name.equals(""))) {
+			result = result.filter(x->x.getName().toLowerCase().contains(name.toLowerCase()) || x.getName().toLowerCase().equals(name.toLowerCase()));
+		}
+		
+		if(!(order==null || order.equals(""))) {
+			Boolean noValido = false;
+			switch(order) {
+			default:
+				noValido = true;
+				break;
+			case "name":
+				result = result.sorted(Comparator.comparing(Platform::getName));
+				break;
+			case "-name":
+				result = result.sorted(Comparator.comparing(Platform::getName).reversed());
+				break;
+			
 			}
-			if(!validFormat) {
-				throw new BadRequestException("The format of the order parameter is incorrect");
+			if(noValido) {
+				throw new BadRequestException("The format of the order parameter must be name, -name, year, -year, country, or -country");
 			}
 		}
-		if(q!=null) {
-			final String q2 = q.toLowerCase();
-			data = data.filter(x -> x.getName().toLowerCase().contains(q2) );
-		}
-		List<Platform> res = data.collect(Collectors.toList());
-
-		if(offset==null) {
-			offset = 0;
-		}
+			List<Platform> res = result.collect(Collectors.toList());
 
 
-		if(limit==null || limit+offset>res.size()) {
-			limit = res.size();
-		}
-		else{
-			limit += offset;
-		}
+			if(offset==null) {
+				offset = 0;
+			}
 
+			if(limit==null || limit+offset>res.size()) {
+				limit = res.size();
+			}
+			
+			else{
+				limit += offset;
+			}
+			
+		
+		return res.subList(offset, limit);
 
-		Collection<Platform> result = res.subList(offset, limit);
-
-		return result;
 	}
 	
 	@GET
