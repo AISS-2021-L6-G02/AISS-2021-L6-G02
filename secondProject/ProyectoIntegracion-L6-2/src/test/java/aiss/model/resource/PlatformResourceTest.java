@@ -135,30 +135,34 @@ public class PlatformResourceTest {
 		assertEquals("The platform's name has not been setted correctly", name, p2.getName());
 
 	}
+
 	@Test
 	public void testUpdatePlatform() {
 		System.out.println("========================================");
 		System.out.println("Test update Platform:");
 		System.out.println("========================================");
 		String name = "Update platform name test";
-		
+
 		Platform p = new Platform();
 		p.setName(name);
 		p.setId(p1.getId());
-		r.updatePlatform(p);		
-		
+		r.updatePlatform(p);
+
 		assertEquals("The platform's name has not been updated correctly", name, p.getName());
-		System.out.println("Updated platform: "+r.get(p1.getId()));
+		System.out.println("Updated platform: " + r.get(p1.getId()));
 	}
+
 	@Test
 	public void testDeletePlatform() {
 		System.out.println("========================================");
 		System.out.println("Test delete Platform:");
 		System.out.println("========================================");
-		r.removePlatform(p1.getId());
-		assertNull("Error when deleting the platform", r.get(p1.getId()));
-		if (r.get(p1.getId())==null)
-				System.out.println("Success deleting platform");
+		System.out.println(r.get(p1.getId()));
+		Platform copy = r.get(p1.getId());
+		Boolean deleted = r.removePlatform(p1.getId()).equals(null);
+		assertFalse("The platform is not deleted", deleted);
+		System.out.println("Success deleting platform");
+		r.addPlatform(copy);
 
 	}
 
