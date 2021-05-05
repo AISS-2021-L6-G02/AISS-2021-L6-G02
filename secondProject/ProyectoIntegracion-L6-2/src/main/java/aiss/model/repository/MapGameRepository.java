@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import aiss.model.Developer;
 import aiss.model.Game;
 
 public class MapGameRepository implements GameRepository{
@@ -21,8 +22,21 @@ public class MapGameRepository implements GameRepository{
 	}
 	
 	public void iniData() {
+		Collection<Developer> devs = MapDeveloperRepository.getInstance().getAllDevelopers();
+		Game g1, g2, g3, g4, g5;
 		gameMap = new HashMap<String, Game>();
-		Game g = new Game();
+		g1 = new Game();
+		g1.setTitle("Super Mario Odyssey");
+		g1.setDescription("Super Mario Odyssey es un videojuego de plataformas de mundo abierto para Nintendo Switch que se lanzó en Japón y los Estados Unidos el 27 de octubre de 2017");
+		g1.setYear(0);
+		
+		g2 = new Game();
+		
+		g3 = new Game();
+		
+		g4 = new Game();
+		
+		g5 = new Game();
 	}
 	
 	
