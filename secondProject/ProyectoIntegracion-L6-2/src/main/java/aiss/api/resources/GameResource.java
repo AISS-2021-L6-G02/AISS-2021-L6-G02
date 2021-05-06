@@ -22,7 +22,6 @@ import javax.ws.rs.core.Response;
 import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 
-import aiss.model.Developer;
 import aiss.model.Game;
 import aiss.model.Genre;
 import aiss.model.Mode;
@@ -46,13 +45,21 @@ public class GameResource {
 		}
 		return instance;
 	}
+	
+	
+	@GET
+	@Produces("application/json")
+	public Collection<Game> getAll(){
+		return getAll(null, null, null, null, null, null, null, null, null, null);
+	}
+	
 
 	@GET
 	@Produces("application/json")
 	public Collection<Game> getAll(@QueryParam("order") String order, @QueryParam("title") String title,
 			@QueryParam("year") Integer year, @QueryParam("developerName") String developerName,
-			@QueryParam("score") Double score, @QueryParam("platformName") Double platformName,
-			@QueryParam("genreName") String genreName, @QueryParam("mode") String mode,
+			@QueryParam("score") Double score, @QueryParam("platformName") String platformName,
+			@QueryParam("genreName") String genreName, @QueryParam("mode") Mode mode,
 			@QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset) {
 		Stream<Game> result = repository.getAllGames().stream();
 		if (!(title == null || !title.equals(""))) {
@@ -81,9 +88,8 @@ public class GameResource {
 				}
 			}
 		}
-		if (!(mode == null || mode.equals(""))) {
-			Mode m = Mode.valueOf(mode.toUpperCase());
-			result = result.filter(g -> g.getModes().contains(m));
+		if (mode != null) {
+			result = result.filter(g -> g.getModes().contains(mode));
 		}
 
 		if (!(order == null || order.equals(""))) {
@@ -92,10 +98,10 @@ public class GameResource {
 			default:
 				noValido = true;
 				break;
-			case "name":
+			case "title":
 				result = result.sorted(Comparator.comparing(Game::getTitle));
 				break;
-			case "-name":
+			case "-title":
 				result = result.sorted(Comparator.comparing(Game::getTitle).reversed());
 				break;
 			case "year":

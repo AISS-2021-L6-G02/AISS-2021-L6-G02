@@ -36,6 +36,15 @@ public class GenreResource {
 		return _instance; 
 	}
 
+	
+	@GET
+	@Produces("application/json")
+	public Collection<Genre> getAll(){
+		return getAll(null, null, null, null);
+	}
+	
+	
+	
 	@GET
 	@Produces("application/json")
 	public Collection<Genre> getAll(@QueryParam("order") String order, @QueryParam("q") String q, @QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset)

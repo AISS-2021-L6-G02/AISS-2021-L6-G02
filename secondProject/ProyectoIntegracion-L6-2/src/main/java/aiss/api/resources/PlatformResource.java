@@ -39,6 +39,15 @@ public class PlatformResource {
 			_instance = new PlatformResource();
 		return _instance;
 	}
+	
+	@GET
+	@Produces("application/json")
+	public Collection<Platform> getAll(){
+		return getAll(null, null, null, null);
+	}
+	
+	
+	
 	@GET
 	@Produces("application/json")
 	public Collection<Platform> getAll(@QueryParam("order") String order, @QueryParam("name") String name,  
