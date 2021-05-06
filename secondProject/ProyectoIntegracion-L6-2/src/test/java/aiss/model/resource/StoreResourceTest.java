@@ -1,6 +1,7 @@
 package aiss.model.resource;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import java.net.URI;
@@ -95,12 +96,13 @@ public class StoreResourceTest {
 		assertNotNull("The collection of stores filtered by location is null", storesFiltroLocation);
 		assertNotNull("The collection of stores filtered by name is null", storesFiltroName);
 		
-		assertNotNull("Listing all stores sorted by name:", storesOrderName);
-		assertNotNull("Listing all stores sorted reverse by name:", storesOrderNameReversed);
-		assertNotNull("Listing all stores sorted by location:", storesOrderLocation);
-		assertNotNull("Listing all stores sorted reverse by location:", storesOrderLocationReversed);
-		assertNotNull("Listing all stores sorted by number of games:", storesOrderGames);
-		assertNotNull("Listing all stores sorted reverse by number of games:", storesOrderGamesReversed);
+		assertNotNull("The collection of stores sorted by name is null", storesOrderName);
+		assertNotNull("The collection of stores sorted reverse by name is null", storesOrderNameReversed);
+		assertNotNull("The collection of stores sorted by location is null", storesOrderLocation);
+		assertNotNull("The collection of stores sorted reverse by location is null", storesOrderLocationReversed);
+		assertNotNull("The collection of stores sorted by number of games is null", storesOrderGames);
+		assertNotNull("The collection of stores sorted reverse by number of gamesis null", storesOrderGamesReversed);
+		assertNotNull("The collection of stores paginated is null", paginacionStores);
 		
 		System.out.println("Get All Stores");
 		for(Store s:stores) {
@@ -114,6 +116,43 @@ public class StoreResourceTest {
 		for(Store s: storesFiltroName) {
 			System.out.println(s);
 		}
+		System.out.println("Get All Stores filtered by having games");
+		for(Store s: storesFiltroHaveGames) {
+			System.out.println(s);
+		}
+		System.out.println("Get All Stores filtered by having no games");
+		for(Store s: storesFiltroNoGames) {
+			System.out.println(s);
+		}
+		System.out.println("Get All Stores sorted by name");
+		for(Store s: storesOrderName) {
+			System.out.println(s);
+		}
+		System.out.println("Get All Stores sorted reverse by name");
+		for(Store s: storesOrderNameReversed) {
+			System.out.println(s);
+		}
+		System.out.println("Get All Stores sorted by location");
+		for(Store s: storesOrderLocation) {
+			System.out.println(s);
+		}
+		System.out.println("Get All Stores sorted reverse by location");
+		for(Store s: storesOrderLocationReversed) {
+			System.out.println(s);
+		}
+		System.out.println("Get All Stores sorted by number of games");
+		for(Store s: storesOrderGames) {
+			System.out.println(s);
+		}
+		System.out.println("Get All Stores sorted reverse by number of games");
+		for(Store s: storesOrderGamesReversed) {
+			System.out.println(s);
+		}
+		System.out.println("Get All Stores paginated");
+		for(Store s: paginacionStores) {
+			System.out.println(s);
+		}
+
 	}
 	
 	@Test
@@ -152,16 +191,48 @@ public class StoreResourceTest {
 		assertEquals("The Close Hour of the store do not match", s3.getCloseHour(), s.getCloseHour());
 		assertEquals("The phone of the store do not match", s3.getPhone(), s.getPhone());
 		assertEquals("The games of the store do not match", s3.getGames(), s.getGames());
+		
+		System.out.println("Store id: " + s.getId());
+		System.out.println("Store name: " + s.getName());
 	}
 	
 	@Test
 	public void testUpdateStore() {
+		Store s = r.get(s2.getId());
+		s.setName("Other test name");
+		s.setLocation("Other test location");
+		r.updateStore(s);
+		s2 = r.get(s2.getId());
+		assertEquals("The id of the store do not match", s2.getId(), s.getId());
+		assertEquals("The name of the store do not match", s2.getName(), s.getName());
+		assertEquals("The location of the store do not match", s2.getLocation(), s.getLocation());
+		assertEquals("The Open Hour of the store do not match", s2.getOpenHour(), s.getOpenHour());
+		assertEquals("The Close Hour of the store do not match", s2.getCloseHour(), s.getCloseHour());
+		assertEquals("The phone of the store do not match", s2.getPhone(), s.getPhone());
+		assertEquals("The games of the store do not match", s2.getGames(), s.getGames());
+		
+		System.out.println("Store id: " + s.getId());
+		System.out.println("Store name: " + s.getName());
+		
+		
 		
 	}
 	
 	@Test
 	public void testDeleteStore() {
+		s3 = new Store();
+		s3.setName("Test name");
+		s3.setLocation("Test Location");
+		s3.setOpenHour(LocalTime.of(11, 0));
+		s3.setCloseHour(LocalTime.of(20, 30));
+		s3.setPhone("999999999");
+		r.addStore(s3);
+		assertNotNull("Error when adding the store", s3);
+		Boolean deleted = r.deleteStore(s3.getId()).equals(null);
+		assertFalse("The store is not deleted",deleted);
+		System.out.println("Success deleting store");
 		
 	}
+	
 
 }
