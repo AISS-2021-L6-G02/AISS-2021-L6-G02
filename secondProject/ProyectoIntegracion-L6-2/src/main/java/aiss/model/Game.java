@@ -99,6 +99,14 @@ public class Game {
 	public void deleteMode(Mode mode) {
 		modes.remove(mode);
 	}
+	@Override
+	public String toString() {
+		return "Game [id=" + id + ", title=" + title + ", description=" + description + ", year=" + year
+				+ ", developer=" + developer + ", score=" + score + ", platforms=" + platforms + ", genres=" + genres
+				+ ", modes=" + modes + "]";
+	}
+	
+	
 	
 
 }

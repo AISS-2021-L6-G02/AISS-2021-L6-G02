@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -61,25 +60,24 @@ public class GameResource {
 			@QueryParam("score") Double score, @QueryParam("platformName") String platformName,
 			@QueryParam("genreName") String genreName, @QueryParam("mode") Mode mode,
 			@QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset) {
-		Stream<Game> result = repository.getAllGames().stream();
-		if (!(title == null || !title.equals(""))) {
-			result = result.filter(x -> x.getTitle().toLowerCase().contains(title.toLowerCase())
-					|| x.getTitle().toLowerCase().equals(title.toLowerCase()));
+		Collection<Game> result = repository.getAllGames();
+		if (!(title == null || title.equals(""))) {
+			result = result.stream().filter(x -> x.getTitle().toLowerCase().contains(title.toLowerCase())).collect(Collectors.toList());
 		}
-		if (!(year.equals(null) || !year.equals(0))) {
-			result = result.filter(x -> x.getYear().equals(year));
+		if (year!=null) {
+			result = result.stream().filter(x -> x.getYear()>=year).collect(Collectors.toList());
 		}
 		if (!(developerName == null || developerName.equals(""))) {
-			result = result.filter(x -> x.getDeveloper().getName().toLowerCase().contains(developerName.toLowerCase())
-					|| x.getDeveloper().getName().toLowerCase().equals(developerName.toLowerCase()));
+			result = result.stream().filter(x -> x.getDeveloper().getName().toLowerCase().contains(developerName.toLowerCase())
+					|| x.getDeveloper().getName().toLowerCase().equals(developerName.toLowerCase())).collect(Collectors.toList());
 		}
-		if (!(score == null || !score.equals(0.0))) {
-			result = result.filter(x -> x.getScore() >= score);
+		if (!(score == null || score.equals(0.0))) {
+			result = result.stream().filter(x -> x.getScore() >= score).collect(Collectors.toList());
 
 		}
 		if (!(genreName == null || genreName.equals(""))) {
 			Set<Game> aux = new HashSet<Game>();
-			for (Game g : result.collect(Collectors.toList())) {
+			for (Game g : result){
 				for (Genre ge : g.getGenres()) {
 					if (ge.getName().toLowerCase().contains(genreName.toLowerCase())
 							|| ge.getName().toLowerCase().equals(genreName.toLowerCase())) {
@@ -89,7 +87,7 @@ public class GameResource {
 			}
 		}
 		if (mode != null) {
-			result = result.filter(g -> g.getModes().contains(mode));
+			result = result.stream().filter(g -> g.getModes().contains(mode)).collect(Collectors.toList());
 		}
 
 		if (!(order == null || order.equals(""))) {
@@ -99,44 +97,43 @@ public class GameResource {
 				noValido = true;
 				break;
 			case "title":
-				result = result.sorted(Comparator.comparing(Game::getTitle));
+				result = result.stream().sorted(Comparator.comparing(Game::getTitle)).collect(Collectors.toList());
 				break;
 			case "-title":
-				result = result.sorted(Comparator.comparing(Game::getTitle).reversed());
+				result = result.stream().sorted(Comparator.comparing(Game::getTitle).reversed()).collect(Collectors.toList());
 				break;
 			case "year":
-				result = result.sorted(Comparator.comparing(Game::getYear));
+				result = result.stream().sorted(Comparator.comparing(Game::getYear)).collect(Collectors.toList());
 				break;
 			case "-year":
-				result = result.sorted(Comparator.comparing(Game::getYear).reversed());
+				result = result.stream().sorted(Comparator.comparing(Game::getYear).reversed()).collect(Collectors.toList());
 				break;
 			case "developerName":
-				result.sorted(new GameDeveloperSorter());
+				result = result.stream().sorted(new GameDeveloperSorter()).collect(Collectors.toList());
 				break;
 			case "-developerName":
-				result.sorted(new GameDeveloperSorter().reversed());
+				result = result.stream().sorted(new GameDeveloperSorter().reversed()).collect(Collectors.toList());
 				break;
 			case "score":
-				result = result.sorted(Comparator.comparing(Game::getScore));
+				result = result.stream().sorted(Comparator.comparing(Game::getScore)).collect(Collectors.toList());
 				break;
 			case "-score":
-				result = result.sorted(Comparator.comparing(Game::getScore).reversed());
-
+				result = result.stream().sorted(Comparator.comparing(Game::getScore).reversed()).collect(Collectors.toList());
 				break;
 			case "genreName":
-				result.sorted(new GameGenreSorter());
+				result = result.stream().sorted(new GameGenreSorter()).collect(Collectors.toList());
 				break;
 			case "-genreName":
-				result.sorted(new GameGenreSorter().reversed());
+				result = result.stream().sorted(new GameGenreSorter().reversed()).collect(Collectors.toList());
 				break;
 			}
 			if (noValido) {
 				throw new BadRequestException(
-						"The format of the order parameter must be name, -name, year, -year, country, or -country");
+						"The format of the order parameter must be title, -title, year, -year, country, or -country");
 			}
 		}
 
-		List<Game> res = result.collect(Collectors.toList());
+		List<Game> res = result.stream().collect(Collectors.toList());
 
 		if (offset == null) {
 			offset = 0;

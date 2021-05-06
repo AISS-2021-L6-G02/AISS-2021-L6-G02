@@ -54,7 +54,7 @@ public class GameResourceTest {
 		g.setGenres(testG);
 		g.setModes(testM);
 		gr.add(g);
-		g1 = gr.getAll(null, "Test title", null, null, null, null, null, null, null, null).stream().findFirst().get();
+		g1 = gr.getAll(null, g.getTitle(), g.getYear(), g.getDeveloper().getName(), g.getScore(), g.getPlatforms().get(0).getName(), g.getGenres().get(0).getName(), g.getModes().get(0), null, null).stream().findFirst().get();
 
 		g = new Game();
 		g.setTitle("Test title 2");
@@ -66,7 +66,7 @@ public class GameResourceTest {
 		g.setGenres(testG);
 		g.setModes(testM);
 		gr.add(g);
-		g2 = gr.getAll(null, "Test title 2", null, null, null, null, null, null, null, null).stream().findFirst().get();
+		g2 = gr.getAll(null, g.getTitle(), g.getYear(), g.getDeveloper().getName(), g.getScore(), g.getPlatforms().get(0).getName(), g.getGenres().get(0).getName(), g.getModes().get(0), null, null).stream().findFirst().get();
 
 
 
@@ -80,7 +80,7 @@ public class GameResourceTest {
 		g.setGenres(testG);
 		g.setModes(testM);
 		gr.add(g);
-		g3 = gr.getAll(null, "Test title 3", null, null, null, null, null, null, null, null).stream().findFirst().get();
+		g3 = gr.getAll(null, g.getTitle(), g.getYear(), g.getDeveloper().getName(), g.getScore(), g.getPlatforms().get(0).getName(), g.getGenres().get(0).getName(), g.getModes().get(0), null, null).stream().findFirst().get();
 	}
 
 	@AfterClass
@@ -268,7 +268,9 @@ public class GameResourceTest {
 		g.setGenres(new ArrayList<Genre>(genres.getAll()));
 		g.setModes(Arrays.asList(Mode.values()));
 		
-		Game gTest = gr.getAll(null, g.getTitle(), g.getYear(), g.getDeveloper().getName(), g.getScore(), g.getPlatforms().get(0).getName(), g.getGenres().get(0).getName(), g.getModes().get(0), null, null).stream().findFirst().get();
+		gr.add(g);
+		
+		Game gTest = gr.getAll(null, g.getTitle(), null, null, null, null, null, null, null, null).stream().findFirst().get();
 		assertNotNull("Error when adding the game", gTest);
 		assertEquals("The game's title has not been setted correctly", g.getTitle(), gTest.getTitle());
 		assertEquals("The game's description has not been setted correctly", g.getDescription(), gTest.getDescription());
@@ -309,12 +311,13 @@ public class GameResourceTest {
 
 	@Test
 	public void testDeleteGame() {
-		gr.delete(g1.getId());
-		Game gT = gr.get(g1.getId());
+		String id = g1.getId();
+		gr.delete(id);
+		Game gT = gr.get(id);
 		assertNull("Error when deleting game", gT);
 		if(gT==null) {
 			gr.add(g1);
-			g1 = gr.getAll(null, g1.getTitle(), g1.getYear(), g1.getDeveloper().getName(), null, null, null, null, null, null).stream().findFirst().get();
+			g1 = gr.getAll(null, g1.getTitle(), g1.getYear(), g1.getDeveloper().getName(), g1.getScore(), g1.getPlatforms().get(0).getName(), g1.getGenres().get(0).getName(), g1.getModes().get(0), null, null).stream().findFirst().get();
 		}
 	}
 
