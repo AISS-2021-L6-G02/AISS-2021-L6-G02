@@ -50,7 +50,7 @@ public class StoreResource {
 		for(Store s: repository.getAllStores()) {
 			if(nogames==null
 					||nogames&&(s.getGames()==null||s.getGames().size()==0)
-					||!nogames&&(s.getGames().size()>0))
+					||!nogames&&(s.getGames()!=null&&s.getGames().size()>0))
 				if(q==null||q.isEmpty()
 						||s.getName().contains(q)
 						||s.getLocation().contains(q))
@@ -177,20 +177,23 @@ public class StoreResource {
 	@POST
 	@Consumes("aplication/json")
 	@Produces("aplication/json")
-	public Response addStore(@Context UriInfo uriInfo, Store store) {
+	public Response addStore(/*@Context UriInfo uriInfo, */Store store) {
 		//Lanza error si nombre o lugar null o vacio o si hora de cierre < hora de apertura
 		if(store.getName()==null||store.getName().equals("")
 				||store.getLocation()==null||store.getLocation().equals("")
-				||store.getOpenHour().compareTo(store.getCloseHour())<0)
+				||store.getOpenHour().compareTo(store.getCloseHour())>0)
 			throw new BadRequestException("Can not add the store with id "+store.getId());
 		
 		repository.addStore(store);
 		
+		/*
 		UriBuilder ub = uriInfo.getAbsolutePathBuilder().path(this.getClass(), "get");
 		URI uri = ub.build(store.getId());
 		ResponseBuilder resp = Response.created(uri);
 		resp.entity(store);
 		return resp.build();
+		*/
+		return Response.noContent().build();
 	}
 	
 	@PUT

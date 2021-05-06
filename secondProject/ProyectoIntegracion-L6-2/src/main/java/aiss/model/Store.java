@@ -110,7 +110,7 @@ public class Store {
 	}
 	
 	public Integer getGamesSize() {
-		return this.games.size();
+		return this.games!=null? this.games.size():0;
 	}
 	@Override
 	public String toString() {

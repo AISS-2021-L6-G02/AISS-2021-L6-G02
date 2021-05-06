@@ -131,7 +131,7 @@ public class PlatformResourceTest {
 		Platform p2 = new Platform();
 		p2 = r.getAll(null, null, null, null).stream().filter(x -> x.getName().equals(name)).findFirst().get();
 		System.out.println("Platform added --> " + p2);
-		assertNotNull("Error when adding the playlist", p2);
+		assertNotNull("Error when adding the platform", p2);
 		assertEquals("The platform's name has not been setted correctly", name, p2.getName());
 
 	}
