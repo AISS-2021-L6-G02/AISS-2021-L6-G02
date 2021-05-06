@@ -234,5 +234,73 @@ public class StoreResourceTest {
 		
 	}
 	
+	@Test
+	public void testGetItems() {
+		Collection<ObjetoStore> items = r.getAllObjects(s1.getId(), null, null, null, null, null);
+		assertNotNull("The collection of games in store with id "+s1.getId()+" is null", items);
+		System.out.println("Get All items on Store:");
+		for(ObjetoStore i:items) {
+			System.out.println(i);
+		}
+	}
+	
+	@Test
+	public void testGetItem() {
+		ObjetoStore item = r.getObject(s1.getId(), s1.getGames().get(0).getId());
+		assertEquals("The Id of the item given does not match", item.getId(),s1.getGames().get(0).getId());
+		assertEquals("The game of the item given does not match", item.getGame(),s1.getGames().get(0).getGame());
+		assertEquals("The price of the item given does not match", item.getPrice(),s1.getGames().get(0).getPrice());
+		assertEquals("The stock of the item given does not match", item.getStock(),s1.getGames().get(0).getStock());
+		
+		System.out.println("Item Store id: " + item.getId());
+		System.out.println("Store id: " + s1.getId());
+		System.out.println("Store name: " + s1.getName());
+	}
+	
+	@Test
+	public void testAddItem() {
+		o = new ObjetoStore();
+		o.setGame(games.getAll().stream().findFirst().get());
+		o.setPrice(23.75);
+		o.setStock(128);
+		r.addObject(s2.getId(), o);
+		Collection<ObjetoStore> items = r.getAllObjects(s2.getId(), null, null, null, null, null);
+		assertNotNull("The collection of items is null", items);
+		assertFalse("The collection of items is empty", items.isEmpty());
+		
+		System.out.println("Item Store id: " + o.getId());
+		System.out.println("Store id: " + s2.getId());
+		System.out.println("Store name: " + s2.getName());
+	}
+	
+	@Test
+	public void testDeleteItem() {
+		s3 = r.get("shop0");
+		o = s3.getGames().get(0);
+		Boolean deleted = r.deleteObject(s3.getId(), o.getId()).equals(null);
+		assertFalse("The Item was not deleted ",deleted);
+		System.out.println("Success deleting item");
+		r.addObject(s3.getId(), o);
+	}
+	
+	@Test
+	public void testUpdateItem() {
+		s3 = r.get(s1.getId());
+		o = s3.getGames().get(0);
+		o.setStock(0);
+		o.setPrice(99.99);
+		r.updateObject(s3.getId(), o);
+		s1 = r.get(s1.getId());
+		ObjetoStore item = s1.getGames().get(0);
+		assertEquals("The Id of the item given does not match", item.getId(),o.getId());
+		assertEquals("The game of the item given does not match", item.getGame(),o.getGame());
+		assertEquals("The price of the item given does not match", item.getPrice(),o.getPrice());
+		assertEquals("The stock of the item given does not match", item.getStock(),o.getStock());
+		
+		System.out.println("Item Store id: " + item.getId());
+		System.out.println("Store id: " + s1.getId());
+		System.out.println("Store name: " + s1.getName());
+	}
+	
 
 }
