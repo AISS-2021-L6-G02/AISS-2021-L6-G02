@@ -7,7 +7,8 @@ public class Genre {
 	
 		/*Constructores*/
 		public Genre(String string) {
-			
+			this.name = string;
+			this.description = "no description";
 		}
 
 		public Genre() {

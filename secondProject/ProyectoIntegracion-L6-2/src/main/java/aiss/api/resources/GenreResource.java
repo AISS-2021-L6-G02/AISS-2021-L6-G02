@@ -107,7 +107,7 @@ public class GenreResource {
 	{
 		Genre result = repository.getGenre(Id);
 		if(result==null) {
-			throw new NotFoundException("The song with id=" + Id + "was not found!");
+			throw new NotFoundException("The genre with id=" + Id + "was not found!");
 		}
 		return result;
 	}
@@ -117,7 +117,7 @@ public class GenreResource {
 	@Produces("application/json")
 	public Response addGenre(Genre genre) {
 		if(genre.getName()==null||genre.getDescription().equals("")) {
-			throw new BadRequestException("The title of the song must not be null");
+			throw new BadRequestException("The title of the genre must not be null");
 		}
 		repository.addGenre(genre);
 		return Response.noContent().build();
@@ -129,7 +129,7 @@ public class GenreResource {
 	public Response updateGenre(Genre genre) {
 		Genre oldGenre = repository.getGenre(genre.getId());
 		if(oldGenre==null) {
-			throw new NotFoundException("The song with id=" + genre.getId() + "was not found");
+			throw new NotFoundException("The genre with id=" + genre.getId() + " was not found");
 		}
 		if(genre.getName()!=null) {
 			oldGenre.setName(genre.getName());
@@ -145,7 +145,7 @@ public class GenreResource {
 	public Response removeGenre(@PathParam("id") String Id) {
 		Genre toRemove =repository.getGenre(Id);
 		if(toRemove==null) {
-			throw new NotFoundException("The song with id=" + Id + "was not found");
+			throw new NotFoundException("The genre with id=" + Id + " was not found");
 		}
 		else {
 			repository.deleteGenre(Id);
