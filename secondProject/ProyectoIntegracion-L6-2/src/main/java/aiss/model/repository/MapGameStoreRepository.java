@@ -19,6 +19,7 @@ public class MapGameStoreRepository implements GameStoreRepository{
 	Map<String,Store> storeMap;
 	private static MapGameStoreRepository instance = null;
 	private int index=0;
+	private int oIndex = 0;
 
 	
 	public static MapGameStoreRepository getInstance() {
@@ -30,8 +31,9 @@ public class MapGameStoreRepository implements GameStoreRepository{
 	}
 	
 	public void iniData() {
-		Stream<Game> games = MapGameRepository.getInstance().getAllGames().stream();
+		Collection<Game> games = MapGameRepository.getInstance().getAllGames();
 		storeMap = new HashMap<String, Store>();
+		Game g = null;
 		//init gamesMap
 		//Create games
 		//Create stores
@@ -43,12 +45,14 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		store1.setPhone("955323867");
 		List<ObjetoStore> gamesStore1 = new ArrayList<>();
 		ObjetoStore game1Store1 = new ObjetoStore();
-		game1Store1.setGame(games.filter(x -> x.getTitle().toLowerCase().contains("super mario odissey")).findFirst().get());
+		game1Store1.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("super mario odyssey")).findFirst().get());
 		game1Store1.setPrice(49.99);
 		game1Store1.setStock(4);
 		gamesStore1.add(game1Store1);
-		store1.setGames(gamesStore1);
 		addStore(store1);
+		for(ObjetoStore i:gamesStore1) {
+			addObjeto(store1.getId(), i);
+		}
 		
 		Store store2 = new Store();
 		store2.setName("CeX");
@@ -58,17 +62,20 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		store2.setPhone("932319555");
 		List<ObjetoStore> gamesStore2 = new ArrayList<>();
 		ObjetoStore game1Store2 = new ObjetoStore();
-		game1Store2.setGame(games.filter(x -> x.getTitle().toLowerCase().contains("fifa 20")).findFirst().get());
+		game1Store2.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("fifa")).findFirst().get());
 		game1Store2.setPrice(9.50);
 		game1Store2.setStock(2);
 		gamesStore2.add(game1Store2);
 		ObjetoStore game2Store2 = new ObjetoStore();
-		game2Store2.setGame(games.filter(x -> x.getTitle().toLowerCase().contains("animal crossing")).findFirst().get());
+		game2Store2.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("animal crossing")).findFirst().get());
 		game2Store2.setPrice(24.95);
 		game2Store2.setStock(3);
 		gamesStore2.add(game2Store2);
-		store2.setGames(gamesStore2);
 		addStore(store2);
+		for(ObjetoStore i:gamesStore2) {
+			addObjeto(store2.getId(), i);
+		}
+		
 		
 		Store store3 = new Store();
 		store3.setName("GAME");
@@ -78,17 +85,19 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		store3.setPhone("917168628");
 		List<ObjetoStore> gamesStore3 = new ArrayList<>();
 		ObjetoStore game1Store3 = new ObjetoStore();
-		game1Store3.setGame(games.filter(x -> x.getTitle().toLowerCase().contains("super mario odissey")).findFirst().get());
+		game1Store3.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("super mario odyssey")).findFirst().get());
 		game1Store3.setPrice(45.60);
 		game1Store3.setStock(1);
 		gamesStore3.add(game1Store3);
 		ObjetoStore game2Store3 = new ObjetoStore();
-		game2Store3.setGame(games.filter(x -> x.getTitle().toLowerCase().contains("grand theft auto")).findFirst().get());
+		game2Store3.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("grand theft auto")).findFirst().get());
 		game2Store3.setPrice(9.50);
 		game2Store3.setStock(5);
 		gamesStore3.add(game2Store3);
-		store3.setGames(gamesStore3);
 		addStore(store3);
+		for(ObjetoStore i:gamesStore3) {
+			addObjeto(store3.getId(), i);
+		}
 		
 		Store store4 = new Store();
 		store4.setName("RETRO GAME VALENCIA");
@@ -98,22 +107,24 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		store4.setPhone("962069197");
 		List<ObjetoStore> gamesStore4 = new ArrayList<>();
 		ObjetoStore game1Store4 = new ObjetoStore();
-		game1Store4.setGame(games.filter(x -> x.getTitle().toLowerCase().contains("animal crossing")).findFirst().get());
+		game1Store4.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("animal crossing")).findFirst().get());
 		game1Store4.setPrice(29.65);
 		game1Store4.setStock(2);
 		gamesStore4.add(game1Store4);
 		ObjetoStore game2Store4 = new ObjetoStore();
-		game2Store4.setGame(games.filter(x -> x.getTitle().toLowerCase().contains("grand theft auto")).findFirst().get());
+		game2Store4.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("grand theft auto")).findFirst().get());
 		game2Store4.setPrice(7.85);
 		game2Store4.setStock(6);
 		gamesStore4.add(game2Store4);
 		ObjetoStore game3Store4 = new ObjetoStore();
-		game3Store4.setGame(games.filter(x -> x.getTitle().toLowerCase().contains("fifa 20")).findFirst().get());
+		game3Store4.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("fifa 20")).findFirst().get());
 		game3Store4.setPrice(10.00);
 		game3Store4.setStock(4);
 		gamesStore4.add(game3Store4);
-		store4.setGames(gamesStore4);
 		addStore(store4);
+		for(ObjetoStore i:gamesStore4) {
+			addObjeto(store4.getId(), i);
+		}
 	}
 	
 	@Override
@@ -151,7 +162,8 @@ public class MapGameStoreRepository implements GameStoreRepository{
 
 	@Override
 	public void addObjeto(String storeId, ObjetoStore o) {
-		String id="o"+index++;
+		if (storeMap.get(storeId).getGames()==null||storeMap.get(storeId).getGamesSize()==0) oIndex=0;
+		String id="o"+oIndex++;
 		o.setId(id);
 		storeMap.get(storeId).addGame(o);
 		
