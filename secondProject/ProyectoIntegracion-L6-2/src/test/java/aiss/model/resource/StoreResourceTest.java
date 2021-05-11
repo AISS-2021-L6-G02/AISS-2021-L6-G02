@@ -8,6 +8,8 @@ import java.net.URI;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -74,22 +76,22 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testGetAll() {
-		Collection<Store> stores = r.getAll(null, null, null, null, null);
-		Collection<Store> storesFiltroLocation = r.getAll("Sevilla", null, null, null, null);
-		Collection<Store> storesFiltroName = r.getAll("GAME", null, null, null, null);
+		Collection<Store> stores = r.getAll(null, null, null, null, null, null);
+		Collection<Store> storesFiltroLocation = r.getAll("Sevilla", null, null, null, null, null);
+		Collection<Store> storesFiltroName = r.getAll("GAME", null, null, null, null, null);
 		
-		Collection<Store> storesFiltroNoGames = r.getAll(null, true, null, null, null);
-		Collection<Store> storesFiltroHaveGames = r.getAll(null, false, null, null, null);
+		Collection<Store> storesFiltroNoGames = r.getAll(null, true, null, null, null, null);
+		Collection<Store> storesFiltroHaveGames = r.getAll(null, false, null, null, null, null);
 		
 		
-		Collection<Store> storesOrderName = r.getAll(null, null, "name", null, null);
-		Collection<Store> storesOrderNameReversed = r.getAll(null, null, "-name", null, null);
-		Collection<Store> storesOrderLocation = r.getAll(null, null, "location", null, null);
-		Collection<Store> storesOrderLocationReversed = r.getAll(null, null, "-location", null, null);
-		Collection<Store> storesOrderGames = r.getAll(null, null, "games", null, null);
-		Collection<Store> storesOrderGamesReversed = r.getAll(null, null, "-games", null, null);
+		Collection<Store> storesOrderName = r.getAll(null, null,null, "name", null, null);
+		Collection<Store> storesOrderNameReversed = r.getAll(null, null, null, "-name", null, null);
+		Collection<Store> storesOrderLocation = r.getAll(null, null, null, "location", null, null);
+		Collection<Store> storesOrderLocationReversed = r.getAll(null, null, null, "-location", null, null);
+		Collection<Store> storesOrderGames = r.getAll(null, null, null, "games", null, null);
+		Collection<Store> storesOrderGamesReversed = r.getAll(null, null, null, "-games", null, null);
 		
-		Collection<Store> paginacionStores = r.getAll(null, null, null, 1, 2);
+		Collection<Store> paginacionStores = r.getAll(null, null, null, null, 1, 2);
 		
 		
 		assertNotNull("The collection of stores is null",stores);
@@ -258,6 +260,16 @@ public class StoreResourceTest {
 	}
 	
 	@Test
+	public void testGetCheapest() {
+		Map<String,Collection<ObjetoStore>> games = r.getCheapestinArea("Sevilla",50.);
+		assertNotNull("The hashmap is null", games);
+		System.out.println("Showing the stores with the cheapest games in your area");
+		for(Entry<String, Collection<ObjetoStore>> store:games.entrySet()) {
+			System.out.println(store);
+		}
+	}
+	
+	@Test
 	public void testAddItem() {
 		o = new ObjetoStore();
 		o.setGame(games.getAll().stream().findFirst().get());
@@ -301,6 +313,7 @@ public class StoreResourceTest {
 		System.out.println("Store id: " + s1.getId());
 		System.out.println("Store name: " + s1.getName());
 	}
+	
 	
 
 }

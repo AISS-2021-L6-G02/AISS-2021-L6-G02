@@ -4,7 +4,9 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
@@ -25,6 +27,7 @@ import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 import org.restlet.resource.Delete;
 
+import aiss.model.Game;
 import aiss.model.ObjetoStore;
 import aiss.model.Store;
 import aiss.model.repository.GameStoreRepository;
@@ -42,7 +45,7 @@ public class StoreResource {
 	
 	@GET
 	@Produces("aplication/json")
-	public Collection<Store>getAll(@QueryParam("q") String q,@QueryParam("nogames")Boolean nogames,
+	public Collection<Store>getAll(@QueryParam("q") String q,@QueryParam("nogames")Boolean nogames,@QueryParam("gamesearch") Collection<Game> gamesearch,
 			@QueryParam("order") String order,@QueryParam("offset")Integer offset,@QueryParam("limit") Integer limit){
 		
 		List<Store> out = new ArrayList<Store>();
@@ -54,7 +57,9 @@ public class StoreResource {
 				if(q==null||q.isEmpty()
 						||s.getName().contains(q)
 						||s.getLocation().contains(q))
-					out.add(s);
+					if(gamesearch==null||gamesearch.isEmpty()
+					||s.getGames().stream().map(x->x.getGame()).anyMatch(x->gamesearch.contains(x)))
+						out.add(s);
 		}
 		
 		if(order!=null)
@@ -172,6 +177,19 @@ public class StoreResource {
 		if(item==null)
 			throw new NotFoundException("The item with id "+itemId+" does not exist in the store with id "+storeId);
 		return item;
+	}
+	
+	@GET
+	@Produces("aplication/json")
+	public Map<String,Collection<ObjetoStore>> getCheapestinArea(@QueryParam("q") String q,@QueryParam("maxprice") Double maxprice){
+		Collection<Store> stores = getAll(q, null, null, null, null, null);
+		Map<String, Collection<ObjetoStore>> res = new HashMap<String, Collection<ObjetoStore>>();
+		for(Store s:stores) {
+			int limit = s.getGamesSize()==0? 0:s.getGamesSize()>5? 5:s.getGamesSize();
+			Collection<ObjetoStore> items = getAllObjects(s.getId(), true, maxprice, "price", null, limit);
+			res.put(s.getId(), items);			
+		}
+		return res;
 	}
 	
 	@POST
