@@ -13,16 +13,16 @@ import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 
 import aiss.model.Developer;
-import aiss.model.repository.DeveloperRepository;
-import aiss.model.repository.MapDeveloperRepository;
+import aiss.model.repository.DatabaseRepository;
+import aiss.model.repository.MapDatabaseRepository;
 
 @Path("/developers")
 public class DeveloperResource {
 	private static DeveloperResource instance = null;
-	DeveloperRepository repository;
+	DatabaseRepository repository;
 	
 	private DeveloperResource() {
-		repository = MapDeveloperRepository.getInstance();
+		repository = MapDatabaseRepository.getInstance();
 	}
 	public static DeveloperResource getInstance() {
 		if(instance==null) {

@@ -24,18 +24,18 @@ import org.jboss.resteasy.spi.NotFoundException;
 import aiss.model.Game;
 import aiss.model.Genre;
 import aiss.model.Mode;
-import aiss.model.repository.GameRepository;
-import aiss.model.repository.MapGameRepository;
+import aiss.model.repository.DatabaseRepository;
+import aiss.model.repository.MapDatabaseRepository;
 import utils.GameDeveloperSorter;
 import utils.GameGenreSorter;
 
 @Path("/games")
 public class GameResource {
 	private static GameResource instance = null;
-	GameRepository repository;
+	DatabaseRepository repository;
 
 	private GameResource() {
-		repository = MapGameRepository.getInstance();
+		repository = MapDatabaseRepository.getInstance();
 	}
 
 	public static GameResource getInstance() {

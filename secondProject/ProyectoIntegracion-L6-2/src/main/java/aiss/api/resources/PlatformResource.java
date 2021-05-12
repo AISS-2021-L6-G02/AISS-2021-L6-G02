@@ -21,17 +21,17 @@ import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 
 import aiss.model.Platform;
-import aiss.model.repository.MapPlatformRepository;
-import aiss.model.repository.PlatformRepository;
+import aiss.model.repository.DatabaseRepository;
+import aiss.model.repository.MapDatabaseRepository;
 
 
 @Path("/platforms")
 public class PlatformResource {
 	private static PlatformResource _instance = null;
-	PlatformRepository repository;
+	DatabaseRepository repository;
 
 	public PlatformResource() {
-		repository = MapPlatformRepository.getInstance();
+		repository = MapDatabaseRepository.getInstance();
 	}
 
 	public static PlatformResource getInstance() {

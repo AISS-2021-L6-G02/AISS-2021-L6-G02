@@ -17,16 +17,16 @@ import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 
 import aiss.model.Genre;
-import aiss.model.repository.GenreRepository;
-import aiss.model.repository.MapGenreRepository;
+import aiss.model.repository.DatabaseRepository;
+import aiss.model.repository.MapDatabaseRepository;
 
 public class GenreResource {
 	/* Singleton */
 	private static GenreResource _instance=null;
-	GenreRepository repository;
+	DatabaseRepository repository;
 
 	public GenreResource(){
-		repository=MapGenreRepository.getInstance();
+		repository=MapDatabaseRepository.getInstance();
 	}
 
 	public static GenreResource getInstance()

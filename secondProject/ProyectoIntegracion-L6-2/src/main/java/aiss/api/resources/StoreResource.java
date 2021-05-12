@@ -30,16 +30,16 @@ import org.restlet.resource.Delete;
 import aiss.model.Game;
 import aiss.model.ObjetoStore;
 import aiss.model.Store;
-import aiss.model.repository.GameStoreRepository;
-import aiss.model.repository.MapGameStoreRepository;
+import aiss.model.repository.DatabaseRepository;
+import aiss.model.repository.MapDatabaseRepository;
 
 @Path("/stores")
 public class StoreResource {
 	
 	public static StoreResource _instance = null;
-	GameStoreRepository repository;
+	DatabaseRepository repository;
 	public StoreResource() {
-		repository = MapGameStoreRepository.getInstance();
+		repository = MapDatabaseRepository.getInstance();
 		
 	}
 	
@@ -241,7 +241,7 @@ public class StoreResource {
 		Store store = repository.getStore(storeId);
 		
 		if(store==null)
-			throw new NotFoundException("The store with id "+store.getId()+" does not exist");
+			throw new NotFoundException("The store with id "+storeId+" does not exist");
 		else
 			repository.addObjeto(storeId, item);
 		
