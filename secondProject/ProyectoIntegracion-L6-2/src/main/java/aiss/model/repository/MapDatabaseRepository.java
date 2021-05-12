@@ -622,5 +622,4 @@ public class MapDatabaseRepository implements DatabaseRepository{
 	public void deleteDeveloper(String developerId) {
 		developerMap.remove(developerId);
 	}
-
 }
