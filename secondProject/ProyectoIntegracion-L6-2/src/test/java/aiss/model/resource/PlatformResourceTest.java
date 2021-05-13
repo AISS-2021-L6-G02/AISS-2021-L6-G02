@@ -2,17 +2,14 @@ package aiss.model.resource;
 
 import static org.junit.Assert.*;
 
-import java.security.cert.CollectionCertStoreParameters;
 import java.util.Collection;
 
-import javax.jdo.annotations.Order;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import aiss.api.resources.PlatformResource;
-import aiss.model.Developer;
 import aiss.model.Platform;
 
 public class PlatformResourceTest {

@@ -57,8 +57,20 @@ public class DeveloperResourceTest {
 	@Test
 	public void testGetAll() {
 		Collection<Developer> devs = dr.getAll();
+		
+		Collection<Developer> devsSortedName = dr.getAll("name", null, null, null, null, null);
+		Collection<Developer> devsSortedNameReverse = dr.getAll("-name", null, null, null, null, null);
+		Collection<Developer> devsSortedYear = dr.getAll("year", null, null, null, null, null);
+		Collection<Developer> devsSortedYearReverse = dr.getAll("-year", null, null, null, null, null);
+		Collection<Developer> devsSortedCountry = dr.getAll("country", null, null, null, null, null);
+		Collection<Developer> devsSortedCountryReverse = dr.getAll("-country", null, null, null, null, null);
+		
+		Collection<Developer> devsFiltroName = dr.getAll(null, "Nintendo", null, null, null, null);
+		Collection<Developer> devsFiltroCountry = dr.getAll(null, null, "Japan", null, null, null);
+		Collection<Developer> devsFiltroYear = dr.getAll(null, null, null, 1889, null, null);
+		
 		Collection<Developer> devsPaginacion = dr.getAll(null, null, null, null, 5, 8);
-		Collection<Developer> devsFiltro = dr.getAll(null, null, "Japan", null, null, null);
+		
 		
 		assertNotNull("The collection of devs is null", devs);
 		System.out.println("Listing all developers:");
@@ -67,6 +79,58 @@ public class DeveloperResourceTest {
 		}
 		
 		
+		assertNotNull("The collection of sorted devs by name is null", devsSortedName);
+		System.out.println("Listing all developers filtered:");
+		for(Developer dev : devsSortedName) {
+			System.out.println(dev.toString());
+		}
+		assertNotNull("The collection of sorted devs by name reversed is null", devsSortedNameReverse);
+		System.out.println("Listing all developers filtered:");
+		for(Developer dev : devsSortedNameReverse) {
+			System.out.println(dev.toString());
+		}
+		
+		assertNotNull("The collection of sorted devs by country is null", devsSortedCountry);
+		System.out.println("Listing all developers filtered:");
+		for(Developer dev : devsSortedCountry) {
+			System.out.println(dev.toString());
+		}
+		assertNotNull("The collection of sorted devs by country reversed is null", devsSortedCountryReverse);
+		System.out.println("Listing all developers filtered:");
+		for(Developer dev : devsSortedCountryReverse) {
+			System.out.println(dev.toString());
+		}
+		
+		assertNotNull("The collection of sorted devs by year is null", devsSortedYear);
+		System.out.println("Listing all developers filtered:");
+		for(Developer dev : devsSortedYear) {
+			System.out.println(dev.toString());
+		}
+		assertNotNull("The collection of sorted devs by year reversed is null", devsSortedYearReverse);
+		System.out.println("Listing all developers filtered:");
+		for(Developer dev : devsSortedYearReverse) {
+			System.out.println(dev.toString());
+		}
+		
+		
+		assertNotNull("The collection of filtered devs by name is null", devsFiltroName);
+		System.out.println("Listing all developers filtered:");
+		for(Developer dev : devsFiltroName) {
+			System.out.println(dev.toString());
+		}
+		
+		assertNotNull("The collection of filtered devs by country is null", devsFiltroCountry);
+		System.out.println("Listing all developers filtered:");
+		for(Developer dev : devsFiltroCountry) {
+			System.out.println(dev.toString());
+		}
+		
+		assertNotNull("The collection of filtered devs by year is null", devsFiltroYear);
+		System.out.println("Listing all developers filtered:");
+		for(Developer dev : devsFiltroYear) {
+			System.out.println(dev.toString());
+		}
+		
 		assertNotNull("The collection of devs with pagination is null", devsPaginacion);
 		System.out.println("Listing all developers with pagination:");
 		for(Developer dev : devsPaginacion) {
@@ -74,11 +138,7 @@ public class DeveloperResourceTest {
 		}
 		
 		
-		assertNotNull("The collection of filtered devs is null", devsFiltro);
-		System.out.println("Listing all developers filtered:");
-		for(Developer dev : devsFiltro) {
-			System.out.println(dev.toString());
-		}
+		
 	}
 	
 	@Test

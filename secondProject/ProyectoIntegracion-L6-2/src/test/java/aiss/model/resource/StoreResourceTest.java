@@ -4,66 +4,96 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-import java.net.URI;
 import java.time.LocalTime;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
-import javax.ws.rs.core.UriInfo;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import aiss.api.resources.GameResource;
 import aiss.api.resources.StoreResource;
-import aiss.model.Game;
 import aiss.model.ObjetoStore;
 import aiss.model.Store;
 
 public class StoreResourceTest {
 	static Store s1,s2,s3;
-	static ObjetoStore o;
+	static ObjetoStore o1, o2, o3;
 	static StoreResource r = new StoreResource();
 	
 	private static GameResource games = GameResource.getInstance();
 	
 	@BeforeClass
 	public static void setUp() throws Exception {
-		
 		s1 = new Store();
-		o = new ObjetoStore();
+		s2 = new Store();
+		s3 = new Store();
+		
+		o1 = new ObjetoStore();
+		o2 = new ObjetoStore();
+		o3 = new ObjetoStore();
+		
 		s1.setName("Test name");
 		s1.setLocation("Test location");
 		s1.setOpenHour(LocalTime.of(11, 0));
 		s1.setCloseHour(LocalTime.of(20, 30));
 		s1.setPhone("999999999");
-		o.setGame(games.getAll().stream().findFirst().get());
-		o.setPrice(10.0);
-		o.setStock(1);
+		
+		s2.setName("Test name 2");
+		s2.setLocation("Test Location 2");
+		s2.setOpenHour(LocalTime.of(11, 0));
+		s2.setCloseHour(LocalTime.of(20, 30));
+		s2.setPhone("999999999");
+		
+		s3.setName("Test name 3");
+		s3.setLocation("Test Location 3");
+		s3.setOpenHour(LocalTime.of(8, 0));
+		s3.setCloseHour(LocalTime.of(19, 30));
+		s3.setPhone("999999999");
+		
+		o1.setGame(games.getAll().stream().findFirst().get());
+		o1.setPrice(10.0);
+		o1.setStock(1);
+		
+		o2.setGame(games.getAll().stream().findAny().get());
+		o2.setPrice(20.0);
+		o2.setStock(5);
+		
+		o3.setGame(games.getAll().stream().collect(Collectors.toList()).get(2));
+		o3.setPrice(5.0);
+		o3.setStock(4);
+		
+		r.addStore(s1);
+		r.addStore(s2);
+		r.addStore(s3);
+		
+		s1.setId(r.getAll().stream().filter(x->x.getName()==s1.getName()).findFirst().get().getId());
+		s2.setId(r.getAll().stream().filter(x->x.getName()==s2.getName()).findFirst().get().getId());
+		s3.setId(r.getAll().stream().filter(x->x.getName()==s3.getName()).findFirst().get().getId());
+		
+		r.addObject(s1.getId(), o1);
+		r.addObject(s2.getId(), o2);
+		r.addObject(s3.getId(), o3);
+		
+		o1.setId(r.getAllObjects(s1.getId(), null, null, null, null, null).stream().filter(x->x.getGame().equals(o1.getGame()) && x.getPrice()==o1.getPrice() && x.getStock()==o1.getStock()).findFirst().get().getId());
+		o2.setId(r.getAllObjects(s2.getId(), null, null, null, null, null).stream().filter(x->x.getGame().equals(o2.getGame()) && x.getPrice()==o2.getPrice() && x.getStock()==o2.getStock()).findFirst().get().getId());
+		o3.setId(r.getAllObjects(s3.getId(), null, null, null, null, null).stream().filter(x->x.getGame().equals(o3.getGame()) && x.getPrice()==o3.getPrice() && x.getStock()==o3.getStock()).findFirst().get().getId());
+		
 		/*
 		UriInfo uriInfo = Mockito.mock(UriInfo.class);
 		Mockito.when(uriInfo.getAbsolutePath()).thenReturn(URI.create("localhost:8080/stores"));
 		*/
-		r.addStore(s1);
-		r.addObject(s1.getId(), o);
 		
-		s2 = new Store();
-		s2.setName("Test name");
-		s2.setLocation("Test Location");
-		s2.setOpenHour(LocalTime.of(11, 0));
-		s2.setCloseHour(LocalTime.of(20, 30));
-		s2.setPhone("999999999");
+		
+		
 		/*
 		UriInfo uriInfo2 = Mockito.mock(UriInfo.class);
 		Mockito.when(uriInfo2.getAbsolutePath()).thenReturn(URI.create("localhost:8080/stores"));
 		*/
-		r.addStore(s2);
-		
-		
 	}
 	
 	@AfterClass
@@ -71,6 +101,7 @@ public class StoreResourceTest {
 		System.out.println("tearDown");
 		r.deleteStore(s1.getId());
 		r.deleteStore(s2.getId());
+		r.deleteStore(s3.getId());
 	}
 	
 	
@@ -177,22 +208,23 @@ public class StoreResourceTest {
 	
 	@Test 
 	public void testAddStore() {
-		s3 = new Store();
-		s3.setName("Test name");
-		s3.setLocation("Test Location");
-		s3.setOpenHour(LocalTime.of(11, 0));
-		s3.setCloseHour(LocalTime.of(20, 30));
-		s3.setPhone("999999999");
-		r.addStore(s3);
-		Store s = r.get(s3.getId());
+		Store sTest = new Store();
+		sTest.setName("Test add name");
+		sTest.setLocation("Test add Location");
+		sTest.setOpenHour(LocalTime.of(11, 0));
+		sTest.setCloseHour(LocalTime.of(20, 30));
+		sTest.setPhone("999999999");
+		r.addStore(sTest);
+		sTest.setId(r.getAll().stream().filter(x->x.getName()==sTest.getName()).findFirst().get().getId());
+		Store s = r.get(sTest.getId());
 		assertNotNull("Error when adding the store", s);
-		assertEquals("The id of the store do not match", s3.getId(), s.getId());
-		assertEquals("The name of the store do not match", s3.getName(), s.getName());
-		assertEquals("The location of the store do not match", s3.getLocation(), s.getLocation());
-		assertEquals("The Open Hour of the store do not match", s3.getOpenHour(), s.getOpenHour());
-		assertEquals("The Close Hour of the store do not match", s3.getCloseHour(), s.getCloseHour());
-		assertEquals("The phone of the store do not match", s3.getPhone(), s.getPhone());
-		assertEquals("The games of the store do not match", s3.getGames(), s.getGames());
+		assertEquals("The id of the store do not match", sTest.getId(), s.getId());
+		assertEquals("The name of the store do not match", sTest.getName(), s.getName());
+		assertEquals("The location of the store do not match", sTest.getLocation(), s.getLocation());
+		assertEquals("The Open Hour of the store do not match", sTest.getOpenHour(), s.getOpenHour());
+		assertEquals("The Close Hour of the store do not match", sTest.getCloseHour(), s.getCloseHour());
+		assertEquals("The phone of the store do not match", sTest.getPhone(), s.getPhone());
+		assertEquals("The games of the store do not match", sTest.getGames(), s.getGames());
 		
 		System.out.println("Store id: " + s.getId());
 		System.out.println("Store name: " + s.getName());
@@ -222,15 +254,18 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testDeleteStore() {
-		s3 = new Store();
-		s3.setName("Test name");
-		s3.setLocation("Test Location");
-		s3.setOpenHour(LocalTime.of(11, 0));
-		s3.setCloseHour(LocalTime.of(20, 30));
-		s3.setPhone("999999999");
-		r.addStore(s3);
-		assertNotNull("Error when adding the store", s3);
-		Boolean deleted = r.deleteStore(s3.getId()).equals(null);
+		Store sTest = new Store();
+		sTest.setName("Test name");
+		sTest.setLocation("Test Location");
+		sTest.setOpenHour(LocalTime.of(11, 0));
+		sTest.setCloseHour(LocalTime.of(20, 30));
+		sTest.setPhone("999999999");
+		r.addStore(sTest);
+		
+		Store sTest2 = r.getAll().stream().filter(x->x.getName()==sTest.getName() && x.getLocation()==sTest.getLocation() && x.getId()!=s1.getId() && x.getId()!=s2.getId() && x.getId()!=s3.getId()).findFirst().get();
+		
+		assertNotNull("The store was not added correctly", sTest2);
+		Boolean deleted = r.deleteStore(sTest2.getId()).equals(null);
 		assertFalse("The store is not deleted",deleted);
 		System.out.println("Success deleting store");
 		
@@ -271,47 +306,73 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testAddItem() {
-		o = new ObjetoStore();
-		o.setGame(games.getAll().stream().findFirst().get());
-		o.setPrice(23.75);
-		o.setStock(128);
-		r.addObject(s2.getId(), o);
+		
+		
+		ObjetoStore oTest = new ObjetoStore();
+		oTest.setGame(games.getAll().stream().findFirst().get());
+		oTest.setPrice(23.75);
+		oTest.setStock(128);
+		r.addObject(s2.getId(), oTest);
+		
+		
+		
+		
 		Collection<ObjetoStore> items = r.getAllObjects(s2.getId(), null, null, null, null, null);
 		assertNotNull("The collection of items is null", items);
 		assertFalse("The collection of items is empty", items.isEmpty());
 		
-		System.out.println("Item Store id: " + o.getId());
+		System.out.println("Item Store id: " + oTest.getId());
 		System.out.println("Store id: " + s2.getId());
 		System.out.println("Store name: " + s2.getName());
 	}
 	
 	@Test
 	public void testDeleteItem() {
-		s3 = r.get("shop0");
-		o = s3.getGames().get(0);
-		Boolean deleted = r.deleteObject(s3.getId(), o.getId()).equals(null);
+		Store sTest = new Store();
+		
+		sTest.setName(s3.getName());
+		sTest.setLocation(s3.getLocation());
+		sTest.setOpenHour(s3.getOpenHour());
+		sTest.setCloseHour(s3.getCloseHour());
+		sTest.setGames(s3.getGames());
+		sTest.setPhone(s3.getPhone());
+		
+		r.addStore(sTest);
+		sTest.setId(r.getAll().stream().filter(x->x.getName()==sTest.getName()&&x.getId()!=s3.getId()).findFirst().get().getId());
+		
+		ObjetoStore oTest = new ObjetoStore();
+		ObjetoStore ref = sTest.getGames().stream().findAny().get();
+		
+		oTest.setGame(ref.getGame());
+		oTest.setPrice(ref.getPrice());
+		oTest.setStock(ref.getStock());
+		
+		r.addObject(sTest.getId(), oTest);
+		
+		oTest.setId(r.getAllObjects(sTest.getId(), null, null, null, null, null).stream().filter(x->x.getGame()==oTest.getGame()&&x.getStock()==oTest.getStock()&&x.getPrice()==oTest.getPrice()).findFirst().get().getId());
+		
+		Boolean deleted = r.deleteObject(sTest.getId(), oTest.getId()).equals(null);
 		assertFalse("The Item was not deleted ",deleted);
 		System.out.println("Success deleting item");
-		r.addObject(s3.getId(), o);
 	}
 	
 	@Test
 	public void testUpdateItem() {
-		s3 = r.get(s1.getId());
-		o = s3.getGames().get(0);
-		o.setStock(0);
-		o.setPrice(99.99);
-		r.updateObject(s3.getId(), o);
-		s1 = r.get(s1.getId());
-		ObjetoStore item = s1.getGames().get(0);
-		assertEquals("The Id of the item given does not match", item.getId(),o.getId());
-		assertEquals("The game of the item given does not match", item.getGame(),o.getGame());
-		assertEquals("The price of the item given does not match", item.getPrice(),o.getPrice());
-		assertEquals("The stock of the item given does not match", item.getStock(),o.getStock());
+		ObjetoStore oTest = s1.getGames().get(0);
+		
+		oTest.setStock(0);
+		oTest.setPrice(99.99);
+		r.updateObject(s1.getId(), oTest);
+		
+		Store sTest2 = r.get(s1.getId());
+		ObjetoStore item = sTest2.getGames().stream().filter(x->x.getGame().equals(oTest.getGame())&&x.getPrice()==oTest.getPrice()&&x.getStock()==oTest.getStock()).findFirst().get();
+		assertEquals("The game of the item given does not match", item.getGame(),oTest.getGame());
+		assertEquals("The price of the item given does not match", item.getPrice(),oTest.getPrice());
+		assertEquals("The stock of the item given does not match", item.getStock(),oTest.getStock());
 		
 		System.out.println("Item Store id: " + item.getId());
-		System.out.println("Store id: " + s1.getId());
-		System.out.println("Store name: " + s1.getName());
+		System.out.println("Store id: " + sTest2.getId());
+		System.out.println("Store name: " + sTest2.getName());
 	}
 	
 	

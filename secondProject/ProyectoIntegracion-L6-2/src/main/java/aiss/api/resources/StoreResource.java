@@ -1,6 +1,5 @@
 package aiss.api.resources;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -17,11 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
@@ -41,6 +36,12 @@ public class StoreResource {
 	public StoreResource() {
 		repository = MapDatabaseRepository.getInstance();
 		
+	}
+	
+	@GET
+	@Produces("aplication/json")
+	public Collection<Store>getAll (){
+		return getAll(null, null, null, null, null, null);
 	}
 	
 	@GET
