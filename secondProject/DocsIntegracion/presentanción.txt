@@ -1,0 +1,17 @@
+presentación integración
+
+resumen de lo que hace/para qué sirve
+Nuestra Api sirve para localizar puntos de venta donde podamos encontrar un videojuego en concreto ya sea por nombre de la tienda, por localización de la misma o por stock de un juego en concreto.
+
+relación entre las distintas clases
+Store -> objetoStore -> Game -> genre developers platform  Enum mode
+árbol con las relaciones
+
+diapositivas -> explicación de las distintas clases
+	basarnos en la documentación
+
+conforme hacemos la demo podemos explicar las posibilidades que nos permite hacer los distintos componentes de la Api
+
+adjuntar capturas de la documentación y del uso de la api
+
+	

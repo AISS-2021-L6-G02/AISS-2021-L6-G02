@@ -134,7 +134,7 @@ public class StoreResourceTest {
 		assertNotNull("The collection of stores sorted by location is null", storesOrderLocation);
 		assertNotNull("The collection of stores sorted reverse by location is null", storesOrderLocationReversed);
 		assertNotNull("The collection of stores sorted by number of games is null", storesOrderGames);
-		assertNotNull("The collection of stores sorted reverse by number of gamesis null", storesOrderGamesReversed);
+		assertNotNull("The collection of stores sorted reverse by number of games is null", storesOrderGamesReversed);
 		assertNotNull("The collection of stores paginated is null", paginacionStores);
 		
 		System.out.println("Get All Stores");
