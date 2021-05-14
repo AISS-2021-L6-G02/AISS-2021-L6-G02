@@ -31,11 +31,17 @@ import aiss.model.repository.MapDatabaseRepository;
 @Path("/stores")
 public class StoreResource {
 	
-	public static StoreResource _instance = null;
+	private static StoreResource _instance = null;
 	DatabaseRepository repository;
 	public StoreResource() {
 		repository = MapDatabaseRepository.getInstance();
-		
+	}
+	
+	public static StoreResource getInstance() {
+		if(_instance==null) {
+			_instance = new StoreResource();
+		}
+		return _instance;
 	}
 	
 	@GET

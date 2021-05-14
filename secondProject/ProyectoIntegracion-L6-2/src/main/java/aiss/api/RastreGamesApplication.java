@@ -5,7 +5,11 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import aiss.api.resources.DeveloperResource;
+import aiss.api.resources.GameResource;
+import aiss.api.resources.GenreResource;
 import aiss.api.resources.PlatformResource;
+import aiss.api.resources.StoreResource;
 
 
 public class RastreGamesApplication extends Application{
@@ -15,8 +19,11 @@ public class RastreGamesApplication extends Application{
 	// Loads all resources that are implemented in the application
 	// so that they can be found by RESTEasy.
 	public RastreGamesApplication() {
-
+		singletons.add(GenreResource.getInstance());
 		singletons.add(PlatformResource.getInstance());
+		singletons.add(DeveloperResource.getInstance());
+		singletons.add(GameResource.getInstance());
+		singletons.add(StoreResource.getInstance());
 	}
 
 	@Override
