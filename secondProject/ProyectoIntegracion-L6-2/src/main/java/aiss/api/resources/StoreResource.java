@@ -52,15 +52,15 @@ public class StoreResource {
 	
 	@GET
 	@Produces("aplication/json")
-	public Collection<Store>getAll(@QueryParam("q") String q,@QueryParam("nogames")Boolean nogames,@QueryParam("gamesearch") Collection<Game> gamesearch,
+	public Collection<Store>getAll(@QueryParam("q") String q,@QueryParam("noGames")Boolean noGames,@QueryParam("gamesearch") Collection<Game> gamesearch,
 			@QueryParam("order") String order,@QueryParam("offset")Integer offset,@QueryParam("limit") Integer limit){
 		
 		List<Store> out = new ArrayList<Store>();
 		
 		for(Store s: repository.getAllStores()) {
-			if(nogames==null
-					||nogames&&(s.getGames()==null||s.getGames().size()==0)
-					||!nogames&&(s.getGames()!=null&&s.getGames().size()>0))
+			if(noGames==null
+					||noGames&&(s.getGames()==null||s.getGames().size()==0)
+					||!noGames&&(s.getGames()!=null&&s.getGames().size()>0))
 				if(q==null||q.isEmpty()
 						||s.getName().contains(q)
 						||s.getLocation().contains(q))
