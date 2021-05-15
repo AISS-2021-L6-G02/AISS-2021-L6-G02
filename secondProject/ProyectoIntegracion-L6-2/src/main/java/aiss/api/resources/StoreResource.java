@@ -186,7 +186,7 @@ public class StoreResource {
 	
 	@GET
 	@Produces("aplication/json")
-	public Map<String,Collection<ObjetoStore>> getCheapestinArea(@QueryParam("q") String q,@QueryParam("maxprice") Double maxprice){
+	public Map<String,Collection<ObjetoStore>> getCheapestInArea(@QueryParam("q") String q,@QueryParam("maxprice") Double maxprice){
 		Collection<Store> stores = getAll(q, null, null, null, null, null);
 		Map<String, Collection<ObjetoStore>> res = new HashMap<String, Collection<ObjetoStore>>();
 		for(Store s:stores) {
@@ -240,7 +240,7 @@ public class StoreResource {
 		return Response.noContent().build();
 	}
 	
-	@PUT
+	@POST
 	@Consumes("aplication/json")
 	public Response addObject(String storeId, ObjetoStore item) {
 		Store store = repository.getStore(storeId);
