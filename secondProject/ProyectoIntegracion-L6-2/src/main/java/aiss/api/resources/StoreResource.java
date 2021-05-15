@@ -242,6 +242,7 @@ public class StoreResource {
 	}
 	
 	@POST
+	@Path("/object")
 	@Consumes("aplication/json")
 	public Response addObject(String storeId, ObjetoStore item) {
 		Store store = repository.getStore(storeId);
@@ -256,6 +257,7 @@ public class StoreResource {
 	}
 	
 	@PUT
+	@Path("/object")
 	@Consumes("aplication/json")
 	public Response updateObject(String storeId, ObjetoStore item) {
 		ObjetoStore old = repository.getObject(storeId, item.getId());
