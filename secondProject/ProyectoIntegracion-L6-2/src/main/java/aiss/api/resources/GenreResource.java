@@ -20,6 +20,8 @@ import aiss.model.Genre;
 import aiss.model.repository.DatabaseRepository;
 import aiss.model.repository.MapDatabaseRepository;
 
+
+@Path("/genres")
 public class GenreResource {
 	/* Singleton */
 	private static GenreResource _instance=null;
