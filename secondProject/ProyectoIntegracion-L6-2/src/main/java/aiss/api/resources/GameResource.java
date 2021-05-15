@@ -46,8 +46,7 @@ public class GameResource {
 	}
 	
 	
-	@GET
-	@Produces("application/json")
+	
 	public Collection<Game> getAll(){
 		return getAll(null, null, null, null, null, null, null, null, null, null);
 	}

@@ -40,8 +40,7 @@ public class PlatformResource {
 		return _instance;
 	}
 	
-	@GET
-	@Produces("application/json")
+	
 	public Collection<Platform> getAll(){
 		return getAll(null, null, null, null);
 	}

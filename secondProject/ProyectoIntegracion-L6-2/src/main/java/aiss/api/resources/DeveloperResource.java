@@ -31,8 +31,6 @@ public class DeveloperResource {
 		return instance;
 	}
 	
-	@GET
-	@Produces("application/json")
 	public Collection<Developer> getAll(){
 		return getAll(null, null, null, null, null, null);
 	}

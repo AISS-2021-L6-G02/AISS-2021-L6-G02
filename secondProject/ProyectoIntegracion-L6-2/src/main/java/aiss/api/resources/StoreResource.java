@@ -44,8 +44,6 @@ public class StoreResource {
 		return _instance;
 	}
 	
-	@GET
-	@Produces("aplication/json")
 	public Collection<Store>getAll (){
 		return getAll(null, null, null, null, null, null);
 	}

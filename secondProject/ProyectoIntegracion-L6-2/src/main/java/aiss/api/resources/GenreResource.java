@@ -37,8 +37,6 @@ public class GenreResource {
 	}
 
 	
-	@GET
-	@Produces("application/json")
 	public Collection<Genre> getAll(){
 		return getAll(null, null, null, null);
 	}
