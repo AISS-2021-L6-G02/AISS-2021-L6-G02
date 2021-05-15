@@ -185,6 +185,7 @@ public class StoreResource {
 	}
 	
 	@GET
+	@Path("/cheapestGames")
 	@Produces("aplication/json")
 	public Map<String,Collection<ObjetoStore>> getCheapestInArea(@QueryParam("q") String q,@QueryParam("maxprice") Double maxprice){
 		Collection<Store> stores = getAll(q, null, null, null, null, null);
