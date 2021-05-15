@@ -52,7 +52,7 @@ public class StoreResource {
 	
 	@GET
 	@Produces("aplication/json")
-	public Collection<Store>getAll(@QueryParam("q") String q,@QueryParam("noGames")Boolean noGames,@QueryParam("gamesearch") Collection<Game> gamesearch,
+	public Collection<Store>getAll(@QueryParam("q") String q,@QueryParam("noGames")Boolean noGames,@QueryParam("gameSearch") Collection<Game> gameSearch,
 			@QueryParam("order") String order,@QueryParam("offset")Integer offset,@QueryParam("limit") Integer limit){
 		
 		List<Store> out = new ArrayList<Store>();
@@ -64,8 +64,8 @@ public class StoreResource {
 				if(q==null||q.isEmpty()
 						||s.getName().contains(q)
 						||s.getLocation().contains(q))
-					if(gamesearch==null||gamesearch.isEmpty()
-					||s.getGames().stream().map(x->x.getGame()).anyMatch(x->gamesearch.contains(x)))
+					if(gameSearch==null||gameSearch.isEmpty()
+					||s.getGames().stream().map(x->x.getGame()).anyMatch(x->gameSearch.contains(x)))
 						out.add(s);
 		}
 		
