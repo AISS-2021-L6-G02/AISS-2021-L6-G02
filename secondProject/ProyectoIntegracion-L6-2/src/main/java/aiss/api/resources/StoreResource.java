@@ -123,7 +123,7 @@ public class StoreResource {
 	@Path("/{storeId}/objects")
 	@Produces("aplication/json")
 	public Collection<ObjetoStore> getAllObjects(@PathParam("storeId") String storeId, @QueryParam("hasStock") Boolean hasStock,
-			@QueryParam("maxPrice")Double maxPrice,@QueryParam("order") String order,@QueryParam("offset") Integer offset,
+			@QueryParam("maxPrice")Double maxPrice,@QueryParam("order") String order, @QueryParam("games") Collection<Game> games, @QueryParam("offset") Integer offset,
 			@QueryParam("limit") Integer limit) {
 		
 		Collection<ObjetoStore> items = repository.getAllObjects(storeId);
@@ -137,7 +137,8 @@ public class StoreResource {
 					||hasStock&&item.getStock()>0
 					||!hasStock&&item.getStock()==0)
 				if(maxPrice==null||maxPrice>=item.getPrice())
-					out.add(item);
+					if(games==null||games.contains(item.getGame()))
+						out.add(item);
 		}
 		
 		if(order!=null)
@@ -187,12 +188,14 @@ public class StoreResource {
 	@GET
 	@Path("/cheapestGames")
 	@Produces("aplication/json")
-	public Collection<ObjetoStore> getCheapestGamesInArea(@QueryParam("q") String q,@QueryParam("maxprice") Double maxprice){
-		Collection<Store> stores = getAll(q, null, null, null, null, null);
+	public Collection<ObjetoStore> getCheapestGamesInArea(@QueryParam("q") String q,@QueryParam("maxprice") Double maxprice, 
+			@QueryParam("games") Collection<Game> games){
+		Collection<Store> stores = getAll(q, null, games, null, null, null);
 		List<ObjetoStore> res = new ArrayList<ObjetoStore>();
 		for(Store s:stores) {
-			int limit = s.getGamesSize()==0? 0:s.getGamesSize()>5? 5:s.getGamesSize();
-			Collection<ObjetoStore> items = getAllObjects(s.getId(), true, maxprice, "price", null, limit);
+			int values = games==null?5:games.size();
+			int limit = s.getGamesSize()==0? 0:s.getGamesSize()> values? values:s.getGamesSize();
+			Collection<ObjetoStore> items = getAllObjects(s.getId(), true, maxprice, "price", games, null, limit);
 			res.addAll(items);			
 		}
 		return res;

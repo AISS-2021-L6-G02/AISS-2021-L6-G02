@@ -79,9 +79,9 @@ public class StoreResourceTest {
 		r.addObject(s2.getId(), o2);
 		r.addObject(s3.getId(), o3);
 		
-		o1.setId(r.getAllObjects(s1.getId(), null, null, null, null, null).stream().filter(x->x.getGame().equals(o1.getGame()) && x.getPrice()==o1.getPrice() && x.getStock()==o1.getStock()).findFirst().get().getId());
-		o2.setId(r.getAllObjects(s2.getId(), null, null, null, null, null).stream().filter(x->x.getGame().equals(o2.getGame()) && x.getPrice()==o2.getPrice() && x.getStock()==o2.getStock()).findFirst().get().getId());
-		o3.setId(r.getAllObjects(s3.getId(), null, null, null, null, null).stream().filter(x->x.getGame().equals(o3.getGame()) && x.getPrice()==o3.getPrice() && x.getStock()==o3.getStock()).findFirst().get().getId());
+		o1.setId(r.getAllObjects(s1.getId(), null, null, null, null, null, null).stream().filter(x->x.getGame().equals(o1.getGame()) && x.getPrice()==o1.getPrice() && x.getStock()==o1.getStock()).findFirst().get().getId());
+		o2.setId(r.getAllObjects(s2.getId(), null, null, null, null, null, null).stream().filter(x->x.getGame().equals(o2.getGame()) && x.getPrice()==o2.getPrice() && x.getStock()==o2.getStock()).findFirst().get().getId());
+		o3.setId(r.getAllObjects(s3.getId(), null, null, null, null, null, null).stream().filter(x->x.getGame().equals(o3.getGame()) && x.getPrice()==o3.getPrice() && x.getStock()==o3.getStock()).findFirst().get().getId());
 		
 		/*
 		UriInfo uriInfo = Mockito.mock(UriInfo.class);
@@ -273,7 +273,7 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testGetItems() {
-		Collection<ObjetoStore> items = r.getAllObjects(s1.getId(), null, null, null, null, null);
+		Collection<ObjetoStore> items = r.getAllObjects(s1.getId(), null, null, null, null, null, null);
 		assertNotNull("The collection of games in store with id "+s1.getId()+" is null", items);
 		System.out.println("Get All items on Store:");
 		for(ObjetoStore i:items) {
@@ -296,7 +296,7 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testGetCheapest() {
-		Collection<ObjetoStore> games = r.getCheapestGamesInArea("Sevilla",50.);
+		Collection<ObjetoStore> games = r.getCheapestGamesInArea("Sevilla",50., null);
 		assertNotNull("The hashmap is null", games);
 		System.out.println("Showing the stores with the cheapest games in your area");
 		for(ObjetoStore store:games) {
@@ -317,7 +317,7 @@ public class StoreResourceTest {
 		
 		
 		
-		Collection<ObjetoStore> items = r.getAllObjects(s2.getId(), null, null, null, null, null);
+		Collection<ObjetoStore> items = r.getAllObjects(s2.getId(), null, null, null, null, null, null);
 		assertNotNull("The collection of items is null", items);
 		assertFalse("The collection of items is empty", items.isEmpty());
 		
@@ -349,7 +349,7 @@ public class StoreResourceTest {
 		
 		r.addObject(sTest.getId(), oTest);
 		
-		oTest.setId(r.getAllObjects(sTest.getId(), null, null, null, null, null).stream().filter(x->x.getGame()==oTest.getGame()&&x.getStock()==oTest.getStock()&&x.getPrice()==oTest.getPrice()).findFirst().get().getId());
+		oTest.setId(r.getAllObjects(sTest.getId(), null, null, null, null, null, null).stream().filter(x->x.getGame()==oTest.getGame()&&x.getStock()==oTest.getStock()&&x.getPrice()==oTest.getPrice()).findFirst().get().getId());
 		
 		Boolean deleted = r.deleteObject(sTest.getId(), oTest.getId()).equals(null);
 		assertFalse("The Item was not deleted ",deleted);
