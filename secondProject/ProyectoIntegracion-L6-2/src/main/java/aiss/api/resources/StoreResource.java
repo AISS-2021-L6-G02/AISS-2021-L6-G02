@@ -187,13 +187,13 @@ public class StoreResource {
 	@GET
 	@Path("/cheapestGames")
 	@Produces("aplication/json")
-	public Map<String,Collection<ObjetoStore>> getCheapestInArea(@QueryParam("q") String q,@QueryParam("maxprice") Double maxprice){
+	public Collection<ObjetoStore> getCheapestGamesInArea(@QueryParam("q") String q,@QueryParam("maxprice") Double maxprice){
 		Collection<Store> stores = getAll(q, null, null, null, null, null);
-		Map<String, Collection<ObjetoStore>> res = new HashMap<String, Collection<ObjetoStore>>();
+		List<ObjetoStore> res = new ArrayList<ObjetoStore>();
 		for(Store s:stores) {
 			int limit = s.getGamesSize()==0? 0:s.getGamesSize()>5? 5:s.getGamesSize();
 			Collection<ObjetoStore> items = getAllObjects(s.getId(), true, maxprice, "price", null, limit);
-			res.put(s.getId(), items);			
+			res.addAll(items);			
 		}
 		return res;
 	}

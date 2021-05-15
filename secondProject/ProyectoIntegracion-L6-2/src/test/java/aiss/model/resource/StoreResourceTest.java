@@ -296,10 +296,10 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testGetCheapest() {
-		Map<String,Collection<ObjetoStore>> games = r.getCheapestInArea("Sevilla",50.);
+		Collection<ObjetoStore> games = r.getCheapestGamesInArea("Sevilla",50.);
 		assertNotNull("The hashmap is null", games);
 		System.out.println("Showing the stores with the cheapest games in your area");
-		for(Entry<String, Collection<ObjetoStore>> store:games.entrySet()) {
+		for(ObjetoStore store:games) {
 			System.out.println(store);
 		}
 	}
