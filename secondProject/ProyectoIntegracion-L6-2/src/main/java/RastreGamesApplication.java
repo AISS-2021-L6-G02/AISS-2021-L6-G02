@@ -1,4 +1,3 @@
-package aiss.api;
 
 
 import java.util.HashSet;

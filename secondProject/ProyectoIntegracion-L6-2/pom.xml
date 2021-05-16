@@ -7,11 +7,11 @@
     <version>1.0-SNAPSHOT</version>
 
     <groupId>aiss</groupId>
-    <artifactId>aiss-project-template</artifactId>
+    <artifactId>lab5-implementing-rastreGames</artifactId>
 
     <properties>
         <!-- PUT HERE YOUR projectId FROM GOOGLE CLOUD CONSOLE -->
-        <project.projectId>api-gamestore</project.projectId>
+        <project.projectId>aiss-rastreGames</project.projectId>
 
         <appengine.version>1.9.80</appengine.version>        <!-- AppEngine version -->
         <gcloud.version>2.1.0</gcloud.version>        <!-- GCloud version -->
@@ -56,11 +56,6 @@
             <artifactId>appengine-api-1.0-sdk</artifactId>
             <version>${appengine.version}</version>
         </dependency>
-        <dependency>
-    <groupId>org.mockito</groupId>
-    <artifactId>mockito-all</artifactId>
-    <version>1.9.0</version>
-</dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -178,7 +173,7 @@
                     <deploy.version>GCLOUD_CONFIG</deploy.version>
                     <fullScanSeconds>1</fullScanSeconds>
                     <!-- <address>0.0.0.0</address> -->
-                    <port>8099</port>
+                    <port>8089</port>
                     <jvmFlags>
                         <jvmFlag> -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
                         <jvmFlag> -Dappengine.fullscan.seconds=1 </jvmFlag>

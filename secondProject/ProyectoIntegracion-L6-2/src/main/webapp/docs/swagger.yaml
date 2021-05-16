@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers: 
-	- url: "http://localhost:8099"
+	- url: "http://localhost:8089"
 
 info:
   description: This is a Game Api based on rastreator. You can search avaliable cheapest and nearest games in your location
