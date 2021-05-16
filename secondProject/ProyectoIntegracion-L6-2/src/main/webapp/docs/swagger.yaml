@@ -1,0 +1,874 @@
+openapi: 3.0.0
+servers: []
+info:
+  description: This is a simple API
+  version: "1.0.0"
+  title: Simple Inventory API
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: stores
+    description: List of game stores
+  - name: games
+    description: List of games
+  - name: platforms
+    description: List of platforms like pc, ps4
+  - name: genre
+    description: List of game genres
+  - name: objetoStore
+    description: The price and stock of a specific game in a specific store
+paths:
+  /platforms:
+    get:
+      tags:
+        - platforms
+      summary: get all platforms
+      operationId: getAllPlatforms
+      description: By passing in the appropriate options, you can search for games
+      parameters: 
+      - in: query
+        name: order
+        description: criteria for sorting the platforms. It can be name or '-name' for the reversed sorting
+        schema:
+          type: string
+      - in: query
+        name: offset
+        description: number of platforms to skip for pagination
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - in: query
+        name: limit
+        description: maximum number of platforms to return
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 50
+      responses:
+          '200':
+            description: search results matching criteria
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Platform'
+          '400':
+            description: bad input parameter
+    post:
+      tags:
+        - platforms
+      summary: adds a platform
+      operationId: addPlatform
+      description: Adds a platform to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Platform'
+        description: Platform to add
+    put:
+      tags:
+        - platforms
+      summary: Update a platform
+      operationId: updatePlatform
+      responses:
+        '201':
+          description: platform updated
+        '400':
+          description: 'invalid input, object invalid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Platform'
+  /platforms/{platformId}:
+    get:
+      tags:
+        - platforms
+      summary: Returns a platform by ID
+      operationId: getPlatform
+      parameters:
+        - in: path
+          name: platformId
+          required: true
+          
+          description: The ID of the platform to return
+          schema:
+            type: string
+            example: 'p0'
+      responses:
+        '200':
+          description: A Platform object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Platform'
+        '400':
+          description: The specified platform ID is invalid
+        '404':
+          description: A platform with the specified ID was not found
+    delete:
+      tags:
+        - platforms
+      summary: deletes a platform with the given ID
+      operationId: deletePlatform
+      parameters:
+        - name: platformId
+          in: path
+          required: true
+          description: The ID of the platform to return
+          schema:
+            type: string
+            example: 'p0'
+      responses:
+        '200':
+          description: Platform successfully deleted
+        '400':
+          description: The specified platform ID is invalid
+        '404':
+          description: A Platform with the specified ID was not found
+        
+  /games:
+    get:
+      tags:
+        - games
+      summary: get all games
+      operationId: getAllGames
+      description: By passing in the appropriate options, you can search for games
+      parameters:
+      - in: query
+        name: order
+        description: criteria for sorting the games. it can be title, year, developerName, platformName, score, genreName, '-title, -year, -developerName, -platformName, -score, -genreName', for the reversed sorting
+        schema:
+          type: string
+      - in: query
+        name: offset
+        description: number of games to skip for pagination
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - in: query
+        name: limit
+        description: maximum number of games to return
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 50
+      responses:
+          '200':
+            description: search results matching criteria
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Game'
+          '400':
+            description: bad input parameter
+        
+    post:
+      tags:
+        - games
+      summary: adds a game
+      operationId: addGame
+      description: Adds a game to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game'
+        description: Game to add
+    put:
+      tags:
+        - games
+      summary: Update a game
+      operationId: updateGame
+      responses:
+        '201':
+          description: game updated
+        '400':
+          description: 'invalid input, object invalid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game' 
+  /games/{gameId}:
+    get:
+      tags:
+        - games
+      summary: Returns a game by ID
+      operationId: getGame
+      parameters:
+        - in: path
+          name: gameId
+          required: true
+          
+          description: The ID of the game to return
+          schema:
+            type: string
+            example: 'g0'
+      responses:
+        '200':
+          description: A Game object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '400':
+          description: The specified game ID is invalid
+        '404':
+          description: A game with the specified ID was not found
+    delete:
+      tags:
+        - games
+      summary: deletes a game with the given ID
+      operationId: deleteGame
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          description: The ID of the game to return
+          schema:
+            type: string
+            example: 'g0'
+      responses:
+        '200':
+          description: Game successfully deleted
+        '400':
+          description: The specified game ID is invalid
+        '404':
+          description: A Game with the specified ID was not found
+          
+  /stores:
+    get:
+      tags:
+        - stores
+      summary: get all stores
+      operationId: getAllStores
+      description: By passing in the appropriate options, you can search for stores
+      parameters:
+        - in: query
+          name: q
+          description: a store name to use as a filter
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: noGames
+          description: filter stores without games ('true' to show only stores without games, 'false' to show only stores with games)
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: gameSearch
+          description: a collection of games to search for
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Game'
+        - in: query
+          name: order
+          description: criteria for sorting the stores. it can be name, location, games, '-name, -location, -games', for the reversed sorting
+          schema:
+            type: string
+        - in: query
+          name: offset
+          description: number of stores to skip for pagination
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of stores to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Store'
+        '400':
+          description: bad input parameter
+    post:
+      tags:
+        - stores
+      summary: adds a store
+      operationId: addStore
+      description: Adds a store to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Store'
+        description: Store to add
+    put:
+      tags:
+        - stores
+      summary: Update a store
+      operationId: updateStore
+      responses:
+        '201':
+          description: store updated
+        '400':
+          description: 'invalid input, object invalid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Store'
+  
+    
+  /stores/{storeId}:
+    get:
+      tags:
+        - stores
+      summary: Returns a store by ID
+      operationId: getStore
+      parameters:
+        - in: path
+          name: storeId
+          required: true
+          
+          description: The ID of the store to return
+          schema:
+            type: string
+            example: 's0'
+      responses:
+        '200':
+          description: A Store object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
+        '400':
+          description: The specified store ID is invalid
+        '404':
+          description: A store with the specified ID was not found
+    delete:
+      tags:
+        - stores
+      summary: deletes a store with the given ID
+      operationId: deleteStore
+      parameters:
+        - name: storeId
+          in: path
+          required: true
+          description: The ID of the store to return
+          schema:
+            type: string
+            example: 's0'
+      responses:
+        '200':
+          description: Store successfully deleted
+        '400':
+          description: The specified store ID is invalid
+        '404':
+          description: A store with the specified ID was not found
+  /stores/{storeId}/objects:
+    get:
+      tags:
+        - objetoStore
+      summary: Returns the objetoStore associated to a store by its storeId
+      operationId: getAllObjects
+      parameters:
+        - in: path
+          name: storeId
+          required: true
+          description: The ID of the store to get the objetoStore from
+          schema:
+            type: string
+            example: 's0'
+        - in: query
+          name: hasStock
+          required: false
+          description: filter stores without games ('true' to show only stores without games, 'false' to show only stores with games)
+          schema:
+            type: boolean
+        - in: query
+          name: maxPrice
+          required: false
+          description: a price limit
+          schema:
+            type: number
+            format: double
+            minimum: 0.0
+        - in: query
+          name: offset
+          required: false
+          description: number of stores to skip for pagination
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          required: false
+          description: maximum stores of records to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      responses:
+        '200':
+          description: A Store object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
+        '400':
+          description: The specified store ID is invalid
+        '404':
+          description: A store with the specified ID was not found
+  /stores/{storeId}/objects/{itemId}:
+    get:
+      tags:
+        - objetoStore
+      summary: Returns the objetoStore associated to a store by its storeId
+      operationId: getObject
+      parameters:
+        - in: path
+          name: storeId
+          required: true
+          description: The ID of the store to get the objetoStore from
+          schema:
+            type: string
+            example: 's0'
+        - in: path
+          name: itemId
+          required: true
+          description: The ID of the objetoStore
+          schema:
+            type: string
+            example: 'o1'
+      responses:
+        '200':
+          description: A Store object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjetoStore'
+        '400':
+          description: Either the specified store ID or the item ID is invalid
+        '404':
+          description: A store with the specified ID or an item with the specified ID was not found
+    delete:
+      tags:
+        - objetoStore
+      summary: deletes a store with the given ID
+      operationId: deleteObjetoStore
+      parameters:
+        - in: path
+          name: storeId
+          required: true
+          description: The ID of the store to delete the ObjetoStore from
+          schema:
+            type: string
+            example: 's0'
+        - in: path
+          name: itemId
+          required: true
+          description: The ID of the objetoStore to delete
+          schema:
+            type: string
+            example: 'o1'
+      responses:
+        '200':
+          description: Store successfully deleted
+        '400':
+          description: The specified store ID is invalid
+        '404':
+          description: A store with the specified ID was not found
+  /stores/object:
+    post:
+      tags:
+        - objetoStore
+      summary: Add a new objetoStore
+      operationId: addObject
+      description: Create a new objetoStore
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - storeId
+                - objeto
+              properties:
+                storeId:
+                  type: string
+                  example: 's3'
+                objeto:
+                  $ref: '#/components/schemas/ObjetoStore'
+        description: objetoStore to add
+    put:
+      tags:
+        - objetoStore
+      summary: Update a objetoStore
+      operationId: updateObject
+      responses:
+        '201':
+          description: objetoStore updated
+        '400':
+          description: 'invalid input, object invalid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjetoStore'
+  /stores/cheapestGames:
+    get:
+      tags:
+        - stores
+      summary: get the cheapest games from a store
+      operationId: getCheapestGameInArea
+      description: given a store name and a max price, get the cheapest games in the store under that price
+      parameters:
+        - in: query
+          name: q
+          description: a store name to use as a filter
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: maxprice
+          description: a price limit
+          required: false
+          schema:
+            type: number
+            format: double
+            minimum: 0.0
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ObjetoStore'
+  
+  /genres:
+    get:
+      tags:
+        - genre
+      summary: get all genres
+      operationId: getAllGenres
+      description: By passing in the appropriate options, you can search for genres
+      parameters:
+        - in: query
+          name: order
+          required: false
+          description: criteria for sorting the stores. it can be name, description, '-name, -description', for the reversed
+          schema:
+            type: string
+        - in: query
+          name: q
+          required: false
+          description: a text parameter to search for in the genre name or the description
+          schema:
+            type: string
+            example: 'adventure'
+        - in: query
+          name: offset
+          description: number of genres to skip for pagination
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of genres to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Genre'
+        '400':
+          description: bad input parameter
+    post:
+      tags:
+        - genre
+      summary: Add a new genre
+      operationId: addGenre
+      description: Create a new Genre
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genre'
+        description: genre to add
+    put:
+      tags:
+        - genre
+      summary: Update a genre
+      operationId: updateGenre
+      responses:
+        '201':
+          description: genre updated
+        '400':
+          description: 'invalid input, object invalid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genre'
+  /genres/{id}:
+    get:
+      tags:
+        - genre
+      summary: Returns a genre by ID
+      operationId: getGenre
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the store to return
+          schema:
+            type: string
+            example: 'gen0'
+      responses:
+        '200':
+          description: A Genre object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre'
+        '400':
+          description: The specified genre ID is invalid
+        '404':
+          description: A genre with the specified ID was not found
+    delete:
+      tags:
+        - genre
+      summary: deletes a genre with the given ID
+      operationId: deleteGenre
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the store to return
+          schema:
+            type: string
+            example: 'gen0'
+      responses:
+        '200':
+          description: Genre successfully deleted
+        '400':
+          description: The specified genre ID is invalid
+        '404':
+          description: A genre with the specified ID was not found
+  
+components:
+  schemas:
+    Mode:
+      type: string
+      enum:
+      - Individual
+      - Cooperativo_local
+      - Cooperativo_en_linea
+      - Multijugador
+      - PvP
+    Genre:
+      type: object
+      required:
+        - id
+        - name
+        - description
+      properties:
+        id:
+          type: string
+          example: 'gen0'
+        name:
+          type: string
+          example: 'Action'
+        description:
+          type: string
+          example: 'This is a test description'
+    Platform:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          example: 'gen0'
+        name:
+          type: string
+          example: 'Nintendo Switch'
+    Developer:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          example: 'gen0'
+        name:
+          type: string
+          example: 'Nintendo'
+        year:
+          type: integer
+          format: year
+          example: 2004
+        country:
+          type: string
+          example: 'Japan'
+    Game:
+      type: object
+      required:
+        - id
+        - title
+        - year
+        - description
+      properties:
+        id:
+          type: string
+          example: 'g0'
+        title:
+          type: string
+          example: 'Super Mario Odyssey'
+        description:
+          type: string
+          example: 'This is a test description for the game'
+        year:
+          type: integer
+          format: year
+          minimum: 1952
+          example: 2004
+        developer:
+          $ref: '#/components/schemas/Developer'
+        score:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 10.0
+          example: 9.5
+        platforms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Platform'
+        genres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genre'
+        modes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Mode'
+    ObjetoStore:
+      type: object
+      required:
+        - id
+        - game
+      properties:
+        id:
+          type: string
+          example: 'o1'
+        game:
+          $ref: '#/components/schemas/Game'
+        price:
+          type: number
+          format: double
+          minimum: 0.0
+          example: 5.5
+        stock:
+          type: integer
+          format: integer32
+          minimum: 0
+          example: 5
+    Store:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          example: 's0'
+        name:
+          type: string
+          example: 'Game Puerto Real'
+        location:
+          type: string
+          format: address
+          example: 'Calle Ruben Maduro, Puerto Real'
+        openHour:
+          type: string
+          format: time
+          example: '10:00'
+        closeHour:
+          type: string
+          format: time
+          example: '21:00'
+        games:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjetoStore'
+        phone:
+          type: string
+          format: telephone
+          example: '123456789'
