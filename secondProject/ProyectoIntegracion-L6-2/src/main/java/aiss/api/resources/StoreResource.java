@@ -1,6 +1,7 @@
 package aiss.api.resources;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -8,8 +9,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,7 +23,7 @@ import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 
 import aiss.model.Game;
-import aiss.model.ObjetoStore;
+import aiss.model.StoreGame;
 import aiss.model.Platform;
 import aiss.model.Store;
 import aiss.model.repository.DatabaseRepository;
@@ -44,18 +47,44 @@ public class StoreResource {
 	}
 
 	public Collection<Store> getAll() {
-		return getAll(null,null,null,null);
+		return getAll(null, null, null, null, null, null, null, null);
 	}
 
-	
 	@GET
 	@Produces("application/json")
 	public Collection<Store> getAll(@QueryParam("order") String order, @QueryParam("name") String name,
+			@QueryParam("location") String location, @QueryParam("titleGame") String titleGame,
+			@QueryParam("openHour") LocalTime openHour, @QueryParam("closeHour") LocalTime closeHour,
 			@QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset) {
 		Stream<Store> result = repository.getAllStores().stream();
-		if (!(name == null || name.equals(""))) {
+		if (!(name == null || !name.equals(""))) {
 			result = result.filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())
 					|| x.getName().toLowerCase().equals(name.toLowerCase()));
+		}
+		if (!(location == null || !location.equals(""))) {
+			result = result.filter(x -> x.getLocation().toLowerCase().contains(location.toLowerCase())
+					|| x.getLocation().toLowerCase().equals(location.toLowerCase()));
+		}
+
+		if (!(titleGame == null || !titleGame.equals(""))) {
+			List<Store> aux = new ArrayList<Store>();
+			Boolean predicate = false;
+			for (Store s : result.collect(Collectors.toList())) {
+				for (StoreGame sg : s.getGames()) {
+					if (sg.getGame().getTitle().toLowerCase().equals(titleGame.toLowerCase()))
+						predicate = true;
+				}
+				if (predicate)
+					aux.add(s);
+
+			}
+			result = aux.stream();
+		}
+		if (!(openHour.equals(null))) {
+			result.filter(x -> x.getOpenHour().equals(openHour)).collect(Collectors.toList());
+		}
+		if (!(closeHour.equals(null))) {
+			result.filter(x -> x.getCloseHour().equals(closeHour)).collect(Collectors.toList());
 		}
 
 		if (!(order == null || order.equals(""))) {
@@ -111,19 +140,44 @@ public class StoreResource {
 		return res.subList(offset, limit);
 
 	}
+
 	@GET
 	@Path("/{id}")
 	@Produces("application/json")
-	public Store get(@PathParam("id") String id)
-	{
+	public Store get(@PathParam("id") String id) {
 		Store list = repository.getStore(id);
-		
+
 		if (list == null) {
-			throw new NotFoundException("The store with id="+ id +" was not found");			
+			throw new NotFoundException("The store with id=" + id + " was not found");
 		}
-		
+
 		return list;
 	}
+	@GET
+	@Path("/store/cheapestGames")
+	@Produces("aplication/json")
+	public Collection<Store> getCheapestGamesInArea(@QueryParam("titleGame") String titleGame,
+			@QueryParam("location") String location) {
+		Collection<Store> stores = null;
+		if (!titleGame.equals("") || !titleGame.equals(null)) {
+			throw new BadRequestException("The title game must not be null");
+		} else {
+			stores = getAll(null, null, location, titleGame, null, null, null, null);
+			List<Store> aux = new ArrayList<Store>();
+			for(Store s: stores) {
+				Boolean predicate = false;
+				for(StoreGame sg: s.getGames()) {
+					if(sg.getStock()>0)
+						predicate=true;
+				}
+				aux.add(s);
+			}
+			stores = aux;
+
+		}
+		return stores;
+	}
+
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -131,227 +185,73 @@ public class StoreResource {
 		if (g.getName() == null || "".equals(g.getName())) {
 			throw new BadRequestException("The name of the store must not be null");
 		}
-		if(g.getCloseHour().equals(null)) {
+		if (g.getCloseHour().equals(null)) {
 			throw new BadRequestException("The close hour of the store must not be null");
 
 		}
-		if(g.getOpenHour().equals(null)) {
+		if (g.getOpenHour().equals(null)) {
 			throw new BadRequestException("The close hour of the store must not be null");
 
 		}
-		if(g.getGames().isEmpty() || g.getGames().equals(null)) {
+		if (g.getGames().isEmpty() || g.getGames().equals(null)) {
 			throw new BadRequestException("The games of the store must not be null");
 
 		}
-		if(g.getLocation().equals(null) || g.getLocation().equals("")) {
+		if (g.getLocation().equals(null) || g.getLocation().equals("")) {
 			throw new BadRequestException("The location of the store must not be null");
 
 		}
-		if(g.getPhone().equals(null) || g.getPhone().equals("")) {
+		if (g.getPhone().equals(null) || g.getPhone().equals("")) {
 			throw new BadRequestException("The phone of the store must not be null");
 
 		}
-		
+
 		repository.addStore(g);
 		return Response.noContent().build();
 	}
+	@PUT
+	@Consumes("application/json")
+	public Response update(Store g) {
+		Store old = repository.getStore(g.getId());
+		if (old.getName() == null || "".equals(g.getName())) {
+			throw new BadRequestException("The name of the store must not be null");
+		}
+		if (old.getCloseHour().equals(null)) {
+			throw new BadRequestException("The close hour of the store must not be null");
 
+		}
+		if (old.getOpenHour().equals(null)) {
+			throw new BadRequestException("The close hour of the store must not be null");
 
-//	
-//	@GET
-//	@Path("/{storeId}")
-//	@Produces("aplication/json")
-//	public Store get(@PathParam("storeId") String storeId) {
-//		Store s = repository.getStore(storeId);
-//		if(s==null)
-//			throw new NotFoundException("The store with id "+storeId+" does not exist");
-//		return s;
-//	}
-//	
-//	@GET
-//	@Path("/{storeId}/objects")
-//	@Produces("aplication/json")
-//	public Collection<ObjetoStore> getAllObjects(@PathParam("storeId") String storeId, @QueryParam("hasStock") Boolean hasStock,
-//			@QueryParam("maxPrice")Double maxPrice,@QueryParam("order") String order, @QueryParam("games") Collection<Game> games, @QueryParam("offset") Integer offset,
-//			@QueryParam("limit") Integer limit) {
-//		
-//		Stream<ObjetoStore> items = repository.getAllObjects(storeId).stream();
-//		
-//		if(items==null)
-//			throw new NotFoundException("The store with id "+storeId+" does not contain any game");
-//		
-//		if(hasStock) {
-//			items.filter(x->x.getStock()>0).collect(Collectors.toList());
-//		}
-//		
-//		
-//		
-//		if(order!=null)
-//			switch(order) {
-//				case "price":
-//					items.sorted(Comparator.comparing(ObjetoStore::getPrice)).collect(Collectors.toList());
-//					break;
-//				case "-price":
-//					items.sorted(Comparator.comparing(ObjetoStore::getPrice).reversed()).collect(Collectors.toList());
-//					break;
-//				case "stock":
-//					items.sorted(Comparator.comparing(ObjetoStore::getStock)).collect(Collectors.toList());
-//					break;
-//				case "-stock":
-//					items.sorted(Comparator.comparing(ObjetoStore::getStock).reversed()).collect(Collectors.toList());
-//					break;
-//				
-//				default:
-//					throw new BadRequestException("Format  not supported");
-//			}
-//		
-//		List<ObjetoStore> res = items.collect(Collectors.toList());
-//
-//
-//		if(offset==null) {
-//			offset = 0;
-//		}
-//
-//		if(limit==null || limit+offset>res.size()) {
-//			limit = res.size();
-//		}
-//		
-//		else{
-//			limit += offset;
-//		}
-//		return res;
-//	}
-//	
-//	@GET
-//	@Path("/{storeId}/objects/{itemId}")
-//	@Produces("aplication/json")
-//	public ObjetoStore getObject(@PathParam("storeId") String storeId,@PathParam("itemId") String itemId) {
-//		ObjetoStore item = repository.getObject(storeId, itemId);
-//		if(item==null)
-//			throw new NotFoundException("The item with id "+itemId+" does not exist in the store with id "+storeId);
-//		return item;
-//	}
+		}
+		if (old.getGames().isEmpty() || old.getGames().equals(null)) {
+			throw new BadRequestException("The games of the store must not be null");
 
-//	@GET
-//	@Path("/cheapestGames")
-//	@Produces("aplication/json")
-//	public Collection<ObjetoStore> getCheapestGamesInArea(@QueryParam("q") String q,@QueryParam("maxprice") Double maxprice, 
-//			@QueryParam("games") Collection<Game> games){
-//		Collection<Store> stores = getAll(q, null, games, null, null, null);
-//		List<ObjetoStore> res = new ArrayList<ObjetoStore>();
-//		for(Store s:stores) {
-//			int values = games==null?5:games.size();
-//			int limit = s.getGamesSize()==0? 0:s.getGamesSize()> values? values:s.getGamesSize();
-//			Collection<ObjetoStore> items = getAllObjects(s.getId(), true, maxprice, "price", games, null, limit);
-//			res.addAll(items);			
-//		}
-//		return res;
-//	}
-//	
-//	@POST
-//	@Consumes("aplication/json")
-//	@Produces("aplication/json")
-//	public Response addStore(/*@Context UriInfo uriInfo, */Store store) {
-//		//Lanza error si nombre o lugar null o vacio o si hora de cierre < hora de apertura
-//		if(store.getName()==null||store.getName().equals("")
-//				||store.getLocation()==null||store.getLocation().equals("")
-//				||store.getOpenHour().compareTo(store.getCloseHour())>0)
-//			throw new BadRequestException("Can not add the store with id "+store.getId());
-//		
-//		repository.addStore(store);
-//		
-//		/*
-//		UriBuilder ub = uriInfo.getAbsolutePathBuilder().path(this.getClass(), "get");
-//		URI uri = ub.build(store.getId());
-//		ResponseBuilder resp = Response.created(uri);
-//		resp.entity(store);
-//		return resp.build();
-//		*/
-//		return Response.noContent().build();
-//	}
-//	
-//	@PUT
-//	@Consumes("aplication/json")
-//	public Response updateStore(Store store) {
-//		Store old = repository.getStore(store.getId());
-//		if(old==null)
-//			throw new NotFoundException("The store with id "+store.getId()+" does not exist");
-//		if(store.getName()!=null&&!store.getName().equals(""))
-//			old.setName(store.getName());
-//		if(store.getLocation()!=null&&!store.getLocation().equals(""))
-//			old.setLocation(store.getLocation());
-//		if(store.getOpenHour().compareTo(store.getCloseHour())<0)
-//			old.setOpenHour(store.getOpenHour());
-//			old.setCloseHour(store.getCloseHour());
-//		if(store.getPhone()!=null)
-//			old.setPhone(store.getPhone());
-//		//La lista de juegos no necesita check en mi opinion
-//		old.setGames(store.getGames());
-//		
-//		return Response.noContent().build();
-//	}
-//	
-//	@POST
-//	@Path("/object")
-//	@Consumes("aplication/json")
-//	public Response addObject(String storeId, ObjetoStore item) {
-//		Store store = repository.getStore(storeId);
-//		
-//		if(store==null)
-//			throw new NotFoundException("The store with id "+storeId+" does not exist");
-//		else
-//			repository.addObjeto(storeId, item);
-//		
-//		return Response.noContent().build();
-//		
-//	}
-//	
-//	@PUT
-//	@Path("/object")
-//	@Consumes("aplication/json")
-//	public Response updateObject(String storeId, ObjetoStore item) {
-//		ObjetoStore old = repository.getObject(storeId, item.getId());
-//		
-//		if(old==null)
-//			throw new NotFoundException("The item with id "+item.getId()+" does not exist in the store with id "+storeId);
-//		else
-//			if(!item.getGame().equals(old.getGame()))
-//				throw new BadRequestException("Can not change the game who item with id "+item.getId()+" refers to");
-//			if(item.getPrice()!=null)
-//				old.setPrice(item.getPrice());
-//			if(item.getStock()!=null)
-//				old.setStock(item.getStock());
-//				
-//		
-//		return Response.noContent().build();
-//		
-//	}
-//	
-//	@Delete
-//	@Path("/{storeId}")
-//	public Response deleteStore(@PathParam("storeId") String storeId) {
-//		Store s = repository.getStore(storeId);
-//		
-//		if(s==null)
-//			throw new NotFoundException("The store with id "+storeId+" does not exist");
-//		else
-//			repository.deleteStore(storeId);
-//		
-//		return Response.noContent().build();
-//	}
-//	
-//	@Delete
-//	@Path("/{storeId}/objects/{itemId}")
-//	public Response deleteObject(@PathParam("storeId") String storeId, @PathParam("itemId") String itemId) {
-//		ObjetoStore item = repository.getObject(storeId, itemId);
-//		
-//		if(item==null)
-//			throw new NotFoundException("The item with id "+itemId+" does not exist in the store with id "+storeId);
-//		else
-//			repository.getAllObjects(storeId).remove(item);
-//		
-//		return Response.noContent().build();
-//	}
-//	
+		}
+		if (old.getLocation().equals(null) || old.getLocation().equals("")) {
+			throw new BadRequestException("The location of the store must not be null");
 
+		}
+		if (old.getPhone().equals(null) || old.getPhone().equals("")) {
+			throw new BadRequestException("The phone of the store must not be null");
+
+		}
+		repository.updateStore(old);
+		return Response.noContent().build();
+	}
+
+	@DELETE
+	@Path("/{id}")
+	public Response delete(@PathParam("id") String id) {
+		Store toRemove = repository.getStore(id);
+
+		if (toRemove == null) {
+			throw new NotFoundException("The store with id=" + id + " was not found");
+		} else {
+			repository.deleteStore(id);
+		}
+		return Response.noContent().build();
+	}
+
+	
 }

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import aiss.model.Game;
-import aiss.model.ObjetoStore;
+import aiss.model.StoreGame;
 import aiss.model.Store;
 
 
@@ -43,14 +43,14 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		store1.setOpenHour(LocalTime.of(8, 0));
 		store1.setCloseHour(LocalTime.of(20, 30));
 		store1.setPhone("955323867");
-		List<ObjetoStore> gamesStore1 = new ArrayList<>();
-		ObjetoStore game1Store1 = new ObjetoStore();
+		List<StoreGame> gamesStore1 = new ArrayList<>();
+		StoreGame game1Store1 = new StoreGame();
 		game1Store1.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("super mario odyssey")).findFirst().get());
 		game1Store1.setPrice(49.99);
 		game1Store1.setStock(4);
 		gamesStore1.add(game1Store1);
 		addStore(store1);
-		for(ObjetoStore i:gamesStore1) {
+		for(StoreGame i:gamesStore1) {
 			addObjeto(store1.getId(), i);
 		}
 		
@@ -60,19 +60,19 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		store2.setOpenHour(LocalTime.of(11, 0));
 		store2.setCloseHour(LocalTime.of(21, 0));
 		store2.setPhone("932319555");
-		List<ObjetoStore> gamesStore2 = new ArrayList<>();
-		ObjetoStore game1Store2 = new ObjetoStore();
+		List<StoreGame> gamesStore2 = new ArrayList<>();
+		StoreGame game1Store2 = new StoreGame();
 		game1Store2.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("fifa")).findFirst().get());
 		game1Store2.setPrice(9.50);
 		game1Store2.setStock(2);
 		gamesStore2.add(game1Store2);
-		ObjetoStore game2Store2 = new ObjetoStore();
+		StoreGame game2Store2 = new StoreGame();
 		game2Store2.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("animal crossing")).findFirst().get());
 		game2Store2.setPrice(24.95);
 		game2Store2.setStock(3);
 		gamesStore2.add(game2Store2);
 		addStore(store2);
-		for(ObjetoStore i:gamesStore2) {
+		for(StoreGame i:gamesStore2) {
 			addObjeto(store2.getId(), i);
 		}
 		
@@ -83,19 +83,19 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		store3.setOpenHour(LocalTime.of(9, 0));
 		store3.setCloseHour(LocalTime.of(19, 30));
 		store3.setPhone("917168628");
-		List<ObjetoStore> gamesStore3 = new ArrayList<>();
-		ObjetoStore game1Store3 = new ObjetoStore();
+		List<StoreGame> gamesStore3 = new ArrayList<>();
+		StoreGame game1Store3 = new StoreGame();
 		game1Store3.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("super mario odyssey")).findFirst().get());
 		game1Store3.setPrice(45.60);
 		game1Store3.setStock(1);
 		gamesStore3.add(game1Store3);
-		ObjetoStore game2Store3 = new ObjetoStore();
+		StoreGame game2Store3 = new StoreGame();
 		game2Store3.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("grand theft auto")).findFirst().get());
 		game2Store3.setPrice(9.50);
 		game2Store3.setStock(5);
 		gamesStore3.add(game2Store3);
 		addStore(store3);
-		for(ObjetoStore i:gamesStore3) {
+		for(StoreGame i:gamesStore3) {
 			addObjeto(store3.getId(), i);
 		}
 		
@@ -105,24 +105,24 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		store4.setOpenHour(LocalTime.of(11, 30));
 		store4.setCloseHour(LocalTime.of(20, 0));
 		store4.setPhone("962069197");
-		List<ObjetoStore> gamesStore4 = new ArrayList<>();
-		ObjetoStore game1Store4 = new ObjetoStore();
+		List<StoreGame> gamesStore4 = new ArrayList<>();
+		StoreGame game1Store4 = new StoreGame();
 		game1Store4.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("animal crossing")).findFirst().get());
 		game1Store4.setPrice(29.65);
 		game1Store4.setStock(2);
 		gamesStore4.add(game1Store4);
-		ObjetoStore game2Store4 = new ObjetoStore();
+		StoreGame game2Store4 = new StoreGame();
 		game2Store4.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("grand theft auto")).findFirst().get());
 		game2Store4.setPrice(7.85);
 		game2Store4.setStock(6);
 		gamesStore4.add(game2Store4);
-		ObjetoStore game3Store4 = new ObjetoStore();
+		StoreGame game3Store4 = new StoreGame();
 		game3Store4.setGame(games.stream().filter(x -> x.getTitle().toLowerCase().contains("fifa 20")).findFirst().get());
 		game3Store4.setPrice(10.00);
 		game3Store4.setStock(4);
 		gamesStore4.add(game3Store4);
 		addStore(store4);
-		for(ObjetoStore i:gamesStore4) {
+		for(StoreGame i:gamesStore4) {
 			addObjeto(store4.getId(), i);
 		}
 	}
@@ -156,12 +156,12 @@ public class MapGameStoreRepository implements GameStoreRepository{
 	}
 
 	@Override
-	public Collection<ObjetoStore> getAllObjects(String storeId) {
+	public Collection<StoreGame> getAllObjects(String storeId) {
 		return storeMap.get(storeId).getGames();
 	}
 
 	@Override
-	public void addObjeto(String storeId, ObjetoStore o) {
+	public void addObjeto(String storeId, StoreGame o) {
 		if (storeMap.get(storeId).getGames()==null||storeMap.get(storeId).getGamesSize()==0) oIndex=0;
 		String id="o"+oIndex++;
 		o.setId(id);
@@ -175,7 +175,7 @@ public class MapGameStoreRepository implements GameStoreRepository{
 	}
 
 	@Override
-	public ObjetoStore getObject(String storeId, String itemId) {
+	public StoreGame getObject(String storeId, String itemId) {
 		return getAllObjects(storeId).stream().filter(x->x.getId().equals(itemId)).findFirst().get();
 	}
 	

@@ -11,7 +11,7 @@ import aiss.model.Developer;
 import aiss.model.Game;
 import aiss.model.Genre;
 import aiss.model.Mode;
-import aiss.model.ObjetoStore;
+import aiss.model.StoreGame;
 import aiss.model.Platform;
 import aiss.model.Store;
 
@@ -45,8 +45,8 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		Developer nintendo, ea, activision, capcom, rockStar, konami, valve, bioware;
 		Game marioOdyssey, animalCrossing, gta, fifa20;
 		Store store1, store2, store3, store4;
-		ObjetoStore game1Store1, game1Store2, game2Store2, game1Store3, game2Store3, game1Store4, game2Store4, game3Store4;
-		List<ObjetoStore> gamesStore1, gamesStore2, gamesStore3, gamesStore4;
+		StoreGame game1Store1, game1Store2, game2Store2, game1Store3, game2Store3, game1Store4, game2Store4, game3Store4;
+		List<StoreGame> gamesStore1, gamesStore2, gamesStore3, gamesStore4;
 		
 		
 		
@@ -374,8 +374,8 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		store1.setPhone("955323867");
 		
 		gamesStore1 = new ArrayList<>();
-		game1Store1 = new ObjetoStore();
-		game2Store2 = new ObjetoStore();
+		game1Store1 = new StoreGame();
+		game2Store2 = new StoreGame();
 		
 		game1Store1.setGame(marioOdyssey);
 		game1Store1.setPrice(49.99);
@@ -390,8 +390,8 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		store2.setPhone("932319555");
 		
 		gamesStore2 = new ArrayList<>();
-		game1Store2 = new ObjetoStore();
-		game2Store2 = new ObjetoStore();
+		game1Store2 = new StoreGame();
+		game2Store2 = new StoreGame();
 		
 		game1Store2.setGame(fifa20);
 		game1Store2.setPrice(9.50);
@@ -411,8 +411,8 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		store3.setPhone("917168628");
 		
 		gamesStore3 = new ArrayList<>();
-		game1Store3 = new ObjetoStore();
-		game2Store3 = new ObjetoStore();
+		game1Store3 = new StoreGame();
+		game2Store3 = new StoreGame();
 		
 		game1Store3.setGame(marioOdyssey);
 		game1Store3.setPrice(45.60);
@@ -433,9 +433,9 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		store4.setPhone("962069197");
 		
 		gamesStore4 = new ArrayList<>();
-		game1Store4 = new ObjetoStore();
-		game2Store4 = new ObjetoStore();
-		game3Store4 = new ObjetoStore();
+		game1Store4 = new StoreGame();
+		game2Store4 = new StoreGame();
+		game3Store4 = new StoreGame();
 		
 		game1Store4.setGame(animalCrossing);
 		game1Store4.setPrice(29.65);
@@ -464,16 +464,16 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		store4.setId(getAllStores().stream().filter(x->x.getName()==store4.getName()).findFirst().get().getId());
 		
 		
-		for(ObjetoStore i:gamesStore1) {
+		for(StoreGame i:gamesStore1) {
 			addObjeto(store1.getId(), i);
 		}
-		for(ObjetoStore i:gamesStore2) {
+		for(StoreGame i:gamesStore2) {
 			addObjeto(store2.getId(), i);
 		}
-		for(ObjetoStore i:gamesStore3) {
+		for(StoreGame i:gamesStore3) {
 			addObjeto(store3.getId(), i);
 		}
-		for(ObjetoStore i:gamesStore4) {
+		for(StoreGame i:gamesStore4) {
 			addObjeto(store4.getId(), i);
 		}
 	}
@@ -530,14 +530,14 @@ public class MapDatabaseRepository implements DatabaseRepository{
 	
 	//ObjetoStore
 	@Override
-	public void addObjeto(String storeId, ObjetoStore o) {
+	public void addObjeto(String storeId, StoreGame o) {
 		if (storeMap.get(storeId).getGames()==null||storeMap.get(storeId).getGamesSize()==0) indexStoreObjeto=0;
 		String id="o"+indexStoreObjeto++;
 		o.setId(id);
 		storeMap.get(storeId).addGame(o);
 	}
 	@Override
-	public Collection<ObjetoStore> getAllObjects(String storeId) {
+	public Collection<StoreGame> getAllObjects(String storeId) {
 		return storeMap.get(storeId).getGames();
 	}
 	@Override
@@ -545,7 +545,7 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		storeMap.get(storeId).deleteGame(getObject(storeId, objectId));
 	}
 	@Override
-	public ObjetoStore getObject(String storeId, String itemId) {
+	public StoreGame getObject(String storeId, String itemId) {
 		return getAllObjects(storeId).stream().filter(x->x.getId().equals(itemId)).findFirst().get();
 	}
 	

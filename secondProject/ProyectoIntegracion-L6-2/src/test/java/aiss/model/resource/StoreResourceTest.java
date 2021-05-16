@@ -17,12 +17,12 @@ import org.junit.Test;
 
 import aiss.api.resources.GameResource;
 import aiss.api.resources.StoreResource;
-import aiss.model.ObjetoStore;
+import aiss.model.StoreGame;
 import aiss.model.Store;
 
 public class StoreResourceTest {
 	static Store s1,s2,s3;
-	static ObjetoStore o1, o2, o3;
+	static StoreGame o1, o2, o3;
 	static StoreResource r = new StoreResource();
 	
 	private static GameResource games = GameResource.getInstance();
@@ -33,9 +33,9 @@ public class StoreResourceTest {
 		s2 = new Store();
 		s3 = new Store();
 		
-		o1 = new ObjetoStore();
-		o2 = new ObjetoStore();
-		o3 = new ObjetoStore();
+		o1 = new StoreGame();
+		o2 = new StoreGame();
+		o3 = new StoreGame();
 		
 		s1.setName("Test name");
 		s1.setLocation("Test location");
@@ -273,17 +273,17 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testGetItems() {
-		Collection<ObjetoStore> items = r.getAllObjects(s1.getId(), null, null, null, null, null, null);
+		Collection<StoreGame> items = r.getAllObjects(s1.getId(), null, null, null, null, null, null);
 		assertNotNull("The collection of games in store with id "+s1.getId()+" is null", items);
 		System.out.println("Get All items on Store:");
-		for(ObjetoStore i:items) {
+		for(StoreGame i:items) {
 			System.out.println(i);
 		}
 	}
 	
 	@Test
 	public void testGetItem() {
-		ObjetoStore item = r.getObject(s1.getId(), s1.getGames().get(0).getId());
+		StoreGame item = r.getObject(s1.getId(), s1.getGames().get(0).getId());
 		assertEquals("The Id of the item given does not match", item.getId(),s1.getGames().get(0).getId());
 		assertEquals("The game of the item given does not match", item.getGame(),s1.getGames().get(0).getGame());
 		assertEquals("The price of the item given does not match", item.getPrice(),s1.getGames().get(0).getPrice());
@@ -296,10 +296,10 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testGetCheapest() {
-		Collection<ObjetoStore> games = r.getCheapestGamesInArea("Sevilla",50., null);
+		Collection<StoreGame> games = r.getCheapestGamesInArea("Sevilla",50., null);
 		assertNotNull("The hashmap is null", games);
 		System.out.println("Showing the stores with the cheapest games in your area");
-		for(ObjetoStore store:games) {
+		for(StoreGame store:games) {
 			System.out.println(store);
 		}
 	}
@@ -308,7 +308,7 @@ public class StoreResourceTest {
 	public void testAddItem() {
 		
 		
-		ObjetoStore oTest = new ObjetoStore();
+		StoreGame oTest = new StoreGame();
 		oTest.setGame(games.getAll().stream().findFirst().get());
 		oTest.setPrice(23.75);
 		oTest.setStock(128);
@@ -317,7 +317,7 @@ public class StoreResourceTest {
 		
 		
 		
-		Collection<ObjetoStore> items = r.getAllObjects(s2.getId(), null, null, null, null, null, null);
+		Collection<StoreGame> items = r.getAllObjects(s2.getId(), null, null, null, null, null, null);
 		assertNotNull("The collection of items is null", items);
 		assertFalse("The collection of items is empty", items.isEmpty());
 		
@@ -340,8 +340,8 @@ public class StoreResourceTest {
 		r.addStore(sTest);
 		sTest.setId(r.getAll().stream().filter(x->x.getName()==sTest.getName()&&x.getId()!=s3.getId()).findFirst().get().getId());
 		
-		ObjetoStore oTest = new ObjetoStore();
-		ObjetoStore ref = sTest.getGames().stream().findAny().get();
+		StoreGame oTest = new StoreGame();
+		StoreGame ref = sTest.getGames().stream().findAny().get();
 		
 		oTest.setGame(ref.getGame());
 		oTest.setPrice(ref.getPrice());
@@ -358,14 +358,14 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testUpdateItem() {
-		ObjetoStore oTest = s1.getGames().get(0);
+		StoreGame oTest = s1.getGames().get(0);
 		
 		oTest.setStock(0);
 		oTest.setPrice(99.99);
 		r.updateObject(s1.getId(), oTest);
 		
 		Store sTest2 = r.get(s1.getId());
-		ObjetoStore item = sTest2.getGames().stream().filter(x->x.getGame().equals(oTest.getGame())&&x.getPrice()==oTest.getPrice()&&x.getStock()==oTest.getStock()).findFirst().get();
+		StoreGame item = sTest2.getGames().stream().filter(x->x.getGame().equals(oTest.getGame())&&x.getPrice()==oTest.getPrice()&&x.getStock()==oTest.getStock()).findFirst().get();
 		assertEquals("The game of the item given does not match", item.getGame(),oTest.getGame());
 		assertEquals("The price of the item given does not match", item.getPrice(),oTest.getPrice());
 		assertEquals("The stock of the item given does not match", item.getStock(),oTest.getStock());

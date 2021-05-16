@@ -5,7 +5,7 @@ import java.util.Collection;
 import aiss.model.Developer;
 import aiss.model.Game;
 import aiss.model.Genre;
-import aiss.model.ObjetoStore;
+import aiss.model.StoreGame;
 import aiss.model.Platform;
 import aiss.model.Store;
 
@@ -23,9 +23,9 @@ public interface DatabaseRepository {
 	public Store getStore(String storeId);
 	public void updateStore(Store s);
 	public void deleteStore(String storeId);
-	public Collection<ObjetoStore> getAllObjects(String storeId);
-	public ObjetoStore getObject(String storeId, String itemId);
-	public void addObjeto(String storeId, ObjetoStore o);
+	public Collection<StoreGame> getAllObjects(String storeId);
+	public StoreGame getObject(String storeId, String itemId);
+	public void addObjeto(String storeId, StoreGame o);
 	public void deleteObjeto(String storeId,String objectId);
 	
 	//Genre

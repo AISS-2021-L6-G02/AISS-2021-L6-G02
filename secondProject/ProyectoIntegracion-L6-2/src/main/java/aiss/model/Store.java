@@ -16,7 +16,7 @@ public class Store {
 	private String location;
 	private LocalTime openHour;
 	private LocalTime closeHour;
-	private List<ObjetoStore> games;
+	private List<StoreGame> games;
 	private String phone;
 	
 	
@@ -25,7 +25,7 @@ public class Store {
 		
 	}
 	public Store(String id, String name, String location, LocalTime openHour, LocalTime closeHour,
-			List<ObjetoStore> games, String phone) {
+			List<StoreGame> games, String phone) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -35,7 +35,7 @@ public class Store {
 		this.games = games;
 		setPhone(phone);
 	}
-	public Store(String name, String location, LocalTime openHour, LocalTime closeHour, List<ObjetoStore> games,
+	public Store(String name, String location, LocalTime openHour, LocalTime closeHour, List<StoreGame> games,
 			String phone) {
 		super();
 		this.name = name;
@@ -61,7 +61,7 @@ public class Store {
 	public LocalTime getCloseHour() {
 		return closeHour;
 	}
-	public List<ObjetoStore> getGames() {
+	public List<StoreGame> getGames() {
 		return games;
 	}
 	public String getPhone() {
@@ -84,7 +84,7 @@ public class Store {
 	public void setCloseHour(LocalTime closeHour) {
 		this.closeHour = closeHour;
 	}
-	public void setGames(List<ObjetoStore> games) {
+	public void setGames(List<StoreGame> games) {
 		this.games = games;
 	}
 	public void setPhone(String phone) {
@@ -100,12 +100,12 @@ public class Store {
 	
 	//Other methods
 	
-	public void addGame(ObjetoStore game) {
-		if(games==null) games = new ArrayList<ObjetoStore>();
+	public void addGame(StoreGame game) {
+		if(games==null) games = new ArrayList<StoreGame>();
 		games.add(game);
 	}
 	
-	public void deleteGame(ObjetoStore game) {
+	public void deleteGame(StoreGame game) {
 		games.remove(game);
 	}
 	

@@ -1,6 +1,6 @@
 package aiss.model;
 
-public class ObjetoStore {
+public class StoreGame {
 	private String id;
 	private Game game;
 	private Double price;
@@ -8,11 +8,11 @@ public class ObjetoStore {
 
 	
 	//Constructors
-	public ObjetoStore() {
+	public StoreGame() {
 		
 	}
 	
-	public ObjetoStore(String id, Game game, Double price, Integer stock) {
+	public StoreGame(String id, Game game, Double price, Integer stock) {
 		super();
 		this.id = id;
 		this.game = game;
@@ -20,7 +20,7 @@ public class ObjetoStore {
 		this.stock = stock;
 	}
 	
-	public ObjetoStore(Game game, Double price, Integer stock) {
+	public StoreGame(Game game, Double price, Integer stock) {
 		super();
 		this.game = game;
 		this.price = price;
