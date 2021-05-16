@@ -1,11 +1,13 @@
 openapi: 3.0.0
-servers: []
+servers: 
+	- url: "http://localhost:8099"
+
 info:
-  description: This is a simple API
+  description: This is a Game Api based on rastreator. You can search avaliable cheapest and nearest games in your location
   version: "1.0.0"
-  title: Simple Inventory API
+  title: Rastreator api
   contact:
-    email: you@your-company.com
+    email: juanantonioortizguerra@gmail.com
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'

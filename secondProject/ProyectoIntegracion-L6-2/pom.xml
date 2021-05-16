@@ -178,7 +178,7 @@
                     <deploy.version>GCLOUD_CONFIG</deploy.version>
                     <fullScanSeconds>1</fullScanSeconds>
                     <!-- <address>0.0.0.0</address> -->
-                    <port>8090</port>
+                    <port>8099</port>
                     <jvmFlags>
                         <jvmFlag> -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
                         <jvmFlag> -Dappengine.fullscan.seconds=1 </jvmFlag>
