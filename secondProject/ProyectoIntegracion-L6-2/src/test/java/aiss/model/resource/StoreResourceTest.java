@@ -5,7 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -29,6 +31,7 @@ public class StoreResourceTest {
 	
 	@BeforeClass
 	public static void setUp() throws Exception {
+		List<StoreGame> gamesList;
 		s1 = new Store();
 		s2 = new Store();
 		s3 = new Store();
@@ -66,6 +69,12 @@ public class StoreResourceTest {
 		o3.setGame(games.getAll().stream().collect(Collectors.toList()).get(2));
 		o3.setPrice(5.0);
 		o3.setStock(4);
+		
+		
+		gamesList = new ArrayList<StoreGame>();
+		gamesList.add(o1);
+		s1.setGames(gamesList);
+		
 		
 		r.addStore(s1);
 		r.addStore(s2);
@@ -107,22 +116,22 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testGetAll() {
-		Collection<Store> stores = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> stores = r.getAll();
 		
-		Collection<Store> storesFiltroName = r.getAll(null, null, null, null, null, null, null, null);
-		Collection<Store> storesFiltroLocation = r.getAll(null, null, null, null, null, null, null, null);
-		Collection<Store> storesFiltroTitleGame = r.getAll(null, null, null, null, null, null, null, null);
-		Collection<Store> storesFiltroOpenHour = r.getAll(null, null, null, null, null, null, null, null);
-		Collection<Store> storesFiltroCloseHour = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesFiltroName = r.getAll(null, "Game", null, null, null, null, null, null);
+		Collection<Store> storesFiltroLocation = r.getAll(null, null, "Sevilla", null, null, null, null, null);
+		Collection<Store> storesFiltroTitleGame = r.getAll(null, null, null, "Animal Crossing", null, null, null, null);
+		Collection<Store> storesFiltroOpenHour = r.getAll(null, null, null, null, LocalTime.of(8, 0), null, null, null);
+		Collection<Store> storesFiltroCloseHour = r.getAll(null, null, null, null, null, LocalTime.of(20, 30), null, null);
 		
-		Collection<Store> storesOrderName = r.getAll(null, null, null, null, null, null, null, null);
-		Collection<Store> storesOrderNameReverse = r.getAll(null, null, null, null, null, null, null, null);
-		Collection<Store> storesOrderLocation = r.getAll(null, null, null, null, null, null, null, null);
-		Collection<Store> storesOrderLocationReverse = r.getAll(null, null, null, null, null, null, null, null);
-		Collection<Store> storesOrderOpenHour = r.getAll(null, null, null, null, null, null, null, null);
-		Collection<Store> storesOrderOpenHourReverse = r.getAll(null, null, null, null, null, null, null, null);
-		Collection<Store> storesOrderCloseHour = r.getAll(null, null, null, null, null, null, null, null);
-		Collection<Store> storesOrderCloseHourReverse = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesOrderName = r.getAll("name", null, null, null, null, null, null, null);
+		Collection<Store> storesOrderNameReverse = r.getAll("-name", null, null, null, null, null, null, null);
+		Collection<Store> storesOrderLocation = r.getAll("location", null, null, null, null, null, null, null);
+		Collection<Store> storesOrderLocationReverse = r.getAll("-location", null, null, null, null, null, null, null);
+		Collection<Store> storesOrderOpenHour = r.getAll("openHour", null, null, null, null, null, null, null);
+		Collection<Store> storesOrderOpenHourReverse = r.getAll("-openHour", null, null, null, null, null, null, null);
+		Collection<Store> storesOrderCloseHour = r.getAll("closeHour", null, null, null, null, null, null, null);
+		Collection<Store> storesOrderCloseHourReverse = r.getAll("-closeHour", null, null, null, null, null, null, null);
 		
 		
 		Collection<Store> paginacionStores = r.getAll(null, null, null, null, null, null, 1, 2);
@@ -133,67 +142,95 @@ public class StoreResourceTest {
 		assertNotNull("The collection of stores filtered by name is null", storesFiltroName);
 		
 		assertNotNull("The collection of stores sorted by name is null", storesOrderName);
-		assertNotNull("The collection of stores sorted reverse by name is null", storesOrderNameReversed);
+		assertNotNull("The collection of stores sorted reverse by name is null", storesOrderNameReverse);
 		assertNotNull("The collection of stores sorted by location is null", storesOrderLocation);
-		assertNotNull("The collection of stores sorted reverse by location is null", storesOrderLocationReversed);
-		assertNotNull("The collection of stores sorted by number of games is null", storesOrderGames);
-		assertNotNull("The collection of stores sorted reverse by number of games is null", storesOrderGamesReversed);
+		assertNotNull("The collection of stores sorted reverse by location is null", storesOrderLocationReverse);
+		assertNotNull("The collection of stores sorted by opening hour is null", storesOrderOpenHour);
+		assertNotNull("The collection of stores sorted reverse by opening hour is null", storesOrderOpenHourReverse);
+		assertNotNull("The collection of stores sorted by closing hour is null", storesOrderCloseHour);
+		assertNotNull("The collection of stores sorted reverse by closing hour is null", storesOrderCloseHourReverse);
+		
 		assertNotNull("The collection of stores paginated is null", paginacionStores);
 		
 		System.out.println("Get All Stores");
 		for(Store s:stores) {
-			System.out.println(s);
+			System.out.println(s.toString());
 		}
-		System.out.println("Get All Stores filtered by location");
-		for(Store s: storesFiltroLocation) {
-			System.out.println(s);
-		}
+		
 		System.out.println("Get All Stores filtered by name");
 		for(Store s: storesFiltroName) {
-			System.out.println(s);
+			System.out.println(s.toString());
 		}
-		System.out.println("Get All Stores filtered by having games");
-		for(Store s: storesFiltroHaveGames) {
-			System.out.println(s);
+		
+		System.out.println("Get All Stores filtered by location");
+		for(Store s: storesFiltroLocation) {
+			System.out.println(s.toString());
 		}
-		System.out.println("Get All Stores filtered by having no games");
-		for(Store s: storesFiltroNoGames) {
-			System.out.println(s);
+		
+		System.out.println("Get All Stores filtered by a game title");
+		for(Store s : storesFiltroTitleGame) {
+			System.out.println(s.toString());
 		}
+		
+		System.out.println("Get All Stores filtered by opening hour");
+		for(Store s : storesFiltroOpenHour) {
+			System.out.println(s.toString());
+		}
+		
+		System.out.println("Get All Stores filtered by a closing hour");
+		for(Store s : storesFiltroCloseHour) {
+			System.out.println(s.toString());
+		}
+		
 		System.out.println("Get All Stores sorted by name");
 		for(Store s: storesOrderName) {
-			System.out.println(s);
+			System.out.println(s.toString());
 		}
+		
 		System.out.println("Get All Stores sorted reverse by name");
-		for(Store s: storesOrderNameReversed) {
-			System.out.println(s);
+		for(Store s: storesOrderNameReverse) {
+			System.out.println(s.toString());
 		}
+		
 		System.out.println("Get All Stores sorted by location");
 		for(Store s: storesOrderLocation) {
-			System.out.println(s);
+			System.out.println(s.toString());
 		}
+		
 		System.out.println("Get All Stores sorted reverse by location");
-		for(Store s: storesOrderLocationReversed) {
-			System.out.println(s);
+		for(Store s: storesOrderLocationReverse) {
+			System.out.println(s.toString());
 		}
-		System.out.println("Get All Stores sorted by number of games");
-		for(Store s: storesOrderGames) {
-			System.out.println(s);
+		
+		System.out.println("Get All Stores sorted by opening hour");
+		for(Store s: storesOrderOpenHour) {
+			System.out.println(s.toString());
 		}
-		System.out.println("Get All Stores sorted reverse by number of games");
-		for(Store s: storesOrderGamesReversed) {
-			System.out.println(s);
+		
+		System.out.println("Get All Stores sorted reverse by opening hour");
+		for(Store s: storesOrderOpenHourReverse) {
+			System.out.println(s.toString());
 		}
-		System.out.println("Get All Stores paginated");
+		
+		System.out.println("Get All Stores sorted by closing hour");
+		for(Store s: storesOrderCloseHour) {
+			System.out.println(s.toString());
+		}
+		
+		System.out.println("Get All Stores sorted reverse by closing hour");
+		for(Store s: storesOrderCloseHourReverse) {
+			System.out.println(s.toString());
+		}
+		
+		System.out.println("Get All Stores with pagination");
 		for(Store s: paginacionStores) {
-			System.out.println(s);
+			System.out.println(s.toString());
 		}
-
 	}
 	
 	@Test
 	public void testGetStore() {
-		Store s = r.get(s1.getId());
+		Store s = r.getStore(s1.getId());
 		System.out.println("========================================");
 		System.out.println("Test get one Store:");
 		System.out.println("========================================");
@@ -219,7 +256,7 @@ public class StoreResourceTest {
 		sTest.setPhone("999999999");
 		r.addStore(sTest);
 		sTest.setId(r.getAll().stream().filter(x->x.getName()==sTest.getName()).findFirst().get().getId());
-		Store s = r.get(sTest.getId());
+		Store s = r.getStore(sTest.getId());
 		assertNotNull("Error when adding the store", s);
 		assertEquals("The id of the store do not match", sTest.getId(), s.getId());
 		assertEquals("The name of the store do not match", sTest.getName(), s.getName());
@@ -235,11 +272,11 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testUpdateStore() {
-		Store s = r.get(s2.getId());
+		Store s = r.getStore(s2.getId());
 		s.setName("Other test name");
 		s.setLocation("Other test location");
 		r.updateStore(s);
-		s2 = r.get(s2.getId());
+		s2 = r.getStore(s2.getId());
 		assertEquals("The id of the store do not match", s2.getId(), s.getId());
 		assertEquals("The name of the store do not match", s2.getName(), s.getName());
 		assertEquals("The location of the store do not match", s2.getLocation(), s.getLocation());
@@ -275,109 +312,12 @@ public class StoreResourceTest {
 	}
 	
 	@Test
-	public void testGetItems() {
-		Collection<StoreGame> items = r.getAllObjects(s1.getId(), null, null, null, null, null, null);
-		assertNotNull("The collection of games in store with id "+s1.getId()+" is null", items);
-		System.out.println("Get All items on Store:");
-		for(StoreGame i:items) {
-			System.out.println(i);
-		}
-	}
-	
-	@Test
-	public void testGetItem() {
-		StoreGame item = r.getObject(s1.getId(), s1.getGames().get(0).getId());
-		assertEquals("The Id of the item given does not match", item.getId(),s1.getGames().get(0).getId());
-		assertEquals("The game of the item given does not match", item.getGame(),s1.getGames().get(0).getGame());
-		assertEquals("The price of the item given does not match", item.getPrice(),s1.getGames().get(0).getPrice());
-		assertEquals("The stock of the item given does not match", item.getStock(),s1.getGames().get(0).getStock());
-		
-		System.out.println("Item Store id: " + item.getId());
-		System.out.println("Store id: " + s1.getId());
-		System.out.println("Store name: " + s1.getName());
-	}
-	
-	@Test
 	public void testGetCheapest() {
-		Collection<StoreGame> games = r.getCheapestGamesInArea("Sevilla",50., null);
-		assertNotNull("The hashmap is null", games);
-		System.out.println("Showing the stores with the cheapest games in your area");
-		for(StoreGame store:games) {
+		Collection<Store> stores = r.getCheapestGamesInArea("Animal Crossing", "Sevilla");
+		assertNotNull("The store collection is null", stores);
+		System.out.println("Showing the stores that sell the specified game the cheapest in your area");
+		for(Store store : stores) {
 			System.out.println(store);
 		}
 	}
-	
-	@Test
-	public void testAddItem() {
-		
-		
-		StoreGame oTest = new StoreGame();
-		oTest.setGame(games.getAll().stream().findFirst().get());
-		oTest.setPrice(23.75);
-		oTest.setStock(128);
-		r.addObject(s2.getId(), oTest);
-		
-		
-		
-		
-		Collection<StoreGame> items = r.getAllObjects(s2.getId(), null, null, null, null, null, null);
-		assertNotNull("The collection of items is null", items);
-		assertFalse("The collection of items is empty", items.isEmpty());
-		
-		System.out.println("Item Store id: " + oTest.getId());
-		System.out.println("Store id: " + s2.getId());
-		System.out.println("Store name: " + s2.getName());
-	}
-	
-	@Test
-	public void testDeleteItem() {
-		Store sTest = new Store();
-		
-		sTest.setName(s3.getName());
-		sTest.setLocation(s3.getLocation());
-		sTest.setOpenHour(s3.getOpenHour());
-		sTest.setCloseHour(s3.getCloseHour());
-		sTest.setGames(s3.getGames());
-		sTest.setPhone(s3.getPhone());
-		
-		r.addStore(sTest);
-		sTest.setId(r.getAll().stream().filter(x->x.getName()==sTest.getName()&&x.getId()!=s3.getId()).findFirst().get().getId());
-		
-		StoreGame oTest = new StoreGame();
-		StoreGame ref = sTest.getGames().stream().findAny().get();
-		
-		oTest.setGame(ref.getGame());
-		oTest.setPrice(ref.getPrice());
-		oTest.setStock(ref.getStock());
-		
-		r.addObject(sTest.getId(), oTest);
-		
-		oTest.setId(r.getAllObjects(sTest.getId(), null, null, null, null, null, null).stream().filter(x->x.getGame()==oTest.getGame()&&x.getStock()==oTest.getStock()&&x.getPrice()==oTest.getPrice()).findFirst().get().getId());
-		
-		Boolean deleted = r.deleteObject(sTest.getId(), oTest.getId()).equals(null);
-		assertFalse("The Item was not deleted ",deleted);
-		System.out.println("Success deleting item");
-	}
-	
-	@Test
-	public void testUpdateItem() {
-		StoreGame oTest = s1.getGames().get(0);
-		
-		oTest.setStock(0);
-		oTest.setPrice(99.99);
-		r.updateObject(s1.getId(), oTest);
-		
-		Store sTest2 = r.get(s1.getId());
-		StoreGame item = sTest2.getGames().stream().filter(x->x.getGame().equals(oTest.getGame())&&x.getPrice()==oTest.getPrice()&&x.getStock()==oTest.getStock()).findFirst().get();
-		assertEquals("The game of the item given does not match", item.getGame(),oTest.getGame());
-		assertEquals("The price of the item given does not match", item.getPrice(),oTest.getPrice());
-		assertEquals("The stock of the item given does not match", item.getStock(),oTest.getStock());
-		
-		System.out.println("Item Store id: " + item.getId());
-		System.out.println("Store id: " + sTest2.getId());
-		System.out.println("Store name: " + sTest2.getName());
-	}
-	
-	
-
 }
