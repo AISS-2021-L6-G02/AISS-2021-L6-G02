@@ -1,0 +1,8 @@
+developer
+son los desarrolladores de juegos, y se puede consultar el nombre, pais de origen
+y año de fundacion
+
+
+platform
+son las distintas plataformas en las que se puede jugar (switch, pc, android...)
+se puede consultar el nombre de la plataforma
