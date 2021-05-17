@@ -1,12 +1,12 @@
 openapi: 3.0.0
 servers: 
-  - url: localhost://8089/api
+  - url: https://api-gamestore.ew.r.appspot.com/
 info:
-  description: This is a simple API
+  description: This is rastregames api, you can search the stores with your searched game in your city filter by the best price
   version: "1.0.0"
-  title: Simple Inventory API
+  title: RastreGame
   contact:
-    email: you@your-company.com
+    email: juanantonioortizguerra@gmail.com
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
