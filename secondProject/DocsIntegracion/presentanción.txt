@@ -14,4 +14,23 @@ conforme hacemos la demo podemos explicar las posibilidades que nos permite hace
 
 adjuntar capturas de la documentación y del uso de la api
 
+
+Store:
+Nombre, localizacion, hora apertura, hora cierre, lista de GameStore (juegos con su precio y stock) y telefono
+
+StoreResource:
+getAll: te devuelve todos las tiendas ordenadas por nombre tienda, localizacion, hora cierre, hora apertura.
+	te los filtra por una localizcion, hora de apertura y cierre, nombre, y por un titulo de un juego que tenga incluida
+	en la StoreGame (linea de juego)
+getStore()--> devuelve una store con su stock y juegos
+getCheapestGameInArea()--> pasamos el titulo del juego y la localizacion y nos devuelve
+			la lista de tiendas que esten en dicha localizacion y tengan dicho juego en STOCKKK
+addStore()--> añade una tienda sin juegos
+updateStore()--> actualiza una tienda con sus juegos y lineas de juegos
+deleteStore()--> borra una tienda
+addStoreGame--> añade lineas de juego a una tienda pasandole el id de la tienda y la linea de juego
+updateStoreGame--> actualiza lineas de juego de una tienda
+deleteGamesFromStore--> borrra lineas de juego de una tienda
+
+
 	
