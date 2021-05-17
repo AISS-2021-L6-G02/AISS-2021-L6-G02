@@ -24,7 +24,7 @@ public class RastreGamesApplication extends Application{
 		singletons.add(PlatformResource.getInstance());
 		singletons.add(DeveloperResource.getInstance());
 		singletons.add(GameResource.getInstance());
-//		singletons.add(StoreResource.getInstance());
+		singletons.add(StoreResource.getInstance());
 	}
 
 	@Override
