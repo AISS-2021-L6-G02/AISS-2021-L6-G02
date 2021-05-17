@@ -53,15 +53,14 @@ public class StoreResource {
 	@Produces("application/json")
 	public Collection<Store> getAll(@QueryParam("order") String order, @QueryParam("name") String name,
 			@QueryParam("location") String location, @QueryParam("titleGame") String titleGame,
-			@QueryParam("openHour") LocalTime openHour, @QueryParam("closeHour") LocalTime closeHour,
+			@QueryParam("openHour") String openHour, @QueryParam("closeHour") String closeHour,
 			@QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset) {
 		Collection<Store> result = repository.getAllStores();
 		if (name != null) {
 
-			result = result.stream().filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())
-					).collect(Collectors.toList());
+			result = result.stream().filter(x -> x.getName().toLowerCase().contains(name.toLowerCase()))
+					.collect(Collectors.toList());
 		}
-
 
 		if (titleGame != null) {
 			List<Store> aux = new ArrayList<Store>();
@@ -76,7 +75,7 @@ public class StoreResource {
 							if (sg.getGame().getTitle().toLowerCase().contains(titleGame.toLowerCase())) {
 								aux2.add(sg);
 								predicate = true;
-							
+
 							}
 						}
 				}
@@ -92,12 +91,12 @@ public class StoreResource {
 		}
 		if (openHour != null) {
 			result = result.stream()
-					.filter(x -> x.getOpenHour().isAfter(openHour) || x.getCloseHour().equals(closeHour))
+					.filter(x -> x.getOpenHour().equals(openHour) || x.getCloseHour().equals(closeHour))
 					.collect(Collectors.toList());
 		}
 		if (closeHour != null) {
 			result = result.stream()
-					.filter(x -> x.getCloseHour().isBefore(closeHour) || x.getCloseHour().equals(closeHour))
+					.filter(x -> x.getCloseHour().equals(closeHour) || x.getCloseHour().equals(closeHour))
 					.collect(Collectors.toList());
 		}
 
@@ -150,8 +149,7 @@ public class StoreResource {
 
 		if (offset == null) {
 			offset = 0;
-		}
-
+		}	
 		if (limit == null || limit + offset > res.size()) {
 			limit = res.size();
 		}
@@ -163,6 +161,9 @@ public class StoreResource {
 		return res.subList(offset, limit);
 
 	}
+		
+
+
 
 	@GET
 	@Path("/{id}")
@@ -189,7 +190,7 @@ public class StoreResource {
 			stores = getAll(null, null, location, titleGame, null, null, null, null);
 			List<Store> aux = new ArrayList<Store>();
 			List<StoreGame> aux2 = new ArrayList<StoreGame>();
-			int i =0;
+			int i = 0;
 			for (Store s : stores) {
 				Boolean predicate = false;
 				for (StoreGame sg : s.getGames()) {
@@ -198,7 +199,7 @@ public class StoreResource {
 						aux2.add(sg);
 					}
 				}
-				if(predicate) {
+				if (predicate) {
 					aux.add(s);
 
 				}
@@ -239,24 +240,24 @@ public class StoreResource {
 		return Response.noContent().build();
 	}
 
-//	@Path("/stores/games")
-//	@POST
-//	@Consumes("application/json")
-//	@Produces("application/json")
-//	public Response addGameToStore(String storeId, StoreGame g) {
-//		if (storeId.equals("") || storeId.equals(null)) {
-//			throw new BadRequestException("The storeId of the store must not be null");
-//		}
-//		if (g.getGame().equals(null))
-//			throw new BadRequestException("The game of store must not be null");
-//		if (g.getPrice().equals(null) || g.getPrice() < 0.0)
-//			throw new BadRequestException("The price of the game must not be null");
-//		if (g.getStock().equals(null))
-//			throw new BadRequestException("The stock Game store must not be null");
-//
-//		repository.addGameToStore(storeId, g);
-//		return Response.noContent().build();
-//	}
+	@Path("/stores/games")
+	@POST
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response addGameToStore(String storeId, StoreGame g) {
+		if (storeId.equals("") || storeId.equals(null)) {
+			throw new BadRequestException("The storeId of the store must not be null");
+		}
+		if (g.getGame().equals(null))
+			throw new BadRequestException("The game of store must not be null");
+		if (g.getPrice().equals(null) || g.getPrice() < 0.0)
+			throw new BadRequestException("The price of the game must not be null");
+		if (g.getStock().equals(null))
+			throw new BadRequestException("The stock Game store must not be null");
+
+		repository.addGameToStore(storeId, g);
+		return Response.noContent().build();
+	}
 
 	@PUT
 	@Consumes("application/json")
@@ -296,7 +297,7 @@ public class StoreResource {
 			throw new NotFoundException("The store with id=" + id + " was not found");
 		} else {
 			Store s = repository.getStore(id);
-			//TODO borrar lineas de juegos de store
+			// TODO borrar lineas de juegos de store
 //			if (s.getGames() != null) {
 //				List<StoreGame> aux = new ArrayList<StoreGame>(s.getGames());
 //				for(StoreGame s2:s.getGames()) {
