@@ -20,6 +20,7 @@ import org.junit.Test;
 import aiss.api.resources.GameResource;
 import aiss.api.resources.StoreResource;
 import aiss.model.StoreGame;
+import aiss.model.Game;
 import aiss.model.Store;
 
 public class StoreResourceTest {
@@ -121,8 +122,8 @@ public class StoreResourceTest {
 		Collection<Store> storesFiltroName = r.getAll(null, "Game", null, null, null, null, null, null);
 		Collection<Store> storesFiltroLocation = r.getAll(null, null, "Sevilla", null, null, null, null, null);
 		Collection<Store> storesFiltroTitleGame = r.getAll(null, null, null, "Animal Crossing", null, null, null, null);
-		Collection<Store> storesFiltroOpenHour = r.getAll(null, null, null, null, LocalTime.of(8, 0), null, null, null);
-		Collection<Store> storesFiltroCloseHour = r.getAll(null, null, null, null, null, LocalTime.of(20, 30), null, null);
+		Collection<Store> storesFiltroOpenHour = r.getAll(null, null, null, null, s1.getOpenHour(), null, null, null);
+		Collection<Store> storesFiltroCloseHour = r.getAll(null, null, null, null, null, s2.getCloseHour(), null, null);
 		
 		Collection<Store> storesOrderName = r.getAll("name", null, null, null, null, null, null, null);
 		Collection<Store> storesOrderNameReverse = r.getAll("-name", null, null, null, null, null, null, null);
@@ -294,18 +295,8 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testDeleteStore() {
-		Store sTest = new Store();
-		sTest.setName("Test name");
-		sTest.setLocation("Test Location");
-		sTest.setOpenHour(LocalTime.of(11, 0));
-		sTest.setCloseHour(LocalTime.of(20, 30));
-		sTest.setPhone("999999999");
-		r.addStore(sTest);
-		
-		Store sTest2 = r.getAll().stream().filter(x->x.getName()==sTest.getName() && x.getLocation()==sTest.getLocation() && x.getId()!=s1.getId() && x.getId()!=s2.getId() && x.getId()!=s3.getId()).findFirst().get();
-		
-		assertNotNull("The store was not added correctly", sTest2);
-		Boolean deleted = r.deleteStore(sTest2.getId()).equals(null);
+			
+		Boolean deleted = r.deleteStore(s1.getId()).equals(null);
 		assertFalse("The store is not deleted",deleted);
 		System.out.println("Success deleting store");
 		

@@ -55,48 +55,54 @@ public class StoreResource {
 			@QueryParam("location") String location, @QueryParam("titleGame") String titleGame,
 			@QueryParam("openHour") LocalTime openHour, @QueryParam("closeHour") LocalTime closeHour,
 			@QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset) {
-		Stream<Store> result = repository.getAllStores().stream();
+		Collection<Store> result = repository.getAllStores();
 		if (name != null) {
-			result = result.filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())
-					|| x.getName().toLowerCase().equals(name.toLowerCase()));
+
+			result = result.stream().filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())
+					|| x.getName().toLowerCase().equals(name.toLowerCase())).collect(Collectors.toList());
 		}
 		if (location != null) {
-			result = result.filter(x -> x.getLocation().toLowerCase().contains(location.toLowerCase())
-					|| x.getLocation().toLowerCase().equals(location.toLowerCase()));
+			result = result.stream()
+					.filter(x -> x.getLocation().toLowerCase().contains(location.toLowerCase())
+							|| x.getLocation().toLowerCase().equals(location.toLowerCase()))
+					.collect(Collectors.toList());
 		}
 
-		if (titleGame!=null) {
+		if (titleGame != null) {
 			List<Store> aux = new ArrayList<Store>();
 			Boolean predicate = false;
 			int i = 0;
-			for (Store s : result.collect(Collectors.toList())) {
-				predicate=false;
+			for (Store s : result) {
+				predicate = false;
 				List<StoreGame> aux2 = new ArrayList<StoreGame>();
-				if(s.getGames()!=null) {
-					if(s.getGames().size()>0)
-					for (StoreGame sg : s.getGames()) {
-						if (sg.getGame().getTitle().toLowerCase().contains(titleGame.toLowerCase())) {
-							aux2.add(sg);
-							predicate = true;
+				if (s.getGames() != null) {
+					if (s.getGames().size() > 0)
+						for (StoreGame sg : s.getGames()) {
+							if (sg.getGame().getTitle().toLowerCase().contains(titleGame.toLowerCase())) {
+								aux2.add(sg);
+								predicate = true;
+							}
 						}
-					}
 				}
-				
-				if(predicate) {
+
+				if (predicate) {
 					aux.add(s);
 					aux.get(i).setGames(new ArrayList<StoreGame>(aux2));
 					i++;
 				}
-				
-				
+
 			}
-			result = aux.stream();
+			result = aux;
 		}
-		if (openHour!=null) {
-			result.filter(x -> x.getOpenHour().isAfter(openHour) || x.getCloseHour().equals(closeHour)).collect(Collectors.toList());
+		if (openHour != null) {
+			result = result.stream()
+					.filter(x -> x.getOpenHour().isAfter(openHour) || x.getCloseHour().equals(closeHour))
+					.collect(Collectors.toList());
 		}
-		if (closeHour!=null) {
-			result.filter(x -> x.getCloseHour().isBefore(closeHour) || x.getCloseHour().equals(closeHour)).collect(Collectors.toList());
+		if (closeHour != null) {
+			result = result.stream()
+					.filter(x -> x.getCloseHour().isBefore(closeHour) || x.getCloseHour().equals(closeHour))
+					.collect(Collectors.toList());
 		}
 
 		if ((order != null)) {
@@ -106,28 +112,33 @@ public class StoreResource {
 				noValido = true;
 				break;
 			case "name":
-				result = result.sorted(Comparator.comparing(Store::getName));
+
+				result = result.stream().sorted(Comparator.comparing(Store::getName)).collect(Collectors.toList());
 				break;
 			case "-name":
-				result = result.sorted(Comparator.comparing(Store::getName).reversed());
+				result = result.stream().sorted(Comparator.comparing(Store::getName).reversed())
+						.collect(Collectors.toList());
 				break;
 			case "location":
-				result = result.sorted(Comparator.comparing(Store::getLocation));
+				result = result.stream().sorted(Comparator.comparing(Store::getLocation)).collect(Collectors.toList());
 				break;
 			case "-location":
-				result = result.sorted(Comparator.comparing(Store::getLocation).reversed());
+				result = result.stream().sorted(Comparator.comparing(Store::getLocation).reversed())
+						.collect(Collectors.toList());
 				break;
 			case "openHour":
-				result = result.sorted(Comparator.comparing(Store::getOpenHour));
+				result = result.stream().sorted(Comparator.comparing(Store::getOpenHour)).collect(Collectors.toList());
 				break;
 			case "-openHour":
-				result = result.sorted(Comparator.comparing(Store::getOpenHour).reversed());
+				result = result.stream().sorted(Comparator.comparing(Store::getOpenHour).reversed())
+						.collect(Collectors.toList());
 				break;
 			case "closeHour":
-				result = result.sorted(Comparator.comparing(Store::getCloseHour));
+				result = result.stream().sorted(Comparator.comparing(Store::getCloseHour)).collect(Collectors.toList());
 				break;
 			case "-closeHour":
-				result = result.sorted(Comparator.comparing(Store::getCloseHour).reversed());
+				result = result.stream().sorted(Comparator.comparing(Store::getCloseHour).reversed())
+						.collect(Collectors.toList());
 				break;
 			}
 			if (noValido) {
@@ -135,7 +146,11 @@ public class StoreResource {
 						"The format of the order parameter must be name, -name, year, -year, country, or -country");
 			}
 		}
-		List<Store> res = result.collect(Collectors.toList());
+		List<Store> res = new ArrayList<Store>();
+		if (result != null) {
+			if (result.size() > 0)
+				res = result.stream().collect(Collectors.toList());
+		}
 
 		if (offset == null) {
 			offset = 0;
@@ -277,7 +292,23 @@ public class StoreResource {
 		if (toRemove == null) {
 			throw new NotFoundException("The store with id=" + id + " was not found");
 		} else {
-			repository.deleteStore(id);
+			Store s = repository.getStore(id);
+			if (s.getGames() != null) {
+				List<StoreGame> ls = new ArrayList<StoreGame>(s.getGames());
+				for (StoreGame sg : ls) {
+					StoreGame toRemove2 = repository.getObject(s.getId(), sg.getId());
+
+					if (toRemove == null) {
+						throw new NotFoundException(
+								"The game with id=" + sg.getId() + " was not found in the store with id=" + s.getId());
+					} else {
+						repository.deleteObjeto(s.getId(), sg.getId());
+					}
+				}
+
+				repository.deleteStore(id);
+			}
+
 		}
 		return Response.noContent().build();
 	}

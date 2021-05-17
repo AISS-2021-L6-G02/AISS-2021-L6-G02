@@ -532,7 +532,7 @@ public class MapDatabaseRepository implements DatabaseRepository{
 	@Override
 	public void addObjeto(String storeId, StoreGame o) {
 		if (storeMap.get(storeId).getGames()==null||storeMap.get(storeId).getGamesSize()==0) indexStoreObjeto=0;
-		String id="o"+indexStoreObjeto++;
+		String id="gs"+indexStoreObjeto++;
 		o.setId(id);
 		storeMap.get(storeId).addGame(o);
 	}
@@ -552,7 +552,7 @@ public class MapDatabaseRepository implements DatabaseRepository{
 	//Genre
 	@Override
 	public void addGenre(Genre g) {
-		String id = "gen" + indexGenre++;
+		String id = "genre" + indexGenre++;
 		g.setId(id);
 		genreMap.put(id, g);
 	}

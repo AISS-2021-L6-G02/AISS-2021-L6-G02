@@ -35,7 +35,7 @@ public class GameResourceTest {
 		List<Mode> testM = new ArrayList<Mode>();
 		List<Genre> testG = new ArrayList<Genre>();
 		List<Platform> testP = new ArrayList<Platform>();
-
+		
 		d = dev.getAll().stream().findFirst().get();
 		gen = genres.getAll().stream().findFirst().get();
 		p = platforms.getAll().stream().findFirst().get();
@@ -121,55 +121,77 @@ public class GameResourceTest {
 
 
 		assertNotNull("The collection of games is null", games);
+		System.out.println("\n\n\n=====================================================");
 		System.out.println("Listing all games:");
+		System.out.println("=====================================================");
+
 		for(Game g : games) {
 			System.out.println(g.toString());
 		}
 		
 		assertNotNull("The collection of games sorted by title is null", gamesOrderTitle);
+		System.out.println("=====================================================");
+
 		System.out.println("Listing all games sorted by title:");
+		System.out.println("=====================================================");
+
 		for(Game g : gamesOrderTitle) {
 			System.out.println(g.toString());
 		}
 		
 		assertNotNull("The collection of games sorted reverse by title is null", gamesOrderTitleReverse);
+		System.out.println("=====================================================");
 		System.out.println("Listing all games sorted reverse by title:");
+		System.out.println("=====================================================");
+
 		for(Game g : gamesOrderTitleReverse) {
 			System.out.println(g.toString());
 		}
 		
 		assertNotNull("The collection of games sorted by year is null", gamesOrderYear);
+		System.out.println("=====================================================");
 		System.out.println("Listing all games sorted by year:");
+		System.out.println("=====================================================");
 		for(Game g : gamesOrderYear) {
 			System.out.println(g.toString());
 		}
 		
 		assertNotNull("The collection of games sorted reverse by year is null", gamesOrderYearReverse);
+		System.out.println("=====================================================");
 		System.out.println("Listing all games sorted reverse by year:");
+		System.out.println("=====================================================");
 		for(Game g : gamesOrderYearReverse) {
 			System.out.println(g.toString());
 		}
 		
 		assertNotNull("The collection of games sorted by dev is null", gamesOrderDev);
+		System.out.println("=====================================================");
 		System.out.println("Listing all games sorted by dev:");
+		System.out.println("=====================================================");
 		for(Game g : gamesOrderDev) {
 			System.out.println(g.toString());
 		}
 		
 		assertNotNull("The collection of games sorted reverse by dev is null", gamesOrderDevReverse);
+		System.out.println("=====================================================");
 		System.out.println("Listing all games sorted reverse by dev:");
+		System.out.println("=====================================================");
 		for(Game g : gamesOrderDevReverse) {
 			System.out.println(g.toString());
 		}
 		
 		assertNotNull("The collection of games sorted by score is null", gamesOrderScore);
+		System.out.println("=====================================================");
 		System.out.println("Listing all games sorted by score:");
+		System.out.println("=====================================================");
 		for(Game g : gamesOrderScore) {
 			System.out.println(g.toString());
 		}
 		
 		assertNotNull("The collection of games sorted reverse by score is null", gamesOrderScoreReverse);
+		System.out.println("=====================================================");
 		System.out.println("Listing all games sorted reverse by score:");
+		System.out.println("=====================================================");
 		for(Game g : gamesOrderScoreReverse) {
 			System.out.println(g.toString());
 		}
@@ -249,7 +271,10 @@ public class GameResourceTest {
 		assertEquals("The genres of the games do not match", g1.getGenres(), gTest.getGenres());
 		assertEquals("The modes of the games do not match", g1.getModes(), gTest.getModes());
 		
-		
+		System.out.println("\n\n\n=====================================================");
+		System.out.println("testGetGame()");
+		System.out.println("=====================================================");
+
 		System.out.println("Game id: " + gTest.getId());
 		System.out.println("Game title: " + gTest.getTitle());
 		
