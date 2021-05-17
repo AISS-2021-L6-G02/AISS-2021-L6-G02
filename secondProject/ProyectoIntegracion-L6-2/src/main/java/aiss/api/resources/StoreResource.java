@@ -53,12 +53,19 @@ public class StoreResource {
 	@Produces("application/json")
 	public Collection<Store> getAll(@QueryParam("order") String order, @QueryParam("name") String name,
 			@QueryParam("location") String location, @QueryParam("titleGame") String titleGame,
-			@QueryParam("openHour") String openHour, @QueryParam("closeHour") String closeHour,
+			@QueryParam("openHour") LocalTime openHour, @QueryParam("closeHour") LocalTime closeHour,
 			@QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset) {
 		Collection<Store> result = repository.getAllStores();
+		
 		if (name != null) {
 
 			result = result.stream().filter(x -> x.getName().toLowerCase().contains(name.toLowerCase()))
+					.collect(Collectors.toList());
+		}
+		
+		if (location != null) {
+
+			result = result.stream().filter(x -> x.getLocation().toLowerCase().contains(location.toLowerCase()))
 					.collect(Collectors.toList());
 		}
 
@@ -67,7 +74,7 @@ public class StoreResource {
 			Boolean predicate = false;
 			int i = 0;
 			for (Store s : result) {
-				predicate = false;
+				// predicate = false;
 				List<StoreGame> aux2 = new ArrayList<StoreGame>();
 				if (s.getGames() != null) {
 					if (s.getGames().size() > 0)
@@ -91,52 +98,38 @@ public class StoreResource {
 		}
 		if (openHour != null) {
 			result = result.stream()
-					.filter(x -> x.getOpenHour().equals(openHour) || x.getCloseHour().equals(closeHour))
+					.filter(x -> x.getOpenHour().compareTo(openHour) == 0)
 					.collect(Collectors.toList());
 		}
 		if (closeHour != null) {
 			result = result.stream()
-					.filter(x -> x.getCloseHour().equals(closeHour) || x.getCloseHour().equals(closeHour))
+					.filter(x -> x.getCloseHour().compareTo(closeHour) == 0)
 					.collect(Collectors.toList());
 		}
 
 		if ((order != null)) {
-			Boolean noValido = false;
 			switch (order) {
-			default:
-				noValido = true;
-				break;
 			case "name":
-
-				result = result.stream().sorted(Comparator.comparing(Store::getName)).collect(Collectors.toList());
-				break;
 			case "-name":
 				result = result.stream().sorted(Comparator.comparing(Store::getName).reversed())
 						.collect(Collectors.toList());
 				break;
 			case "location":
-				result = result.stream().sorted(Comparator.comparing(Store::getLocation)).collect(Collectors.toList());
-				break;
 			case "-location":
 				result = result.stream().sorted(Comparator.comparing(Store::getLocation).reversed())
 						.collect(Collectors.toList());
 				break;
 			case "openHour":
-				result = result.stream().sorted(Comparator.comparing(Store::getOpenHour)).collect(Collectors.toList());
-				break;
 			case "-openHour":
 				result = result.stream().sorted(Comparator.comparing(Store::getOpenHour).reversed())
 						.collect(Collectors.toList());
 				break;
 			case "closeHour":
-				result = result.stream().sorted(Comparator.comparing(Store::getCloseHour)).collect(Collectors.toList());
-				break;
 			case "-closeHour":
 				result = result.stream().sorted(Comparator.comparing(Store::getCloseHour).reversed())
 						.collect(Collectors.toList());
 				break;
-			}
-			if (noValido) {
+			default:
 				throw new BadRequestException(
 						"The format of the order parameter must be name, -name, year, -year, country, or -country");
 			}
@@ -181,33 +174,34 @@ public class StoreResource {
 	@GET
 	@Path("/cheapestGames")
 	@Produces("aplication/json")
-	public Collection<Store> getCheapestGamesInArea(@QueryParam("titleGame") String titleGame,
+	public Collection<StoreGame> getCheapestGamesInArea(@QueryParam("titleGame") String titleGame,
 			@QueryParam("location") String location) {
-		Collection<Store> stores = null;
+		
+		Collection<Store> result = repository.getAllStores();
+		
+		if (location != null) {
+
+			result = result.stream().filter(x -> x.getLocation().toLowerCase().contains(location.toLowerCase()))
+					.collect(Collectors.toList());
+		}
+		
+		
 		if (titleGame.equals("") || titleGame.equals(null)) {
 			throw new BadRequestException("The title game must not be null");
-		} else {
-			stores = getAll(null, null, location, titleGame, null, null, null, null);
-			List<Store> aux = new ArrayList<Store>();
-			List<StoreGame> aux2 = new ArrayList<StoreGame>();
-			int i = 0;
-			for (Store s : stores) {
-				Boolean predicate = false;
-				for (StoreGame sg : s.getGames()) {
-					if (sg.getStock() > 0) {
-						predicate = true;
-						aux2.add(sg);
-					}
-				}
-				if (predicate) {
-					aux.add(s);
-
-				}
-			}
-			stores = aux;
-
 		}
-		return stores;
+
+		List<StoreGame> storeGames = result.stream().filter(
+					x -> x.getGames() != null && x.getGames().size() > 0 && 
+					x.getGames().stream().anyMatch(y -> y.getGame().getTitle().toLowerCase().contains(titleGame.toLowerCase()) && y.getStock() > 0)
+					)
+				.map(x -> x.getGames())
+				.flatMap(Collection::stream)
+				.collect(Collectors.toList()
+		);
+		
+		storeGames.sort(Comparator.comparing(StoreGame::getPrice));
+		
+		return storeGames;
 	}
 
 	@POST

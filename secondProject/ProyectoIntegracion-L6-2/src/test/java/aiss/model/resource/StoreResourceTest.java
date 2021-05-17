@@ -302,15 +302,14 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testGetCheapest() {
-		Collection<Store> stores = r.getCheapestGamesInArea("Mario", "Madrid");
-		assertNotNull("The store collection is null", stores);
+		Collection<StoreGame> storegames = r.getCheapestGamesInArea("Mario", "Madrid");
+		assertNotNull("The storegame collection is null", storegames);
 		System.out.println("========================================");
 		System.out.println("Test get cheapest:");
 		System.out.println("========================================");
-		System.out.println("Showing the stores that sell the specified game the cheapest in your area");
-		for(Store store : stores) {
-			System.out.println(store);
-			System.out.println(store.getGames());
+		System.out.println("Showing the storegames that sell the specified game the cheapest in your area");
+		for(StoreGame storegame : storegames) {
+			System.out.println(storegame);
 		}
 	}
 }

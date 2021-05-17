@@ -1,6 +1,7 @@
 package aiss.model;
 
 public class StoreGame {
+	private Store store;
 	private String id;
 	private Game game;
 	private Double price;
@@ -12,19 +13,21 @@ public class StoreGame {
 		
 	}
 	
-	public StoreGame(String id, Game game, Double price, Integer stock) {
+	public StoreGame(String id, Game game, Double price, Integer stock, Store store) {
 		super();
 		this.id = id;
 		this.game = game;
 		this.price = price;
 		this.stock = stock;
+		this.store = store;
 	}
 	
-	public StoreGame(Game game, Double price, Integer stock) {
+	public StoreGame(Game game, Double price, Integer stock, Store store) {
 		super();
 		this.game = game;
 		this.price = price;
 		this.stock = stock;
+		this.store = store;
 	}
 
 	//Getters
@@ -40,7 +43,10 @@ public class StoreGame {
 	public Integer getStock() {
 		return stock;
 	}
-	
+	public Store getStore() {
+		return store;
+	}
+
 	//Setters
 	public void setId(String id) {
 		this.id=id;
@@ -53,6 +59,9 @@ public class StoreGame {
 	}
 	public void setStock(Integer stock) {
 		this.stock = stock;
+	}	
+	public void setStore(Store store) {
+		this.store = store;
 	}
 	
 
@@ -64,6 +73,7 @@ public class StoreGame {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((stock == null) ? 0 : stock.hashCode());
+		result = prime * result + ((store == null) ? 0 : store.hashCode());
 		return result;
 	}
 
@@ -96,15 +106,17 @@ public class StoreGame {
 				return false;
 		} else if (!stock.equals(other.stock))
 			return false;
+		if (store == null) {
+			if (other.store != null)
+				return false;
+		} else if (!store.equals(other.store))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ObjetoStore [id=" + id + ", game=" + game + ", price=" + price + ", stock=" + stock + "]";
+		return "StoreGame [store=" + store.getName() + ", id=" + id + ", game=" + game + ", price=" + price + ", stock=" + stock
+				+ "]";
 	}
-	
-	
-	
-
 }

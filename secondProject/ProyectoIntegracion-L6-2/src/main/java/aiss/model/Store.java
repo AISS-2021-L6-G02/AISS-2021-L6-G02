@@ -85,6 +85,12 @@ public class Store {
 		this.closeHour = closeHour;
 	}
 	public void setGames(List<StoreGame> games) {
+		
+		if(games != null)
+		{
+			games.forEach(g -> { if(g != null) g.setStore(this); });
+		}
+		
 		this.games = games;
 	}
 	public void setPhone(String phone) {
@@ -101,6 +107,12 @@ public class Store {
 	//Other methods
 	
 	public void addGame(StoreGame game) {
+		
+		if(game != null)
+		{
+			game.setStore(this);
+		}
+		
 		if(games==null) games = new ArrayList<StoreGame>();
 		games.add(game);
 	}
