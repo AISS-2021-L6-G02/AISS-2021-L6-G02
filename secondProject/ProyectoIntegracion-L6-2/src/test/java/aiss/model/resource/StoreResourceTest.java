@@ -142,7 +142,9 @@ public class StoreResourceTest {
 		assertNotNull("The collection of stores sorted reverse by closing hour is null", storesOrderCloseHourReverse);
 		
 		assertNotNull("The collection of stores paginated is null", paginacionStores);
-		
+		System.out.println("========================================");
+		System.out.println("Test get all stores:");
+		System.out.println("========================================");
 		System.out.println("Get All Stores");
 		for(Store s:stores) {
 			System.out.println(s.toString());
@@ -237,6 +239,7 @@ public class StoreResourceTest {
 		System.out.println("Store name: " + s.getName());
 	}
 	
+	
 	@Test 
 	public void testAddStore() {
 		Store sTest = new Store();
@@ -288,6 +291,9 @@ public class StoreResourceTest {
 		Store aux = s1;
 		Boolean deleted = r.deleteStore(s1.getId()).equals(null);
 		assertFalse("The store is not deleted",deleted);
+		System.out.println("========================================");
+		System.out.println("Test delete store:");
+		System.out.println("========================================");
 		System.out.println("Success deleting store");
 		Response res = r.addStore(aux);
 		assertNotNull("Error adding store on testDeleteStore()", res);
@@ -296,11 +302,15 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testGetCheapest() {
-		Collection<Store> stores = r.getCheapestGamesInArea("Animal Crossing", "Sevilla");
+		Collection<Store> stores = r.getCheapestGamesInArea("Mario", "Madrid");
 		assertNotNull("The store collection is null", stores);
+		System.out.println("========================================");
+		System.out.println("Test get cheapest:");
+		System.out.println("========================================");
 		System.out.println("Showing the stores that sell the specified game the cheapest in your area");
 		for(Store store : stores) {
 			System.out.println(store);
+			System.out.println(store.getGames());
 		}
 	}
 }
