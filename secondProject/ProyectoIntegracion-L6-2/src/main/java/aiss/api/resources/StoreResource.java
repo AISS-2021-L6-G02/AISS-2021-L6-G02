@@ -56,18 +56,20 @@ public class StoreResource {
 	public Collection<Store> getAll(@QueryParam("order") String order, @QueryParam("name") String name,
 			@QueryParam("location") String location, @QueryParam("titleGame") String titleGame,
 			@QueryParam("openHour") LocalTime openHour, @QueryParam("closeHour") LocalTime closeHour,
+			@QueryParam("hasStock") Boolean hasStock,
 			@QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset) {
 		Stream<Store> result = repository.getAllStores().stream();
-		if (!(name == null || !name.equals(""))) {
+		if (name != null || !name.equals("")) {
 			result = result.filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())
 					|| x.getName().toLowerCase().equals(name.toLowerCase()));
 		}
-		if (!(location == null || !location.equals(""))) {
+		if (location != null || !location.equals("")) {
 			result = result.filter(x -> x.getLocation().toLowerCase().contains(location.toLowerCase())
 					|| x.getLocation().toLowerCase().equals(location.toLowerCase()));
 		}
+		
 
-		if (!(titleGame == null || !titleGame.equals(""))) {
+		if ((titleGame != null || !titleGame.equals(""))) {
 			List<Store> aux = new ArrayList<Store>();
 			Boolean predicate = false;
 			for (Store s : result.collect(Collectors.toList())) {
@@ -88,7 +90,7 @@ public class StoreResource {
 			result.filter(x -> x.getCloseHour().equals(closeHour)).collect(Collectors.toList());
 		}
 
-		if (!(order == null || order.equals(""))) {
+		if ((order != null || !order.equals(""))) {
 			Boolean noValido = false;
 			switch (order) {
 			default:
@@ -161,7 +163,7 @@ public class StoreResource {
 	public Collection<Store> getCheapestGamesInArea(@QueryParam("titleGame") String titleGame,
 			@QueryParam("location") String location) {
 		Collection<Store> stores = null;
-		if (!titleGame.equals("") || !titleGame.equals(null)) {
+		if (titleGame.equals("") || titleGame.equals(null)) {
 			throw new BadRequestException("The title game must not be null");
 		} else {
 			stores = getAll(null, null, location, titleGame, null, null, null, null);
