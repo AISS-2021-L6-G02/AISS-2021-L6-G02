@@ -294,20 +294,13 @@ public class StoreResource {
 		} else {
 			Store s = repository.getStore(id);
 			if (s.getGames() != null) {
-				List<StoreGame> ls = new ArrayList<StoreGame>(s.getGames());
-				for (StoreGame sg : ls) {
-					StoreGame toRemove2 = repository.getObject(s.getId(), sg.getId());
+				List<StoreGame> aux = new ArrayList<StoreGame>(s.getGames());
+				for(StoreGame s2:s.getGames()) {
+					repository.deleteObjeto(s.getId(), s2.getId());
 
-					if (toRemove == null) {
-						throw new NotFoundException(
-								"The game with id=" + sg.getId() + " was not found in the store with id=" + s.getId());
-					} else {
-						repository.deleteObjeto(s.getId(), sg.getId());
-					}
 				}
-
-				repository.deleteStore(id);
 			}
+			repository.deleteStore(s.getId());
 
 		}
 		return Response.noContent().build();

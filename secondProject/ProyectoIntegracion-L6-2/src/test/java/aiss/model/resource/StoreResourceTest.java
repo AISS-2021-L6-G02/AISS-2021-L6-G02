@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import javax.ws.rs.core.Response;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -93,17 +94,6 @@ public class StoreResourceTest {
 		o2.setId(r.getGamesFromStore(s2.getId()).stream().filter(x->x.getGame().equals(o2.getGame()) && x.getPrice()==o2.getPrice() && x.getStock()==o2.getStock()).findFirst().get().getId());
 		o3.setId(r.getGamesFromStore(s3.getId()).stream().filter(x->x.getGame().equals(o3.getGame()) && x.getPrice()==o3.getPrice() && x.getStock()==o3.getStock()).findFirst().get().getId());
 		
-		/*
-		UriInfo uriInfo = Mockito.mock(UriInfo.class);
-		Mockito.when(uriInfo.getAbsolutePath()).thenReturn(URI.create("localhost:8080/stores"));
-		*/
-		
-		
-		
-		/*
-		UriInfo uriInfo2 = Mockito.mock(UriInfo.class);
-		Mockito.when(uriInfo2.getAbsolutePath()).thenReturn(URI.create("localhost:8080/stores"));
-		*/
 	}
 	
 	@AfterClass
@@ -295,10 +285,12 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testDeleteStore() {
-			
+		Store aux = s1;
 		Boolean deleted = r.deleteStore(s1.getId()).equals(null);
 		assertFalse("The store is not deleted",deleted);
 		System.out.println("Success deleting store");
+		Response res = r.addStore(aux);
+		assertNotNull("Error adding store on testDeleteStore()", res);
 		
 	}
 	
