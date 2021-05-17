@@ -1,0 +1,5 @@
+mirar lo del local time
+
+implementar el filtro de localizacion
+
+método aparte privado que devuelva una lista de tiendas que tengan un determinado juego para evitar tener que cambiar el código varias veces
