@@ -23,11 +23,13 @@ public class MapDatabaseRepository implements DatabaseRepository{
 	Map<String,Store> storeMap;
 	Map<String,Genre> genreMap;
 	Map<String, Platform> platformMap;
+	Map<String, StoreGame> storeGameMap;
+	
 	
 	private int indexGame = 0;
 	private int indexDeveloper = 0;
 	private int indexStore = 0;
-	private int indexStoreObjeto = 0;
+	private int indexStoreGame = 0;
 	private int indexGenre = 0;
 	private int indexPlatform = 0;
 	
@@ -60,7 +62,7 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		storeMap = new HashMap<String, Store>();
 		genreMap = new HashMap<String, Genre>();
 		platformMap = new HashMap<String, Platform>();
-		
+		storeGameMap = new HashMap<String, StoreGame>();
 		
 		//Genre
 		action = new Genre();
@@ -375,7 +377,6 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		
 		gamesStore1 = new ArrayList<>();
 		game1Store1 = new StoreGame();
-		game2Store2 = new StoreGame();
 		
 		game1Store1.setGame(marioOdyssey);
 		game1Store1.setPrice(49.99);
@@ -458,6 +459,25 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		addStore(store3);
 		addStore(store4);
 		
+		
+		addStoreGame(game1Store1);
+		addStoreGame(game1Store2);
+		addStoreGame(game2Store2);
+		addStoreGame(game1Store3);
+		addStoreGame(game2Store3);
+		addStoreGame(game1Store4);
+		addStoreGame(game2Store4);
+		addStoreGame(game3Store4);
+		
+		game1Store1.setId(getAllObjects().stream().filter(x->x.getGame().equals(game1Store1.getGame()) && x.getPrice().equals(game1Store1.getPrice()) && x.getStock().equals(game1Store1.getStock())).findFirst().get().getId());
+		game1Store2.setId(getAllObjects().stream().filter(x->x.getGame().equals(game1Store2.getGame()) && x.getPrice().equals(game1Store2.getPrice()) && x.getStock().equals(game1Store2.getStock())).findFirst().get().getId());
+		game2Store2.setId(getAllObjects().stream().filter(x->x.getGame().equals(game2Store2.getGame()) && x.getPrice().equals(game2Store2.getPrice()) && x.getStock().equals(game2Store2.getStock())).findFirst().get().getId());
+		game1Store3.setId(getAllObjects().stream().filter(x->x.getGame().equals(game1Store3.getGame()) && x.getPrice().equals(game1Store3.getPrice()) && x.getStock().equals(game1Store3.getStock())).findFirst().get().getId());
+		game2Store3.setId(getAllObjects().stream().filter(x->x.getGame().equals(game2Store3.getGame()) && x.getPrice().equals(game2Store3.getPrice()) && x.getStock().equals(game2Store3.getStock())).findFirst().get().getId());
+		game1Store4.setId(getAllObjects().stream().filter(x->x.getGame().equals(game1Store4.getGame()) && x.getPrice().equals(game1Store4.getPrice()) && x.getStock().equals(game1Store4.getStock())).findFirst().get().getId());
+		game2Store4.setId(getAllObjects().stream().filter(x->x.getGame().equals(game2Store4.getGame()) && x.getPrice().equals(game2Store4.getPrice()) && x.getStock().equals(game2Store4.getStock())).findFirst().get().getId());
+		game3Store4.setId(getAllObjects().stream().filter(x->x.getGame().equals(game3Store4.getGame()) && x.getPrice().equals(game3Store4.getPrice()) && x.getStock().equals(game3Store4.getStock())).findFirst().get().getId());
+		
 		store1.setId(getAllStores().stream().filter(x->x.getName()==store1.getName()).findFirst().get().getId());
 		store2.setId(getAllStores().stream().filter(x->x.getName()==store2.getName()).findFirst().get().getId());
 		store3.setId(getAllStores().stream().filter(x->x.getName()==store3.getName()).findFirst().get().getId());
@@ -465,16 +485,16 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		
 		
 		for(StoreGame i:gamesStore1) {
-			addObjeto(store1.getId(), i);
+			addGameToStore(store1.getId(), i);
 		}
 		for(StoreGame i:gamesStore2) {
-			addObjeto(store2.getId(), i);
+			addGameToStore(store2.getId(), i);
 		}
 		for(StoreGame i:gamesStore3) {
-			addObjeto(store3.getId(), i);
+			addGameToStore(store3.getId(), i);
 		}
 		for(StoreGame i:gamesStore4) {
-			addObjeto(store4.getId(), i);
+			addGameToStore(store4.getId(), i);
 		}
 	}
 	
@@ -529,12 +549,20 @@ public class MapDatabaseRepository implements DatabaseRepository{
 	}
 	
 	//ObjetoStore
+	private Collection<StoreGame> getAllObjects(){
+		return storeGameMap.values();
+	}
 	@Override
-	public void addObjeto(String storeId, StoreGame o) {
-		if (storeMap.get(storeId).getGames()==null||storeMap.get(storeId).getGamesSize()==0) indexStoreObjeto=0;
-		String id="o"+indexStoreObjeto++;
+	public void addStoreGame(StoreGame o) {
+		String id = "o" + indexStoreGame++;
 		o.setId(id);
-		storeMap.get(storeId).addGame(o);
+		storeGameMap.put(id, o);
+	}
+	@Override
+	public void addGameToStore(String storeId, StoreGame o) {
+		Store s = getStore(storeId);
+		s.addGame(o);
+		storeMap.put(storeId, s);
 	}
 	@Override
 	public Collection<StoreGame> getAllObjects(String storeId) {
