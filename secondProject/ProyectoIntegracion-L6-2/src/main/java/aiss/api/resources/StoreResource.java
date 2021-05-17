@@ -251,7 +251,7 @@ public class StoreResource {
 		if (g.getStock().equals(null))
 			throw new BadRequestException("The stock Game store must not be null");
 
-		repository.addObjeto(storeId, g);
+		repository.addGameToStore(storeId, g);
 		return Response.noContent().build();
 	}
 
@@ -329,7 +329,7 @@ public class StoreResource {
 			throw new BadRequestException("The stock must not be null or negative");
 		}
 
-		repository.addObjeto(storeId, game);
+		repository.addGameToStore(storeId, game);
 		return Response.noContent().build();
 	}
 

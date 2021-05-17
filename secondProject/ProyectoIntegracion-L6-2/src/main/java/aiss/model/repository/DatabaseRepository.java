@@ -25,7 +25,8 @@ public interface DatabaseRepository {
 	public void deleteStore(String storeId);
 	public Collection<StoreGame> getAllObjects(String storeId);
 	public StoreGame getObject(String storeId, String itemId);
-	public void addObjeto(String storeId, StoreGame o);
+	public void addStoreGame(StoreGame o);
+	public void addGameToStore(String storeId, StoreGame o);
 	public void deleteObjeto(String storeId,String objectId);
 	
 	//Genre
