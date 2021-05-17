@@ -75,13 +75,13 @@ public class StoreResourceTest {
 		s2.setId(r.getAll().stream().filter(x->x.getName()==s2.getName()).findFirst().get().getId());
 		s3.setId(r.getAll().stream().filter(x->x.getName()==s3.getName()).findFirst().get().getId());
 		
-		r.addObject(s1.getId(), o1);
-		r.addObject(s2.getId(), o2);
-		r.addObject(s3.getId(), o3);
+		r.addStoreGame(s1.getId(), o1);
+		r.addStoreGame(s2.getId(), o2);
+		r.addStoreGame(s3.getId(), o3);
 		
-		o1.setId(r.getAllObjects(s1.getId(), null, null, null, null, null, null).stream().filter(x->x.getGame().equals(o1.getGame()) && x.getPrice()==o1.getPrice() && x.getStock()==o1.getStock()).findFirst().get().getId());
-		o2.setId(r.getAllObjects(s2.getId(), null, null, null, null, null, null).stream().filter(x->x.getGame().equals(o2.getGame()) && x.getPrice()==o2.getPrice() && x.getStock()==o2.getStock()).findFirst().get().getId());
-		o3.setId(r.getAllObjects(s3.getId(), null, null, null, null, null, null).stream().filter(x->x.getGame().equals(o3.getGame()) && x.getPrice()==o3.getPrice() && x.getStock()==o3.getStock()).findFirst().get().getId());
+		o1.setId(r.getGamesFromStore(s1.getId()).stream().filter(x->x.getGame().equals(o1.getGame()) && x.getPrice()==o1.getPrice() && x.getStock()==o1.getStock()).findFirst().get().getId());
+		o2.setId(r.getGamesFromStore(s2.getId()).stream().filter(x->x.getGame().equals(o2.getGame()) && x.getPrice()==o2.getPrice() && x.getStock()==o2.getStock()).findFirst().get().getId());
+		o3.setId(r.getGamesFromStore(s3.getId()).stream().filter(x->x.getGame().equals(o3.getGame()) && x.getPrice()==o3.getPrice() && x.getStock()==o3.getStock()).findFirst().get().getId());
 		
 		/*
 		UriInfo uriInfo = Mockito.mock(UriInfo.class);
@@ -107,22 +107,25 @@ public class StoreResourceTest {
 	
 	@Test
 	public void testGetAll() {
-		Collection<Store> stores = r.getAll(null, null, null, null, null, null);
-		Collection<Store> storesFiltroLocation = r.getAll("Sevilla", null, null, null, null, null);
-		Collection<Store> storesFiltroName = r.getAll("GAME", null, null, null, null, null);
+		Collection<Store> stores = r.getAll(null, null, null, null, null, null, null, null);
 		
-		Collection<Store> storesFiltroNoGames = r.getAll(null, true, null, null, null, null);
-		Collection<Store> storesFiltroHaveGames = r.getAll(null, false, null, null, null, null);
+		Collection<Store> storesFiltroName = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesFiltroLocation = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesFiltroTitleGame = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesFiltroOpenHour = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesFiltroCloseHour = r.getAll(null, null, null, null, null, null, null, null);
+		
+		Collection<Store> storesOrderName = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesOrderNameReverse = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesOrderLocation = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesOrderLocationReverse = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesOrderOpenHour = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesOrderOpenHourReverse = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesOrderCloseHour = r.getAll(null, null, null, null, null, null, null, null);
+		Collection<Store> storesOrderCloseHourReverse = r.getAll(null, null, null, null, null, null, null, null);
 		
 		
-		Collection<Store> storesOrderName = r.getAll(null, null,null, "name", null, null);
-		Collection<Store> storesOrderNameReversed = r.getAll(null, null, null, "-name", null, null);
-		Collection<Store> storesOrderLocation = r.getAll(null, null, null, "location", null, null);
-		Collection<Store> storesOrderLocationReversed = r.getAll(null, null, null, "-location", null, null);
-		Collection<Store> storesOrderGames = r.getAll(null, null, null, "games", null, null);
-		Collection<Store> storesOrderGamesReversed = r.getAll(null, null, null, "-games", null, null);
-		
-		Collection<Store> paginacionStores = r.getAll(null, null, null, null, 1, 2);
+		Collection<Store> paginacionStores = r.getAll(null, null, null, null, null, null, 1, 2);
 		
 		
 		assertNotNull("The collection of stores is null",stores);

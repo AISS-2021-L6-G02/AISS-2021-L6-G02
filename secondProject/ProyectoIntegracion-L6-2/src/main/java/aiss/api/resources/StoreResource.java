@@ -144,7 +144,7 @@ public class StoreResource {
 	@GET
 	@Path("/{id}")
 	@Produces("application/json")
-	public Store get(@PathParam("id") String id) {
+	public Store getStore(@PathParam("id") String id) {
 		Store list = repository.getStore(id);
 
 		if (list == null) {
@@ -153,6 +153,7 @@ public class StoreResource {
 
 		return list;
 	}
+	
 	@GET
 	@Path("/store/cheapestGames")
 	@Produces("aplication/json")
@@ -181,7 +182,7 @@ public class StoreResource {
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response add(Store g) {
+	public Response addStore(Store g) {
 		if (g.getName() == null || "".equals(g.getName())) {
 			throw new BadRequestException("The name of the store must not be null");
 		}
@@ -209,9 +210,10 @@ public class StoreResource {
 		repository.addStore(g);
 		return Response.noContent().build();
 	}
+	
 	@PUT
 	@Consumes("application/json")
-	public Response update(Store g) {
+	public Response updateStore(Store g) {
 		Store old = repository.getStore(g.getId());
 		if (old.getName() == null || "".equals(g.getName())) {
 			throw new BadRequestException("The name of the store must not be null");
@@ -242,7 +244,7 @@ public class StoreResource {
 
 	@DELETE
 	@Path("/{id}")
-	public Response delete(@PathParam("id") String id) {
+	public Response deleteStore(@PathParam("id") String id) {
 		Store toRemove = repository.getStore(id);
 
 		if (toRemove == null) {
@@ -252,6 +254,13 @@ public class StoreResource {
 		}
 		return Response.noContent().build();
 	}
-
+	
+	public void addStoreGame(String storeId, StoreGame game) {
+		repository.addObjeto(storeId, game);
+	}
+	
+	public Collection<StoreGame> getGamesFromStore(String storeId){
+		return repository.getAllObjects(storeId);
+	}
 	
 }
