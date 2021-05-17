@@ -33,4 +33,24 @@ updateStoreGame--> actualiza lineas de juego de una tienda
 deleteGamesFromStore--> borrra lineas de juego de una tienda
 
 
+Game:
+titulo, descripcion, año de publicacion, desarrollador (ejemplo: sony,nintendo......), score--> puntuacion del juego
+platforms--> plataformas como pc y movil
+generos
+modes--> como online o pvp o single player
+
+GameResource:
+clase que permite hacer el crud de juegos
+getAll--> devuelve todos los juegos filtrados por titulo, año, nombre del desarrollador, puntuacion, nombre del genero,
+modo de juego
+Aparte ordena por titulo,año, nombre desarrollador, puntuacion, y nombre del genero
+get--> se le pasa un id y devuelve un juego
+put--> actualiza un juego pasandole el juego en si
+delete--> borra un juego pasandole su id
+
+
+StoreGame:
+clase que representa el juego asociado a una tienda junto a su stock y su precio.
+Atributos: el juego el precio y el stock
+
 	
