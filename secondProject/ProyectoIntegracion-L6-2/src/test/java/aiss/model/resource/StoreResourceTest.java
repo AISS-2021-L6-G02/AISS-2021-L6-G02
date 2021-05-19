@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-import java.time.LocalTime;
+//import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -44,20 +44,20 @@ public class StoreResourceTest {
 		
 		s1.setName("Test name");
 		s1.setLocation("Test location");
-		s1.setOpenHour(LocalTime.of(11, 0));
-		s1.setCloseHour(LocalTime.of(20, 30));
+		//s1.setOpenHour(LocalTime.of(11, 0));
+		//s1.setCloseHour(LocalTime.of(20, 30));
 		s1.setPhone("999999999");
 		
 		s2.setName("Test name 2");
 		s2.setLocation("Test Location 2");
-		s2.setOpenHour(LocalTime.of(11, 0));
-		s2.setCloseHour(LocalTime.of(20, 30));
+		//s2.setOpenHour(LocalTime.of(11, 0));
+		//s2.setCloseHour(LocalTime.of(20, 30));
 		s2.setPhone("999999999");
 		
 		s3.setName("Test name 3");
 		s3.setLocation("Test Location 3");
-		s3.setOpenHour(LocalTime.of(8, 0));
-		s3.setCloseHour(LocalTime.of(19, 30));
+		//s3.setOpenHour(LocalTime.of(8, 0));
+		//s3.setCloseHour(LocalTime.of(19, 30));
 		s3.setPhone("999999999");
 		
 		o1.setGame(games.getAll().stream().findFirst().get());
@@ -109,23 +109,19 @@ public class StoreResourceTest {
 	public void testGetAll() {
 		Collection<Store> stores = r.getAll();
 		
-		Collection<Store> storesFiltroName = r.getAll(null, "Game", null, null, null, null, null, null);
-		Collection<Store> storesFiltroLocation = r.getAll(null, null, "Sevilla", null, null, null, null, null);
-		Collection<Store> storesFiltroTitleGame = r.getAll(null, null, null, "Animal Crossing", null, null, null, null);
-		Collection<Store> storesFiltroOpenHour = r.getAll(null, null, null, null, s1.getOpenHour(), null, null, null);
-		Collection<Store> storesFiltroCloseHour = r.getAll(null, null, null, null, null, s2.getCloseHour(), null, null);
+		Collection<Store> storesFiltroName = r.getAll(null, "Game", null, null, null, null);
+		Collection<Store> storesFiltroLocation = r.getAll(null, null, "Sevilla", null, null, null);
+		Collection<Store> storesFiltroTitleGame = r.getAll(null, null, null, "Animal Crossing", null, null);
+
 		
-		Collection<Store> storesOrderName = r.getAll("name", null, null, null, null, null, null, null);
-		Collection<Store> storesOrderNameReverse = r.getAll("-name", null, null, null, null, null, null, null);
-		Collection<Store> storesOrderLocation = r.getAll("location", null, null, null, null, null, null, null);
-		Collection<Store> storesOrderLocationReverse = r.getAll("-location", null, null, null, null, null, null, null);
-		Collection<Store> storesOrderOpenHour = r.getAll("openHour", null, null, null, null, null, null, null);
-		Collection<Store> storesOrderOpenHourReverse = r.getAll("-openHour", null, null, null, null, null, null, null);
-		Collection<Store> storesOrderCloseHour = r.getAll("closeHour", null, null, null, null, null, null, null);
-		Collection<Store> storesOrderCloseHourReverse = r.getAll("-closeHour", null, null, null, null, null, null, null);
+		Collection<Store> storesOrderName = r.getAll("name", null, null, null, null, null);
+		Collection<Store> storesOrderNameReverse = r.getAll("-name", null, null, null, null, null);
+		Collection<Store> storesOrderLocation = r.getAll("location", null, null, null, null, null);
+		Collection<Store> storesOrderLocationReverse = r.getAll("-location", null, null, null, null, null);
+
 		
 		
-		Collection<Store> paginacionStores = r.getAll(null, null, null, null, null, null, 1, 2);
+		Collection<Store> paginacionStores = r.getAll(null, null, null, null, 1, 2);
 		
 		
 		assertNotNull("The collection of stores is null",stores);
@@ -136,10 +132,7 @@ public class StoreResourceTest {
 		assertNotNull("The collection of stores sorted reverse by name is null", storesOrderNameReverse);
 		assertNotNull("The collection of stores sorted by location is null", storesOrderLocation);
 		assertNotNull("The collection of stores sorted reverse by location is null", storesOrderLocationReverse);
-		assertNotNull("The collection of stores sorted by opening hour is null", storesOrderOpenHour);
-		assertNotNull("The collection of stores sorted reverse by opening hour is null", storesOrderOpenHourReverse);
-		assertNotNull("The collection of stores sorted by closing hour is null", storesOrderCloseHour);
-		assertNotNull("The collection of stores sorted reverse by closing hour is null", storesOrderCloseHourReverse);
+
 		
 		assertNotNull("The collection of stores paginated is null", paginacionStores);
 		System.out.println("========================================");
@@ -165,15 +158,6 @@ public class StoreResourceTest {
 			System.out.println(s.toString());
 		}
 		
-		System.out.println("Get All Stores filtered by opening hour");
-		for(Store s : storesFiltroOpenHour) {
-			System.out.println(s.toString());
-		}
-		
-		System.out.println("Get All Stores filtered by a closing hour");
-		for(Store s : storesFiltroCloseHour) {
-			System.out.println(s.toString());
-		}
 		
 		System.out.println("Get All Stores sorted by name");
 		for(Store s: storesOrderName) {
@@ -195,25 +179,6 @@ public class StoreResourceTest {
 			System.out.println(s.toString());
 		}
 		
-		System.out.println("Get All Stores sorted by opening hour");
-		for(Store s: storesOrderOpenHour) {
-			System.out.println(s.toString());
-		}
-		
-		System.out.println("Get All Stores sorted reverse by opening hour");
-		for(Store s: storesOrderOpenHourReverse) {
-			System.out.println(s.toString());
-		}
-		
-		System.out.println("Get All Stores sorted by closing hour");
-		for(Store s: storesOrderCloseHour) {
-			System.out.println(s.toString());
-		}
-		
-		System.out.println("Get All Stores sorted reverse by closing hour");
-		for(Store s: storesOrderCloseHourReverse) {
-			System.out.println(s.toString());
-		}
 		
 		System.out.println("Get All Stores with pagination");
 		for(Store s: paginacionStores) {
@@ -230,8 +195,7 @@ public class StoreResourceTest {
 		assertEquals("The id of the store do not match", s1.getId(), s.getId());
 		assertEquals("The name of the store do not match", s1.getName(), s.getName());
 		assertEquals("The location of the store do not match", s1.getLocation(), s.getLocation());
-		assertEquals("The Open Hour of the store do not match", s1.getOpenHour(), s.getOpenHour());
-		assertEquals("The Close Hour of the store do not match", s1.getCloseHour(), s.getCloseHour());
+
 		assertEquals("The phone of the store do not match", s1.getPhone(), s.getPhone());
 		assertEquals("The games of the store do not match", s1.getGames(), s.getGames());
 		
@@ -245,8 +209,7 @@ public class StoreResourceTest {
 		Store sTest = new Store();
 		sTest.setName("Test add name");
 		sTest.setLocation("Test add Location");
-		sTest.setOpenHour(LocalTime.of(11, 0));
-		sTest.setCloseHour(LocalTime.of(20, 30));
+
 		sTest.setPhone("999999999");
 		r.addStore(sTest);
 		sTest.setId(r.getAll().stream().filter(x->x.getName()==sTest.getName()).findFirst().get().getId());
@@ -255,8 +218,7 @@ public class StoreResourceTest {
 		assertEquals("The id of the store do not match", sTest.getId(), s.getId());
 		assertEquals("The name of the store do not match", sTest.getName(), s.getName());
 		assertEquals("The location of the store do not match", sTest.getLocation(), s.getLocation());
-		assertEquals("The Open Hour of the store do not match", sTest.getOpenHour(), s.getOpenHour());
-		assertEquals("The Close Hour of the store do not match", sTest.getCloseHour(), s.getCloseHour());
+
 		assertEquals("The phone of the store do not match", sTest.getPhone(), s.getPhone());
 		assertEquals("The games of the store do not match", sTest.getGames(), s.getGames());
 		
@@ -274,8 +236,7 @@ public class StoreResourceTest {
 		assertEquals("The id of the store do not match", s2.getId(), s.getId());
 		assertEquals("The name of the store do not match", s2.getName(), s.getName());
 		assertEquals("The location of the store do not match", s2.getLocation(), s.getLocation());
-		assertEquals("The Open Hour of the store do not match", s2.getOpenHour(), s.getOpenHour());
-		assertEquals("The Close Hour of the store do not match", s2.getCloseHour(), s.getCloseHour());
+
 		assertEquals("The phone of the store do not match", s2.getPhone(), s.getPhone());
 		assertEquals("The games of the store do not match", s2.getGames(), s.getGames());
 		

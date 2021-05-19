@@ -40,8 +40,8 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		Store store1 = new Store();
 		store1.setName("GAME");
 		store1.setLocation("Los Arcos Sevilla");
-		store1.setOpenHour(LocalTime.of(8, 0));
-		store1.setCloseHour(LocalTime.of(20, 30));
+		//store1.setOpenHour(LocalTime.of(8, 0));
+		//store1.setCloseHour(LocalTime.of(20, 30));
 		store1.setPhone("955323867");
 		List<StoreGame> gamesStore1 = new ArrayList<>();
 		StoreGame game1Store1 = new StoreGame();
@@ -57,8 +57,8 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		Store store2 = new Store();
 		store2.setName("CeX");
 		store2.setLocation("Paseo de Sant Joan Barcelona");
-		store2.setOpenHour(LocalTime.of(11, 0));
-		store2.setCloseHour(LocalTime.of(21, 0));
+		//store2.setOpenHour(LocalTime.of(11, 0));
+		//store2.setCloseHour(LocalTime.of(21, 0));
 		store2.setPhone("932319555");
 		List<StoreGame> gamesStore2 = new ArrayList<>();
 		StoreGame game1Store2 = new StoreGame();
@@ -80,8 +80,8 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		Store store3 = new Store();
 		store3.setName("GAME");
 		store3.setLocation("Paseo de la Florida Madrid");
-		store3.setOpenHour(LocalTime.of(9, 0));
-		store3.setCloseHour(LocalTime.of(19, 30));
+		//store3.setOpenHour(LocalTime.of(9, 0));
+		//store3.setCloseHour(LocalTime.of(19, 30));
 		store3.setPhone("917168628");
 		List<StoreGame> gamesStore3 = new ArrayList<>();
 		StoreGame game1Store3 = new StoreGame();
@@ -102,8 +102,8 @@ public class MapGameStoreRepository implements GameStoreRepository{
 		Store store4 = new Store();
 		store4.setName("RETRO GAME VALENCIA");
 		store4.setLocation("Calle  de l'Arxiduc Carles Valencia");
-		store4.setOpenHour(LocalTime.of(11, 30));
-		store4.setCloseHour(LocalTime.of(20, 0));
+		//store4.setOpenHour(LocalTime.of(11, 30));
+		//store4.setCloseHour(LocalTime.of(20, 0));
 		store4.setPhone("962069197");
 		List<StoreGame> gamesStore4 = new ArrayList<>();
 		StoreGame game1Store4 = new StoreGame();

@@ -1,6 +1,5 @@
 package aiss.api.resources;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -46,14 +45,13 @@ public class StoreResource {
 	}
 
 	public Collection<Store> getAll() {
-		return getAll(null, null, null, null, null, null, null, null);
+		return getAll(null, null, null, null, null, null);
 	}
 
 	@GET
 	@Produces("application/json")
 	public Collection<Store> getAll(@QueryParam("order") String order, @QueryParam("name") String name,
 			@QueryParam("location") String location, @QueryParam("titleGame") String titleGame,
-			@QueryParam("openHour") LocalTime openHour, @QueryParam("closeHour") LocalTime closeHour,
 			@QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset) {
 		Collection<Store> result = repository.getAllStores();
 		
@@ -96,37 +94,23 @@ public class StoreResource {
 			}
 			result = aux;
 		}
-		if (openHour != null) {
-			result = result.stream()
-					.filter(x -> x.getOpenHour().compareTo(openHour) == 0)
-					.collect(Collectors.toList());
-		}
-		if (closeHour != null) {
-			result = result.stream()
-					.filter(x -> x.getCloseHour().compareTo(closeHour) == 0)
-					.collect(Collectors.toList());
-		}
 
 		if ((order != null)) {
 			switch (order) {
 			case "name":
+				result = result.stream().sorted(Comparator.comparing(Store::getName))
+						.collect(Collectors.toList());
+				break;
 			case "-name":
 				result = result.stream().sorted(Comparator.comparing(Store::getName).reversed())
 						.collect(Collectors.toList());
 				break;
 			case "location":
+				result = result.stream().sorted(Comparator.comparing(Store::getLocation))
+						.collect(Collectors.toList());
+				break;
 			case "-location":
 				result = result.stream().sorted(Comparator.comparing(Store::getLocation).reversed())
-						.collect(Collectors.toList());
-				break;
-			case "openHour":
-			case "-openHour":
-				result = result.stream().sorted(Comparator.comparing(Store::getOpenHour).reversed())
-						.collect(Collectors.toList());
-				break;
-			case "closeHour":
-			case "-closeHour":
-				result = result.stream().sorted(Comparator.comparing(Store::getCloseHour).reversed())
 						.collect(Collectors.toList());
 				break;
 			default:
@@ -171,6 +155,8 @@ public class StoreResource {
 		return list;
 	}
 
+	//Fallo en la ruta. Path detecta la siguiente ruta -> Stores/Storeid/GameId y entra en conflicto con Stores/cheapestGames porque lo detecta como un Storeid
+	//Solucion posible: Crear un recurso a parte para este metodo
 	@GET
 	@Path("/cheapestGames")
 	@Produces("aplication/json")
@@ -189,7 +175,8 @@ public class StoreResource {
 		if (titleGame.equals("") || titleGame.equals(null)) {
 			throw new BadRequestException("The title game must not be null");
 		}
-
+		//Crea una lista de StoreGame pero no sirve si el usuario no sabe a que tienda pertenece cada storegame
+		//Deberia haber un atributo en storegame que sea storeId para que luego el usuario pueda verlo
 		List<StoreGame> storeGames = result.stream().filter(
 					x -> x.getGames() != null && x.getGames().size() > 0 && 
 					x.getGames().stream().anyMatch(y -> y.getGame().getTitle().toLowerCase().contains(titleGame.toLowerCase()) && y.getStock() > 0)
@@ -211,14 +198,6 @@ public class StoreResource {
 		if (g.getName() == null || "".equals(g.getName())) {
 			throw new BadRequestException("The name of the store must not be null");
 		}
-		if (g.getCloseHour().equals(null)) {
-			throw new BadRequestException("The close hour of the store must not be null");
-
-		}
-		if (g.getOpenHour().equals(null)) {
-			throw new BadRequestException("The close hour of the store must not be null");
-
-		}
 
 		if (g.getLocation().equals(null) || g.getLocation().equals("")) {
 			throw new BadRequestException("The location of the store must not be null");
@@ -234,11 +213,11 @@ public class StoreResource {
 		return Response.noContent().build();
 	}
 
-	@Path("/stores/games")
+	@Path("/{id}")
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response addGameToStore(String storeId, StoreGame g) {
+	public Response addGameToStore(@PathParam("id") String storeId, StoreGame g) {
 		if (storeId.equals("") || storeId.equals(null)) {
 			throw new BadRequestException("The storeId of the store must not be null");
 		}
@@ -269,12 +248,7 @@ public class StoreResource {
 		if (!(g.getGames().isEmpty() || g.getGames().equals(null))) {
 			old.setGames(g.getGames());
 		}
-		if (!g.getOpenHour().equals(null)) {
-			old.setOpenHour(g.getOpenHour());
-		}
-		if (!g.getCloseHour().equals(null)) {
-			old.setCloseHour(g.getCloseHour());
-		}
+
 		if (!(g.getPhone().equals("") || g.getPhone().equals(null))) {
 			old.setPhone(g.getPhone());
 		}
