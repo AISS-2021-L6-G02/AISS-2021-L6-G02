@@ -16,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.spi.BadRequestException;
@@ -48,25 +49,24 @@ public class StoreResource {
 		return getAll(null, null, null, null, null, null);
 	}
 
+	
 	@GET
 	@Produces("application/json")
 	public Collection<Store> getAll(@QueryParam("order") String order, @QueryParam("name") String name,
 			@QueryParam("location") String location, @QueryParam("titleGame") String titleGame,
 			@QueryParam("limit") Integer limit, @QueryParam("offset") Integer offset) {
-		Collection<Store> result = repository.getAllStores();
 		
+		Store temp;
+		
+		Collection<Store> result = repository.getAllStores();
 		if (name != null) {
-
 			result = result.stream().filter(x -> x.getName().toLowerCase().contains(name.toLowerCase()))
 					.collect(Collectors.toList());
 		}
-		
 		if (location != null) {
-
 			result = result.stream().filter(x -> x.getLocation().toLowerCase().contains(location.toLowerCase()))
 					.collect(Collectors.toList());
 		}
-
 		if (titleGame != null) {
 			List<Store> aux = new ArrayList<Store>();
 			Boolean predicate = false;
@@ -84,13 +84,13 @@ public class StoreResource {
 							}
 						}
 				}
-
 				if (predicate) {
 					aux.add(s);
-					aux.get(i).setGames(aux2);
+					temp = aux.get(i);
+					temp.setGames(aux2);
+					aux.set(i, temp);
 					i++;
 				}
-
 			}
 			result = aux;
 		}
@@ -138,7 +138,6 @@ public class StoreResource {
 		return res.subList(offset, limit);
 
 	}
-		
 
 
 
@@ -158,36 +157,39 @@ public class StoreResource {
 	//Sigue dando problemas
 	@GET
 	@Path("/cheapestGames")
-	@Produces("aplication/json")
-	public Collection<StoreGame> getCheapestGamesInArea(@QueryParam("titleGame") String titleGame,
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<StoreGame> getCheapestGamesInArea(@QueryParam("title") String titleGame,
 			@QueryParam("location") String location) {
 		
-		Collection<Store> result = repository.getAllStores();
-		
-		if (location != null) {
-
-			result = result.stream().filter(x -> x.getLocation().toLowerCase().contains(location.toLowerCase()))
-					.collect(Collectors.toList());
+		if("".equals(titleGame) || "".equals(location) || titleGame==null || location==null) {
+			throw new NotFoundException("the location and the game title cannot be null");
 		}
 		
 		
-		if (titleGame.equals("") || titleGame.equals(null)) {
-			throw new BadRequestException("The title game must not be null");
-		}
-		List<StoreGame> storeGames = result.stream().filter(
-					x -> x.getGames() != null && x.getGames().size() > 0 && 
-					x.getGames().stream().anyMatch(y -> y.getGame().getTitle().toLowerCase().contains(titleGame.toLowerCase()) && y.getStock() > 0)
-					)
-				.map(x -> x.getGames())
-				.flatMap(Collection::stream)
-				.collect(Collectors.toList()
-		);
-		
-		storeGames.sort(Comparator.comparing(StoreGame::getPrice));
-		
-		return storeGames;
+		else {
+			Collection<Store> res = repository.getAllStores().stream()
+					.filter(x->x.getLocation().toLowerCase().contains(location.toLowerCase()))
+					.filter(x-> x.getGames().stream().anyMatch(y->y.getGame().getTitle().toLowerCase()
+							.contains(titleGame.toLowerCase()) && y.getStock()>0)).collect(Collectors.toList());
+			
+			if(res.isEmpty()) {
+				throw new BadRequestException("There is no store at the specified location that has stock of the specified game");
+			}
+			else {
+				List<StoreGame> result = res.stream().flatMap(x->x.getGames().stream())
+						.filter(x->x.getGame().getTitle().toLowerCase().contains(titleGame.toLowerCase())
+								&& x.getStock()>0).collect(Collectors.toList());;
+				
+				result.sort(Comparator.comparing(StoreGame::getPrice));
+				return result;
+			}
+		}		
 	}
-
+	
+	
+	
+	
+	
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
