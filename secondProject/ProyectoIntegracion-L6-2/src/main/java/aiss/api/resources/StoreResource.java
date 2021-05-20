@@ -67,7 +67,7 @@ public class StoreResource {
 					.collect(Collectors.toList());
 		}
 
-		/*if (titleGame != null) {
+		if (titleGame != null) {
 			List<Store> aux = new ArrayList<Store>();
 			Boolean predicate = false;
 			int i = 0;
@@ -93,7 +93,7 @@ public class StoreResource {
 
 			}
 			result = aux;
-		}*/
+		}
 
 		if ((order != null)) {
 			switch (order) {
