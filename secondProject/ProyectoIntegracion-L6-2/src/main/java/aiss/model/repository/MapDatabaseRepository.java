@@ -383,6 +383,7 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		game1Store1.setStock(4);
 		gamesStore1.add(game1Store1);
 		
+		
 		store2 = new Store();
 		store2.setName("CeX");
 		store2.setLocation("Paseo de Sant Joan Barcelona");
@@ -403,6 +404,7 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		game2Store2.setPrice(24.95);
 		game2Store2.setStock(3);
 		gamesStore2.add(game2Store2);
+		
 		
 		store3 = new Store();
 		store3.setName("GAME");

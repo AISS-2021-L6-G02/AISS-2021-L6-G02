@@ -1,7 +1,7 @@
 package aiss.model;
 
 public class StoreGame {
-	private Store store;
+	private String storeId;
 	private String id;
 	private Game game;
 	private Double price;
@@ -13,21 +13,21 @@ public class StoreGame {
 		
 	}
 	
-	public StoreGame(String id, Game game, Double price, Integer stock, Store store) {
+	public StoreGame(String id, Game game, Double price, Integer stock, String storeId) {
 		super();
 		this.id = id;
 		this.game = game;
 		this.price = price;
 		this.stock = stock;
-		this.store = store;
+		this.storeId = storeId;
 	}
 	
-	public StoreGame(Game game, Double price, Integer stock, Store store) {
+	public StoreGame(Game game, Double price, Integer stock, String storeId) {
 		super();
 		this.game = game;
 		this.price = price;
 		this.stock = stock;
-		this.store = store;
+		this.storeId = storeId;
 	}
 
 	//Getters
@@ -43,8 +43,8 @@ public class StoreGame {
 	public Integer getStock() {
 		return stock;
 	}
-	public Store getStore() {
-		return store;
+	public String getStoreId() {
+		return storeId;
 	}
 
 	//Setters
@@ -60,8 +60,8 @@ public class StoreGame {
 	public void setStock(Integer stock) {
 		this.stock = stock;
 	}	
-	public void setStore(Store store) {
-		this.store = store;
+	public void setStoreId(String storeId) {
+		this.storeId = storeId;
 	}
 	
 
@@ -73,7 +73,7 @@ public class StoreGame {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((stock == null) ? 0 : stock.hashCode());
-		result = prime * result + ((store == null) ? 0 : store.hashCode());
+		result = prime * result + ((storeId == null) ? 0 : storeId.hashCode());
 		return result;
 	}
 
@@ -106,17 +106,17 @@ public class StoreGame {
 				return false;
 		} else if (!stock.equals(other.stock))
 			return false;
-		if (store == null) {
-			if (other.store != null)
+		if (storeId == null) {
+			if (other.storeId != null)
 				return false;
-		} else if (!store.equals(other.store))
+		} else if (!storeId.equals(other.storeId))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "StoreGame [store=" + store.getName() + ", id=" + id + ", game=" + game + ", price=" + price + ", stock=" + stock
+		return "StoreGame [storeId=" + storeId + ", id=" + id + ", game=" + game + ", price=" + price + ", stock=" + stock
 				+ "]";
 	}
 }

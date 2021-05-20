@@ -67,7 +67,7 @@ public class StoreResource {
 					.collect(Collectors.toList());
 		}
 
-		if (titleGame != null) {
+		/*if (titleGame != null) {
 			List<Store> aux = new ArrayList<Store>();
 			Boolean predicate = false;
 			int i = 0;
@@ -93,7 +93,7 @@ public class StoreResource {
 
 			}
 			result = aux;
-		}
+		}*/
 
 		if ((order != null)) {
 			switch (order) {
@@ -155,8 +155,7 @@ public class StoreResource {
 		return list;
 	}
 
-	//Fallo en la ruta. Path detecta la siguiente ruta -> Stores/Storeid/GameId y entra en conflicto con Stores/cheapestGames porque lo detecta como un Storeid
-	//Solucion posible: Crear un recurso a parte para este metodo
+	//Sigue dando problemas
 	@GET
 	@Path("/cheapestGames")
 	@Produces("aplication/json")
@@ -175,8 +174,6 @@ public class StoreResource {
 		if (titleGame.equals("") || titleGame.equals(null)) {
 			throw new BadRequestException("The title game must not be null");
 		}
-		//Crea una lista de StoreGame pero no sirve si el usuario no sabe a que tienda pertenece cada storegame
-		//Deberia haber un atributo en storegame que sea storeId para que luego el usuario pueda verlo
 		List<StoreGame> storeGames = result.stream().filter(
 					x -> x.getGames() != null && x.getGames().size() > 0 && 
 					x.getGames().stream().anyMatch(y -> y.getGame().getTitle().toLowerCase().contains(titleGame.toLowerCase()) && y.getStock() > 0)

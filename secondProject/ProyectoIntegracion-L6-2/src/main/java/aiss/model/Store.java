@@ -72,7 +72,7 @@ public class Store {
 		
 		if(games != null)
 		{
-			games.forEach(g -> { if(g != null) g.setStore(this); });
+			games.forEach(g -> { if(g != null) g.setStoreId(this.id); });
 		}
 		
 		this.games = games;
@@ -94,7 +94,7 @@ public class Store {
 		
 		if(game != null)
 		{
-			game.setStore(this);
+			game.setStoreId(this.id);
 		}
 		
 		if(games==null) games = new ArrayList<StoreGame>();
