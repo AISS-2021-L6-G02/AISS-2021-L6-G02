@@ -154,7 +154,6 @@ public class StoreResource {
 		return list;
 	}
 
-	//Sigue dando problemas
 	@GET
 	@Path("/cheapestGames")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -263,16 +262,12 @@ public class StoreResource {
 		if (toRemove == null) {
 			throw new NotFoundException("The store with id=" + id + " was not found");
 		} else {
-			Store s = repository.getStore(id);
-			// TODO borrar lineas de juegos de store
-//			if (s.getGames() != null) {
-//				List<StoreGame> aux = new ArrayList<StoreGame>(s.getGames());
-//				for(StoreGame s2:s.getGames()) {
-//					repository.deleteObjeto(s.getId(), s2.getId());
-//
-//				}
-//			}
-			repository.deleteStore(s.getId());
+			if (toRemove.getGames() != null & !toRemove.getGames().isEmpty()) {
+				for(StoreGame s2:toRemove.getGames()) {
+					repository.deleteObjeto(id, s2.getId());
+				}
+			}
+			repository.deleteStore(toRemove.getId());
 
 		}
 		return Response.noContent().build();

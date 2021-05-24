@@ -572,7 +572,10 @@ public class MapDatabaseRepository implements DatabaseRepository{
 	}
 	@Override
 	public void deleteObjeto(String storeId, String objectId) {
-		storeMap.get(storeId).deleteGame(getObject(storeId, objectId));
+		Store s = storeMap.get(storeId);
+		s.deleteGame(getObject(storeId, objectId));
+		storeMap.put(storeId, s);
+		storeGameMap.remove(objectId);
 	}
 	@Override
 	public StoreGame getObject(String storeId, String itemId) {
