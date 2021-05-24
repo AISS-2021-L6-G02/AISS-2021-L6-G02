@@ -1,6 +1,5 @@
 package aiss.api.resources;
 
-import java.net.URI;
 
 
 import java.util.Collection;
@@ -22,7 +21,6 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
-import org.restlet.resource.Delete;
 
 import aiss.model.Genre;
 import aiss.model.repository.DatabaseRepository;
