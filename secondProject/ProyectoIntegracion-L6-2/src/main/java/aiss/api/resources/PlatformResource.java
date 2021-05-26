@@ -102,7 +102,7 @@ public class PlatformResource {
 		Platform list = repository.getPlatform(id);
 		
 		if (list == null) {
-			throw new NotFoundException("The playlist with id="+ id +" was not found");			
+			throw new NotFoundException("The platform with id= "+ id +" was not found");			
 		}
 		
 		return list;
@@ -142,11 +142,12 @@ public class PlatformResource {
 	public Response removePlatform(@PathParam("id") String id) {
 		Platform toRemove =repository.getPlatform(id);
 		if(toRemove==null) {
-			throw new NotFoundException("The platform with id=" + id + "was not found");
+			throw new NotFoundException("The platform with id= " + id + " was not found");
 		}
 		else {
-			repository.getPlatform(id);
+			repository.deletePlatform(id);
 		}
+		
 		return Response.noContent().build();
 	}
 	

@@ -107,7 +107,11 @@ public class DeveloperResource {
 	@Path("/{id}")
 	@Produces("application/json")
 	public Developer get(@PathParam("id") String id) {
-		return repository.getDeveloper(id);
+		Developer result = repository.getDeveloper(id);
+		if(result==null) {
+			throw new NotFoundException("The developer with id="+ id +" was not found");
+		}
+		return result;
 	}
 	
 	@POST
