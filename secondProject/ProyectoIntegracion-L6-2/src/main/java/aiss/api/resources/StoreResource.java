@@ -236,8 +236,8 @@ public class StoreResource {
 			throw new NotFoundException("The store with id=" + id + " was not found");
 		} else {
 			if (toRemove.getGames() != null && !toRemove.getGames().isEmpty()) {
-				for(StoreGame s2:toRemove.getGames()) {
-					repository.deleteObjeto(id, s2.getId());
+				for(int s = 0; s<toRemove.getGamesSize(); s++) {
+					repository.deleteObjeto(id, toRemove.getGames().get(s).getId());
 				}
 			}
 			repository.deleteStore(toRemove.getId());
