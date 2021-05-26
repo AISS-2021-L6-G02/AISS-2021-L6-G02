@@ -28,7 +28,7 @@ paths:
       parameters:
         - in: query
           name: order
-          description: criteria for sorting the stores. it can be name, location, openHour, closeHour, '-name, -location, -openHour, -closeHour', for the reversed sorting
+          description: criteria for sorting the stores. it can be name, location, '-name, -location', for the reversed sorting
           schema:
             type: string
         - in: query
@@ -49,20 +49,6 @@ paths:
           required: false
           schema:
             type: string
-        - in: query
-          name: openHour
-          description: a store name to use as a filter
-          required: false
-          schema:
-            type: string
-            example: '11:10:00 or 11:15'
-        - in: query
-          name: closeHour
-          description: a store name to use as a filter
-          required: false
-          schema:
-            type: string
-            example: '11:10:00 or 11:15'
         - in: query
           name: limit
           description: maximum number of stores to return
@@ -156,7 +142,7 @@ paths:
         - in: path
           name: id
           required: true
-          description: The ID of the store to return
+          description: The ID of the store to delete
           schema:
             type: string
             example: 's0'
@@ -176,7 +162,7 @@ paths:
         - in: path
           name: id
           required: true
-          description: the ID of the store of which to add the game
+          description: the ID of the store to add the game to
           schema:
             type: string
             example: 's0'
@@ -253,7 +239,7 @@ paths:
       operationId: getCheapestGamesInArea
       parameters:
         - in: query
-          name: titleGame
+          name: title
           required: true
           description: the game title to look for
           schema:
@@ -275,134 +261,6 @@ paths:
                   $ref: '#/components/schemas/Store'
         '400':
           description: bad input parameter
-  
-  /genres:
-    get:
-      tags:
-        - genre
-      summary: get all genres
-      operationId: getAllGenres
-      description: By passing in the appropriate options, you can search for genres
-      parameters:
-        - in: query
-          name: order
-          required: false
-          description: criteria for sorting the stores. it can be name, description, '-name, -description', for the reversed
-          schema:
-            type: string
-        - in: query
-          name: q
-          required: false
-          description: a text parameter to search for in the genre name or the description
-          schema:
-            type: string
-            example: 'adventure'
-        - in: query
-          name: offset
-          description: number of genres to skip for pagination
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: maximum number of genres to return
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
-      responses:
-        '200':
-          description: search results matching criteria
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Genre'
-        '400':
-          description: bad input parameter
-    post:
-      tags:
-        - genre
-      summary: Add a new genre
-      operationId: addGenre
-      description: Create a new Genre
-      responses:
-        '201':
-          description: item created
-        '400':
-          description: 'invalid input, object invalid'
-        '409':
-          description: an existing item already exists
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Genre'
-        description: genre to add
-    put:
-      tags:
-        - genre
-      summary: Update a genre
-      operationId: updateGenre
-      responses:
-        '201':
-          description: genre updated
-        '400':
-          description: 'invalid input, object invalid'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Genre'
-  /genres/{id}:
-    get:
-      tags:
-        - genre
-      summary: Returns a genre by ID
-      operationId: getGenre
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: The ID of the store to return
-          schema:
-            type: string
-            example: 'gen0'
-      responses:
-        '200':
-          description: A Genre object
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Genre'
-        '400':
-          description: The specified genre ID is invalid
-        '404':
-          description: A genre with the specified ID was not found
-    delete:
-      tags:
-        - genre
-      summary: deletes a genre with the given ID
-      operationId: deleteGenre
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: The ID of the store to return
-          schema:
-            type: string
-            example: 'gen0'
-      responses:
-        '200':
-          description: Genre successfully deleted
-        '400':
-          description: The specified genre ID is invalid
-        '404':
-          description: A genre with the specified ID was not found
-  
 components:
   schemas:
     Mode:
@@ -506,11 +364,15 @@ components:
       type: object
       required:
         - id
+        - storeId
         - game
       properties:
+        storeId:
+          type: string
+          example: 'shop0'
         id:
           type: string
-          example: 'o1'
+          example: 'sg0'
         game:
           $ref: '#/components/schemas/Game'
         price:
@@ -531,7 +393,7 @@ components:
       properties:
         id:
           type: string
-          example: 's0'
+          example: 'shop0'
         name:
           type: string
           example: 'Game Puerto Real'
@@ -539,14 +401,6 @@ components:
           type: string
           format: address
           example: 'Calle Ruben Maduro, Puerto Real'
-        openHour:
-          type: string
-          format: time
-          example: '10:00'
-        closeHour:
-          type: string
-          format: time
-          example: '21:00'
         games:
           type: array
           items:
