@@ -191,14 +191,12 @@ public class DeveloperResourceTest {
 	}
 	@Test
 	public void testDeleteDeveloper() {
-		dr.deleteDeveloper(d1.getId());
-		Developer dT = dr.get(d1.getId());
-		assertNull("Error when deleting the developer", dT);
-		if(dT==null) {
-			dr.addDeveloper(d1);
-			String newId = dr.getAll(null, d1.getName(), d1.getCountry(), d1.getYear(), null, null).stream().findFirst().get().getId();
-			d1.setId(newId);
-		}
+		boolean deleted = dr.deleteDeveloper(d1.getId()).equals(null);
+		assertFalse("Error when deleting the developer", deleted);
+		dr.addDeveloper(d1);
+		String newId = dr.getAll(null, d1.getName(), d1.getCountry(), d1.getYear(), null, null).stream().findFirst().get().getId();
+		d1.setId(newId);
+		
 	}
 	
 }
