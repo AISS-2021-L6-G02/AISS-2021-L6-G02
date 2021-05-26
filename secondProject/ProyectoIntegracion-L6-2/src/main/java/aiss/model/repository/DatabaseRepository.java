@@ -23,6 +23,7 @@ public interface DatabaseRepository {
 	public Store getStore(String storeId);
 	public void updateStore(Store s);
 	public void deleteStore(String storeId);
+	public Collection<StoreGame> getAllObjects();
 	public Collection<StoreGame> getAllObjects(String storeId);
 	public StoreGame getObject(String storeId, String itemId);
 	public void addStoreGame(StoreGame o);

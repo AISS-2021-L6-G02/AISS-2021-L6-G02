@@ -1,6 +1,5 @@
 package aiss.model;
 
-//import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
@@ -10,7 +9,6 @@ import org.jboss.resteasy.spi.BadRequestException;
 
 
 public class Store {
-	//TODO NURIA Y ALBERTO
 	private String id;
 	private String name;
 	private String location;
@@ -20,10 +18,10 @@ public class Store {
 	
 	//Constructors
 	public Store() {
+		super();
 		
 	}
-	public Store(String id, String name, String location, /*LocalTime openHour, LocalTime closeHour,*/
-			List<StoreGame> games, String phone) {
+	public Store(String id, String name, String location, List<StoreGame> games, String phone) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -31,7 +29,7 @@ public class Store {
 		this.games = games;
 		setPhone(phone);
 	}
-	public Store(String name, String location, /*LocalTime openHour, LocalTime closeHour,*/ List<StoreGame> games,
+	public Store(String name, String location, List<StoreGame> games,
 			String phone) {
 		super();
 		this.name = name;

@@ -47,7 +47,6 @@ public class StoreResource {
 	public Collection<Store> getAll() {
 		return getAll(null, null, null, null, null, null);
 	}
-
 	
 	@GET
 	@Produces("application/json")
@@ -71,7 +70,7 @@ public class StoreResource {
 			Boolean predicate = false;
 			int i = 0;
 			for (Store s : result) {
-				// predicate = false;
+				predicate = false;
 				List<StoreGame> aux2 = new ArrayList<StoreGame>();
 				if (s.getGames() != null) {
 					if (s.getGames().size() > 0)
@@ -138,8 +137,6 @@ public class StoreResource {
 
 	}
 
-
-
 	@GET
 	@Path("/{id}")
 	@Produces("application/json")
@@ -184,10 +181,6 @@ public class StoreResource {
 		}		
 	}
 	
-	
-	
-	
-	
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -205,27 +198,8 @@ public class StoreResource {
 
 		}
 		g.setGames(new ArrayList<StoreGame>());
-
 		repository.addStore(g);
-		return Response.noContent().build();
-	}
-
-	@Path("/{id}")
-	@POST
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response addGameToStore(@PathParam("id") String storeId, StoreGame g) {
-		if (storeId.equals("") || storeId.equals(null)) {
-			throw new BadRequestException("The storeId of the store must not be null");
-		}
-		if (g.getGame().equals(null))
-			throw new BadRequestException("The game of store must not be null");
-		if (g.getPrice().equals(null) || g.getPrice() < 0.0)
-			throw new BadRequestException("The price of the game must not be null");
-		if (g.getStock().equals(null))
-			throw new BadRequestException("The stock Game store must not be null");
-
-		repository.addGameToStore(storeId, g);
+		
 		return Response.noContent().build();
 	}
 
@@ -261,7 +235,7 @@ public class StoreResource {
 		if (toRemove == null) {
 			throw new NotFoundException("The store with id=" + id + " was not found");
 		} else {
-			if (toRemove.getGames() != null & !toRemove.getGames().isEmpty()) {
+			if (toRemove.getGames() != null && !toRemove.getGames().isEmpty()) {
 				for(StoreGame s2:toRemove.getGames()) {
 					repository.deleteObjeto(id, s2.getId());
 				}
@@ -287,8 +261,10 @@ public class StoreResource {
 		if (game.getStock().equals(null) || game.getStock() < 0) {
 			throw new BadRequestException("The stock must not be null or negative");
 		}
-
-		repository.addGameToStore(storeId, game);
+		repository.addStoreGame(game);
+		StoreGame sG = repository.getAllObjects().stream().filter(x->x.getGame().equals(game.getGame()) && x.getPrice().equals(game.getPrice()) && x.getStock().equals(game.getStock())).findFirst().get();
+		
+		repository.addGameToStore(storeId, sG);
 		return Response.noContent().build();
 	}
 

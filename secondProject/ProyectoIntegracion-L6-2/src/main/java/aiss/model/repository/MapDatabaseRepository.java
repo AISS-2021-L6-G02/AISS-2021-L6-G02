@@ -67,74 +67,74 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		//Genre
 		action = new Genre();
 		action.setName("Action");
-		action.setDescription("An action game is a video game genre that emphasizes physical"
-				+ "challenges, including hand–eye coordination and reaction-time. The genre"
-				+ "includes a large variety of sub-genres, such as fighting games, beat 'em ups,"
+		action.setDescription("An action game is a video game genre that emphasizes physical "
+				+ "challenges, including hand–eye coordination and reaction-time. The genre "
+				+ "includes a large variety of sub-genres, such as fighting games, beat 'em ups, "
 				+ "shooter games and platform games");
 
 		adventure = new Genre();
 		adventure.setName("Adventure");
-		adventure.setDescription("An adventure game is a video game in which the player assumes"
-				+ "the role of a protagonist in an interactive story driven by exploration and/or"
+		adventure.setDescription("An adventure game is a video game in which the player assumes "
+				+ "the role of a protagonist in an interactive story driven by exploration and / or "
 				+ "puzzle-solving");
 
 		fighting = new Genre();
 		fighting.setName("Fighting");
-		fighting.setDescription("A fighting game is a video game genre based around close combat"
-				+ "between a limited number of characters, in a stage in which the boundaries are"
-				+ "fixed. The characters fight each other's until they defeat their opponents or"
+		fighting.setDescription("A fighting game is a video game genre based around close combat "
+				+ "between a limited number of characters, in a stage in which the boundaries are "
+				+ "fixed. The characters fight each other's until they defeat their opponents or "
 				+ "the time expires");
 
 		platform = new Genre();
 		platform.setName("Platform");
-		platform.setDescription("Platform games are a video game genre and subgenre of action games"
-				+ "in which the core objective is to move the player character between points in a"
+		platform.setDescription("Platform games are a video game genre and subgenre of action games "
+				+ "in which the core objective is to move the player character between points in a "
 				+ "rendered environment");
 
 		puzzle = new Genre();
 		puzzle.setName("Puzzle");
-		puzzle.setDescription("Puzzle video games make up a broad genre of video games that emphasize"
-				+ "puzzle solving. The types of puzzles can test many problem-solving skills including"
+		puzzle.setDescription("Puzzle video games make up a broad genre of video games that emphasize "
+				+ "puzzle solving. The types of puzzles can test many problem-solving skills including "
 				+ "logic, pattern recognition, sequence solving, spatial recognition, and word completion");
 
 		racing = new Genre();
 		racing.setName("Racing");
-		racing.setDescription("Racing video games are a video game genre in which the player participates in"
+		racing.setDescription("Racing video games are a video game genre in which the player participates in "
 				+ "a racing competition");
 
 		rolePlaying = new Genre();
 		rolePlaying.setName("Role-playing");
-		rolePlaying.setDescription("A role-playing video game (commonly referred to as simply"
-				+ "a role-playing game or an RPG as well as a computer"
-				+ "role-playing game or a CRPG) is a video game genre where"
-				+ "the player controls the actions of a character (or several"
-				+ "party members) immersed in some well-defined world, usually"
-				+ "involving some form of character development by way of recording"
+		rolePlaying.setDescription("A role-playing video game (commonly referred to as simply "
+				+ "a role-playing game or an RPG as well as a computer "
+				+ "role-playing game or a CRPG) is a video game genre where "
+				+ "the player controls the actions of a character (or several "
+				+ "party members) immersed in some well-defined world, usually "
+				+ "involving some form of character development by way of recording "
 				+ "statistics");
 
 		shooter = new Genre();
 		shooter.setName("Shooter");
-		shooter.setDescription("Shooter video games or shooter games are a subgenre of action"
-				+ "video games where the focus is almost entirely on the defeat of the character's"
+		shooter.setDescription("Shooter video games or shooter games are a subgenre of action "
+				+ "video games where the focus is almost entirely on the defeat of the character's "
 				+ "enemies using the weapons given to the player");
 
 		simulation = new Genre();
 		simulation.setName("Simulation");
-		simulation.setDescription("A simulation game attempts to copy various activities from real"
-				+ "life in the form of a game for various purposes such as training, analysis, or"
-				+ "prediction. Usually there are no strictly defined goals in the game, with the player"
-				+ "instead allowed to control a character or environment freely");
+		simulation.setDescription("A simulation game attempts to copy various activities from real "
+				+ "life in the form of a game for various purposes such as training, analysis, or "
+				+ "prediction. Usually there are no strictly defined goals in the game, with the player "
+				+ "instead allowed to control a character or environment freely ");
 		
 		sports = new Genre();
 		sports.setName("Sports");
-		sports.setDescription("A sports video game is a video game that simulates the practice of sports."
-				+ "Most sports have been recreated with a game, including team sports, track and field,"
+		sports.setDescription("A sports video game is a video game that simulates the practice of sports. "
+				+ "Most sports have been recreated with a game, including team sports, track and field, "
 				+ "extreme sports and combat sports");
 		
 		strategy= new Genre();
 		strategy.setName("Strategy");
-		strategy.setDescription("A strategy video game is a video game genre that focuses on skillful"
-				+ "thinking and planning to achieve victory. It emphasizes strategic, tactical, and sometimes"
+		strategy.setDescription("A strategy video game is a video game genre that focuses on skillful "
+				+ "thinking and planning to achieve victory. It emphasizes strategic, tactical, and sometimes "
 				+ "logistical challenges. Many games also offer economic challenges and exploration");
 		
 		
@@ -265,7 +265,7 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		lG.add(platform);
 		lG.add(adventure);
 		marioOdyssey.setTitle("Super Mario Odyssey");
-		marioOdyssey.setDescription("Explore incredible places far from the Mushroom Kingdom as you join Mario"
+		marioOdyssey.setDescription("Explore incredible places far from the Mushroom Kingdom as you join Mario "
 				+ "and his new ally Cappy on a massive, globe-trotting 3D adventure");
 		marioOdyssey.setYear(2017);
 		marioOdyssey.setDeveloper(nintendo);
@@ -285,11 +285,11 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		lG.add(simulation);
 		
 		animalCrossing.setTitle("Animal Crossing: New Horizons");
-		animalCrossing.setDescription("Animal Crossing: New Horizons is a 2020 life simulation game developed and published"
-				+ "by Nintendo for the Nintendo Switch; it is the fifth main game in the Animal Crossing series."
-				+ "In New Horizons, the player controls a character who moves to a deserted island after"
-				+ "purchasing a getaway package from Tom Nook, playing the game in a nonlinear fashion and"
-				+ "developing the island as they choose. They can gather and craft items, customize the island,"
+		animalCrossing.setDescription("Animal Crossing: New Horizons is a 2020 life simulation game developed and published "
+				+ "by Nintendo for the Nintendo Switch; it is the fifth main game in the Animal Crossing series. "
+				+ "In New Horizons, the player controls a character who moves to a deserted island after "
+				+ "purchasing a getaway package from Tom Nook, playing the game in a nonlinear fashion and "
+				+ "developing the island as they choose. They can gather and craft items, customize the island, "
 				+ "and form it into a community of anthropomorphic animals.");
 		animalCrossing.setYear(2020);
 		animalCrossing.setDeveloper(nintendo);
@@ -312,13 +312,13 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		lG.add(adventure);
 		
 		gta.setTitle("Grand Theft Auto: V");
-		gta.setDescription("Grand Theft Auto V is a 2013 action-adventure game developed by Rockstar North and"
-				+ "published by Rockstar Games. It is the first main entry in the Grand Theft Auto series since"
-				+ "2008's Grand Theft Auto IV. Set within the fictional state of San Andreas, based on Southern"
-				+ "California, the single-player story follows three protagonists—retired bank robber Michael De"
-				+ "Santa, street gangster Franklin Clinton, and drug dealer and arms smuggler Trevor Philips—and"
-				+ "their efforts to commit heists while under pressure from a corrupt government agency and powerful"
-				+ "criminals. The open world design lets players freely roam San Andreas' open countryside and the fictional"
+		gta.setDescription("Grand Theft Auto V is a 2013 action-adventure game developed by Rockstar North and "
+				+ "published by Rockstar Games. It is the first main entry in the Grand Theft Auto series since "
+				+ "2008's Grand Theft Auto IV. Set within the fictional state of San Andreas, based on Southern "
+				+ "California, the single-player story follows three protagonists—retired bank robber Michael De "
+				+ "Santa, street gangster Franklin Clinton, and drug dealer and arms smuggler Trevor Philips—and "
+				+ "their efforts to commit heists while under pressure from a corrupt government agency and powerful "
+				+ "criminals. The open world design lets players freely roam San Andreas' open countryside and the fictional "
 				+ "city of Los Santos, based on Los Angeles");
 		gta.setYear(2013);
 		gta.setDeveloper(rockStar);
@@ -342,9 +342,9 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		lG.add(sports);
 		
 		fifa20.setTitle("FIFA 20");
-		fifa20.setDescription("FIFA 20 is a football simulation video game published by Electronic Arts as part"
-				+ "of the FIFA series. It is the 27th installment in the FIFA series, and was released on 27"
-				+ "September 2019 for Microsoft Windows, PlayStation 4, Xbox One, and Nintendo Switch. Its successor,"
+		fifa20.setDescription("FIFA 20 is a football simulation video game published by Electronic Arts as part "
+				+ "of the FIFA series. It is the 27th installment in the FIFA series, and was released on 27 "
+				+ "September 2019 for Microsoft Windows, PlayStation 4, Xbox One, and Nintendo Switch. Its successor, "
 				+ "FIFA 21, was released on 9 October 2020");
 		fifa20.setYear(2019);
 		fifa20.setDeveloper(ea);
@@ -364,15 +364,12 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		fifa20.setId(getAllGames().stream().filter(x->x.getTitle()==fifa20.getTitle()).findFirst().get().getId());
 		
 		
-		//game1Store1, game1Store2, game2Store2, game1Store3, game2Store3, game1Store4, game2Store4, game3Store4
 		
 		
 		//GameStore y ObjetoStore
 		store1 = new Store();
 		store1.setName("GAME");
 		store1.setLocation("Los Arcos Sevilla");
-		//store1.setOpenHour(LocalTime.of(8, 0));
-		//store1.setCloseHour(LocalTime.of(20, 30));
 		store1.setPhone("955323867");
 		
 		gamesStore1 = new ArrayList<>();
@@ -387,8 +384,6 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		store2 = new Store();
 		store2.setName("CeX");
 		store2.setLocation("Paseo de Sant Joan Barcelona");
-		//store2.setOpenHour(LocalTime.of(11, 0));
-		//store2.setCloseHour(LocalTime.of(21, 0));
 		store2.setPhone("932319555");
 		
 		gamesStore2 = new ArrayList<>();
@@ -409,8 +404,6 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		store3 = new Store();
 		store3.setName("GAME");
 		store3.setLocation("Paseo de la Florida Madrid");
-		//store3.setOpenHour(LocalTime.of(9, 0));
-		//store3.setCloseHour(LocalTime.of(19, 30));
 		store3.setPhone("917168628");
 		
 		gamesStore3 = new ArrayList<>();
@@ -431,8 +424,6 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		store4 = new Store();
 		store4.setName("RETRO GAME VALENCIA");
 		store4.setLocation("Calle  de l'Arxiduc Carles Valencia");
-		//store4.setOpenHour(LocalTime.of(11, 30));
-		//store4.setCloseHour(LocalTime.of(20, 0));
 		store4.setPhone("962069197");
 		
 		gamesStore4 = new ArrayList<>();
@@ -480,10 +471,10 @@ public class MapDatabaseRepository implements DatabaseRepository{
 		game2Store4.setId(getAllObjects().stream().filter(x->x.getGame().equals(game2Store4.getGame()) && x.getPrice().equals(game2Store4.getPrice()) && x.getStock().equals(game2Store4.getStock())).findFirst().get().getId());
 		game3Store4.setId(getAllObjects().stream().filter(x->x.getGame().equals(game3Store4.getGame()) && x.getPrice().equals(game3Store4.getPrice()) && x.getStock().equals(game3Store4.getStock())).findFirst().get().getId());
 		
-		store1.setId(getAllStores().stream().filter(x->x.getName()==store1.getName()).findFirst().get().getId());
-		store2.setId(getAllStores().stream().filter(x->x.getName()==store2.getName()).findFirst().get().getId());
-		store3.setId(getAllStores().stream().filter(x->x.getName()==store3.getName()).findFirst().get().getId());
-		store4.setId(getAllStores().stream().filter(x->x.getName()==store4.getName()).findFirst().get().getId());
+		store1.setId(getAllStores().stream().filter(x->x.getName().equals(store1.getName()) && x.getLocation().equals(store1.getLocation()) && x.getPhone().equals(store1.getPhone())).findFirst().get().getId());
+		store2.setId(getAllStores().stream().filter(x->x.getName().equals(store2.getName()) && x.getLocation().equals(store2.getLocation()) && x.getPhone().equals(store2.getPhone())).findFirst().get().getId());
+		store3.setId(getAllStores().stream().filter(x->x.getName().equals(store3.getName()) && x.getLocation().equals(store3.getLocation()) && x.getPhone().equals(store3.getPhone())).findFirst().get().getId());
+		store4.setId(getAllStores().stream().filter(x->x.getName().equals(store4.getName()) && x.getLocation().equals(store4.getLocation()) && x.getPhone().equals(store4.getPhone())).findFirst().get().getId());
 		
 		
 		for(StoreGame i:gamesStore1) {
@@ -530,7 +521,7 @@ public class MapDatabaseRepository implements DatabaseRepository{
 	public void addStore(Store s) {
 		String id = "shop"+indexStore++;
 		s.setId(id);
-		storeMap.put(s.getId(), s);
+		storeMap.put(id, s);
 		
 	}
 	@Override
@@ -551,7 +542,7 @@ public class MapDatabaseRepository implements DatabaseRepository{
 	}
 	
 	//ObjetoStore
-	private Collection<StoreGame> getAllObjects(){
+	public Collection<StoreGame> getAllObjects(){
 		return storeGameMap.values();
 	}
 	@Override
