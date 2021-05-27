@@ -39,19 +39,30 @@ public class BookResource {
 	}
 	public Book getOneBook(String id) {
 		ClientResource cr = null;
-		Book libro = null;
+		Book b = null;
 		try {
 			cr = new ClientResource(uri + "/" + id);
-			libro = cr.get(Book.class);
+			b = cr.get(Book.class);
 		} catch(ResourceException re) {
 			System.err.println("Error when retrieving one book: " + cr.getResponse().getStatus());
 			throw re;
 		}
-		return libro;
+		return b;
 	}
+	
 	public Book addBook(Book b) {
-		//TODO
-		return null;
+		ClientResource cr = null;
+		Book libro = null;
+		try {
+			cr = new ClientResource(uri);
+			cr.setEntityBuffering(true);
+			libro = cr.post(b, Book.class);
+		} catch(ResourceException re) {
+			System.err.println("Error when adding the book: " + cr.getResponse().getStatus());
+			throw re;
+		}
+		
+		return libro;
 	}
 	public boolean updateBook(Book b) {
 		//TODO
