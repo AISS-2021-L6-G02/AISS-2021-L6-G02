@@ -1,6 +1,7 @@
 package aiss.model.resource;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -53,5 +54,39 @@ public class TestSerieResource {
 
 	}
 	
+	@Test
+	public void testUpdateSerie() {
+		System.out.println("============================");
+		System.out.println("TEST UPDATE SERIE");
+		System.out.println("============================");
+		Serie s = new Serie();
+		Serie old = series.stream().collect(Collectors.toList()).get(0);
+		s.setGenre(old.getGenre()+" test");
+		s.setNumEpisodes(old.getNumEpisodes()+"100");
+		s.setStartYear(old.getStartYear()+"0");
+		s.setTitle(old.getTitle()+" test title");
+		s.setId(old.getId());
+		boolean result = sr.updateSerie(s);
+		Serie updated = new Serie();
+		for(Serie sx: sr.getAllSeries()) {
+			if(sx.getId().equals(s.getId())) {
+				updated = sx;
+				break;
+			}
+		}
+		assertEquals("The serie hasn't been update correctly", result, true);
+		assertNotEquals("The name of the serie is equals", old.getTitle(), updated.getTitle());
+		assertNotEquals("The year of the serie is equals", old.getStartYear(), updated.getStartYear());
+		assertNotEquals("The episodes of the serie is equals", old.getNumEpisodes(), updated.getNumEpisodes());
+		assertNotEquals("The genre of the serie is equals", old.getGenre(), updated.getGenre());
+		assertEquals("The ids aren't equals", old.getId(), updated.getId());
+
+
+
+		System.out.println("Serie updated--> "+updated);
+
+	}
+	Serie serie = series.stream().collect(Collectors.toList()).get(0);
+
 
 }
