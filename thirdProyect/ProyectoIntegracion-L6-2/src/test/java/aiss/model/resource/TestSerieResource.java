@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -21,10 +20,7 @@ public class TestSerieResource {
 	public static SerieResource sr = new SerieResource();
 	public static Collection<Serie> series = null;
 	
-	@BeforeClass
-	public static void setUp() throws Exception {
-		series = sr.getAllSeries();
-	}
+	
 	@Test
 	public void testGetAllSeries() {
 		Collection<Serie> test = sr.getAllSeries();
@@ -45,7 +41,7 @@ public class TestSerieResource {
 		System.out.println("============================");
 		System.out.println("TEST GET ONE SERIE BY ID");
 		System.out.println("============================");
-		Serie serie = series.stream().collect(Collectors.toList()).get(0);
+		Serie serie = sr.getAllSeries().stream().collect(Collectors.toList()).get(0);
 		String id = serie.getId();
 		Serie serieGetOne = sr.getOneSerie(id);
 		assertNotNull("The serie is null", serieGetOne);
@@ -62,7 +58,7 @@ public class TestSerieResource {
 		System.out.println("TEST UPDATE SERIE");
 		System.out.println("============================");
 		Serie s = new Serie();
-		Serie old = series.stream().collect(Collectors.toList()).get(0);
+		Serie old = sr.getAllSeries().stream().collect(Collectors.toList()).get(0);
 		s.setGenre(old.getGenre()+" test");
 		s.setNumEpisodes(old.getNumEpisodes()+"100");
 		s.setStartYear(old.getStartYear()+"0");
@@ -91,7 +87,7 @@ public class TestSerieResource {
 		System.out.println("============================");
 		System.out.println("TEST DELETE SERIE");
 		System.out.println("============================");
-		Serie old = series.stream().collect(Collectors.toList()).get(0);
+		Serie old = sr.getAllSeries().stream().collect(Collectors.toList()).get(0);
 		
 		boolean result = sr.deleteSerie(old.getId());
 		sr.addSerie(old);
