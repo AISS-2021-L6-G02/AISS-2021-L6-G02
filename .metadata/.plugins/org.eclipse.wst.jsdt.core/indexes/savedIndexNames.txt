@@ -1,0 +1,2 @@
+INDEX VERSION 1.4+C:\Users\juand\Desktop\repositories\AISS-2021-L6-G02\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+4062401578.index
