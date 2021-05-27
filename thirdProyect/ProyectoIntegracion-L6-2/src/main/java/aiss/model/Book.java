@@ -121,48 +121,12 @@ public class Book {
         this.additionalProperties.put(name, value);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Book.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("id");
-        sb.append('=');
-        sb.append(((this.id == null)?"<null>":this.id));
-        sb.append(',');
-        sb.append("title");
-        sb.append('=');
-        sb.append(((this.title == null)?"<null>":this.title));
-        sb.append(',');
-        sb.append("author");
-        sb.append('=');
-        sb.append(((this.author == null)?"<null>":this.author));
-        sb.append(',');
-        sb.append("date");
-        sb.append('=');
-        sb.append(((this.date == null)?"<null>":this.date));
-        sb.append(',');
-        sb.append("details");
-        sb.append('=');
-        sb.append(((this.details == null)?"<null>":this.details));
-        sb.append(',');
-        sb.append("status");
-        sb.append('=');
-        sb.append(((this.status == null)?"<null>":this.status));
-        sb.append(',');
-        sb.append("genre");
-        sb.append('=');
-        sb.append(((this.genre == null)?"<null>":this.genre));
-        sb.append(',');
-        sb.append("additionalProperties");
-        sb.append('=');
-        sb.append(((this.additionalProperties == null)?"<null>":this.additionalProperties));
-        sb.append(',');
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
-        } else {
-            sb.append(']');
-        }
-        return sb.toString();
-    }
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", date=" + date + ", details=" + details
+				+ ", status=" + status + ", genre=" + genre + ", additionalProperties=" + additionalProperties + "]";
+	}
+
+    
 
 }

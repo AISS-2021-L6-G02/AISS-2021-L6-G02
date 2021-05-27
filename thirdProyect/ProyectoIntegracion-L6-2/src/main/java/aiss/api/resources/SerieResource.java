@@ -65,40 +65,28 @@ public class SerieResource {
 		ClientResource cr = null;
 		Serie resultSerie = null;
 		try {
-			
+			cr = GeneratorClient.generate(uri);
+			cr.setEntityBuffering(true);
+			resultSerie = cr.post(s, Serie.class);
 		} catch (ResourceException e) {
 			System.err.println("Error adding a serie."+cr.getResponse().getStatus());
 		}
 		return resultSerie;
 	}
-	/*public Playlist addPlaylist(Playlist pl) {
-		
-		ClientResource cr = null;
-		Playlist resultPlaylist = null;
-		try {
-			cr = new ClientResource(uri);
-			cr.setEntityBuffering(true);		// Needed for using RESTlet from JUnit tests
-			resultPlaylist = cr.post(pl,Playlist.class);
-			
-		} catch (ResourceException re) {
-			System.err.println("Error when adding the playlist: " + cr.getResponse().getStatus());
-		}
-		
-		return resultPlaylist;
-	}
+
 	
 
-	public boolean updatePlaylist(Playlist pl) {
+	public boolean updateSerie(Serie pl) {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource(uri);
+			cr = GeneratorClient.generate(uri);
 			cr.setEntityBuffering(true);		// Needed for using RESTlet from JUnit tests
 			cr.put(pl);
 			
 			
 		} catch (ResourceException re) {
-			System.err.println("Error when updating the playlist: " + cr.getResponse().getStatus());
+			System.err.println("Error when updating the serie: " + cr.getResponse().getStatus());
 			success = false;
 		}
 		
@@ -106,19 +94,19 @@ public class SerieResource {
 	}
 	
 	
-	public boolean deletePlaylist(String playlistId) {
+	public boolean deleteSerie(String id) {
 		ClientResource cr = null;
 		boolean success = true;
 		try {
-			cr = new ClientResource(uri + "/" + playlistId);
+			cr = new ClientResource(uri + "/" + id);
 			cr.setEntityBuffering(true);		// Needed for using RESTlet from JUnit tests
 			cr.delete();
 			
 		} catch (ResourceException re) {
-			System.err.println("Error when deleting the playlist: " + cr.getResponse().getStatus());
+			System.err.println("Error when deleting the serie: " + cr.getResponse().getStatus());
 			success = false;
 		}
 		
 		return success;
-	}*/
+	}
 }
