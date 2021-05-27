@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers: 
-  - url: https://localhost:8089/api
+  - url: https://api-gamestore.ew.r.appspot.com/api
 info:
   description: This is rastregames api, you can search the stores with your searched game in your city filter by the best price
   version: "1.0.0"
