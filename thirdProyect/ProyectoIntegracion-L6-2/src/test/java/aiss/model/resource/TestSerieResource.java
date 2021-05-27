@@ -18,6 +18,7 @@ import aiss.model.Serie;
 public class TestSerieResource {
 	public static SerieResource sr = new SerieResource();
 	public static Collection<Serie> series = null;
+	
 	@BeforeClass
 	public static void setUp() throws Exception {
 		series = sr.getAllSeries();
@@ -51,5 +52,6 @@ public class TestSerieResource {
 		System.out.println(serieGetOne);
 
 	}
+	
 
 }
