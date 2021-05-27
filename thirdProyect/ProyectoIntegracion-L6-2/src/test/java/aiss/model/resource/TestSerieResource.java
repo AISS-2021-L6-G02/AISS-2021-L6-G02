@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -54,6 +55,7 @@ public class TestSerieResource {
 
 	}
 	
+	
 	@Test
 	public void testUpdateSerie() {
 		System.out.println("============================");
@@ -74,19 +76,33 @@ public class TestSerieResource {
 				break;
 			}
 		}
-		assertEquals("The serie hasn't been update correctly", result, true);
 		assertNotEquals("The name of the serie is equals", old.getTitle(), updated.getTitle());
 		assertNotEquals("The year of the serie is equals", old.getStartYear(), updated.getStartYear());
 		assertNotEquals("The episodes of the serie is equals", old.getNumEpisodes(), updated.getNumEpisodes());
 		assertNotEquals("The genre of the serie is equals", old.getGenre(), updated.getGenre());
-		assertEquals("The ids aren't equals", old.getId(), updated.getId());
 
 
 
 		System.out.println("Serie updated--> "+updated);
 
 	}
-	Serie serie = series.stream().collect(Collectors.toList()).get(0);
+	@Test
+	public void testDeleteSerie() {
+		System.out.println("============================");
+		System.out.println("TEST DELETE SERIE");
+		System.out.println("============================");
+		Serie old = series.stream().collect(Collectors.toList()).get(0);
+		
+		boolean result = sr.deleteSerie(old.getId());
+		sr.addSerie(old);
+		assertFalse("The serie hasn't been deleted correctly", !result);
+
+
+
+		System.out.println("Serie deleted--> "+result);
+		
+
+	}
 
 
 }

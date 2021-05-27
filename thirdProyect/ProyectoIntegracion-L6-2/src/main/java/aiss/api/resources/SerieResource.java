@@ -94,19 +94,19 @@ public class SerieResource {
 	}
 	
 	
-//	public boolean deletePlaylist(String playlistId) {
-//		ClientResource cr = null;
-//		boolean success = true;
-//		try {
-//			cr = new ClientResource(uri + "/" + playlistId);
-//			cr.setEntityBuffering(true);		// Needed for using RESTlet from JUnit tests
-//			cr.delete();
-//			
-//		} catch (ResourceException re) {
-//			System.err.println("Error when deleting the playlist: " + cr.getResponse().getStatus());
-//			success = false;
-//		}
-//		
-//		return success;
-//	}
+	public boolean deleteSerie(String id) {
+		ClientResource cr = null;
+		boolean success = true;
+		try {
+			cr = new ClientResource(uri + "/" + id);
+			cr.setEntityBuffering(true);		// Needed for using RESTlet from JUnit tests
+			cr.delete();
+			
+		} catch (ResourceException re) {
+			System.err.println("Error when deleting the serie: " + cr.getResponse().getStatus());
+			success = false;
+		}
+		
+		return success;
+	}
 }
