@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="org.jboss.resteasy.logging.Logger"/>
+    <fullyQualifiedTypeName name="java.util.logging.Level"/>
+    <fullyQualifiedTypeName name="aiss.model.resources.FootballWikiTeamsResource"/>
+    <fullyQualifiedTypeName name="aiss.model.news.TeamSearch"/>
+    <fullyQualifiedTypeName name="aiss.model.news.Team"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="aiss.model.news.Team2Search"/>
+    <fullyQualifiedTypeName name="java.net.URLEncoder"/>
+    <fullyQualifiedTypeName name="java.util.Collection"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+    <fullyQualifiedTypeName name="aiss.model.resources.SeriesResource"/>
+</qualifiedTypeNameHistroy>

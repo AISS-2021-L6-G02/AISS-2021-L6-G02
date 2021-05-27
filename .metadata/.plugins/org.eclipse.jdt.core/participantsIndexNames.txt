@@ -5,5 +5,9 @@ C:\Users\juand\Desktop\repositories\AISS-2021-L6-G02\.metadata\.plugins\org.ecli
 \ThirdProjectLab6-02\src\main\java
 C:\Users\juand\Desktop\repositories\AISS-2021-L6-G02\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2482761725.index
 \lab3-consumingRESTServices\src\main\java
+C:\Users\juand\Desktop\repositories\AISS-2021-L6-G02\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2044948545.index
+\lab4-consumingRESTServices2\src\main\java
 C:\Users\juand\Desktop\repositories\AISS-2021-L6-G02\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3906730248.index
 \ThirdProjectLab6-02\src\main\java
+C:\Users\juand\Desktop\repositories\AISS-2021-L6-G02\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\226830141.index
+\lab4-consumingRESTServices2\src\main\java
