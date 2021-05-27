@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import aiss.api.resources.BookResource;
 import aiss.api.resources.SerieResource;
 
 public class ApisApplication extends Application{
@@ -16,6 +17,7 @@ public class ApisApplication extends Application{
 	// so that they can be found by RESTEasy.
 	public ApisApplication() {
 		singletons.add(SerieResource.getInstance());
+		singletons.add(BookResource.getInstance());
 		
 	}
 

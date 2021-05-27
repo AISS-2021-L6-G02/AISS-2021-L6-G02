@@ -123,47 +123,10 @@ public class Library {
     }
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Library.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("id");
-        sb.append('=');
-        sb.append(((this.id == null)?"<null>":this.id));
-        sb.append(',');
-        sb.append("name");
-        sb.append('=');
-        sb.append(((this.name == null)?"<null>":this.name));
-        sb.append(',');
-        sb.append("location");
-        sb.append('=');
-        sb.append(((this.location == null)?"<null>":this.location));
-        sb.append(',');
-        sb.append("availableComputers");
-        sb.append('=');
-        sb.append(((this.availableComputers == null)?"<null>":this.availableComputers));
-        sb.append(',');
-        sb.append("isOpen");
-        sb.append('=');
-        sb.append(((this.isOpen == null)?"<null>":this.isOpen));
-        sb.append(',');
-        sb.append("books");
-        sb.append('=');
-        sb.append(((this.books == null)?"<null>":this.books));
-        sb.append(',');
-        sb.append("films");
-        sb.append('=');
-        sb.append(((this.films == null)?"<null>":this.films));
-        sb.append(',');
-        sb.append("additionalProperties");
-        sb.append('=');
-        sb.append(((this.additionalProperties == null)?"<null>":this.additionalProperties));
-        sb.append(',');
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
-        } else {
-            sb.append(']');
-        }
-        return sb.toString();
-    }
+	public String toString() {
+		return "Library [id=" + id + ", name=" + name + ", location=" + location + ", availableComputers="
+				+ availableComputers + ", isOpen=" + isOpen + ", books=" + books + ", films=" + films
+				+ ", additionalProperties=" + additionalProperties + "]";
+	}
 
 }
