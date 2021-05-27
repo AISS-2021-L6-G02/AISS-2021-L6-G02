@@ -8,7 +8,11 @@
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="aiss.model.news.Team2Search"/>
     <fullyQualifiedTypeName name="java.net.URLEncoder"/>
-    <fullyQualifiedTypeName name="java.util.Collection"/>
     <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="aiss.model.resources.SeriesResource"/>
+    <fullyQualifiedTypeName name="java.util.Collection"/>
+    <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+    <fullyQualifiedTypeName name="aiss.api.resources.SerieResource"/>
+    <fullyQualifiedTypeName name="aiss.model.Serie"/>
+    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
 </qualifiedTypeNameHistroy>

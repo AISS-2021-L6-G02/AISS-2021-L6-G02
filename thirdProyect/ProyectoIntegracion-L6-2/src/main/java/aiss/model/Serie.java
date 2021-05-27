@@ -95,4 +95,11 @@ public class Serie {
         this.additionalProperties.put(name, value);
     }
 
+	@Override
+	public String toString() {
+		return "Serie [id=" + id + ", title=" + title + ", genre=" + genre + ", numEpisodes=" + numEpisodes
+				+ ", startYear=" + startYear + ", additionalProperties=" + additionalProperties + "]";
+	}
+
+    
 }

@@ -42,4 +42,22 @@ public class SerieResource {
 		}
 		return Arrays.asList(series);
 	}
+	public Serie getOneSerie(String id) {
+		System.out.println("==================");
+		System.out.println("getOneSerie in serieResource");
+		System.out.println("==================");
+		ClientResource cr = null;
+		Serie  serie = null;
+		
+		try {
+			cr = new ClientResource(uri+"/"+id);
+			serie = cr.get(Serie.class);
+			
+			
+		} catch (ResourceException re) {
+			System.err.println("Error when retrieving one series: " + cr.getResponse().getStatus());
+			throw re;
+		}
+		return serie;
+	}
 }
