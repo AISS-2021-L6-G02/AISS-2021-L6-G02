@@ -7,6 +7,7 @@ import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 
 import aiss.model.Serie;
+import utils.GeneratorClient;
 
 
 public class SerieResource {
@@ -29,7 +30,7 @@ public class SerieResource {
 		ClientResource cr = null;
 		Serie [] series = null;
 		try {
-			cr = new ClientResource(uri);
+			cr = GeneratorClient.generate(uri);
 			series = cr.get(Serie[].class);
 			
 			
@@ -60,4 +61,64 @@ public class SerieResource {
 		}
 		return serie;
 	}
+	public Serie addSerie(Serie s) {
+		ClientResource cr = null;
+		Serie resultSerie = null;
+		try {
+			
+		} catch (ResourceException e) {
+			System.err.println("Error adding a serie."+cr.getResponse().getStatus());
+		}
+		return resultSerie;
+	}
+	/*public Playlist addPlaylist(Playlist pl) {
+		
+		ClientResource cr = null;
+		Playlist resultPlaylist = null;
+		try {
+			cr = new ClientResource(uri);
+			cr.setEntityBuffering(true);		// Needed for using RESTlet from JUnit tests
+			resultPlaylist = cr.post(pl,Playlist.class);
+			
+		} catch (ResourceException re) {
+			System.err.println("Error when adding the playlist: " + cr.getResponse().getStatus());
+		}
+		
+		return resultPlaylist;
+	}
+	
+
+	public boolean updatePlaylist(Playlist pl) {
+		ClientResource cr = null;
+		boolean success = true;
+		try {
+			cr = new ClientResource(uri);
+			cr.setEntityBuffering(true);		// Needed for using RESTlet from JUnit tests
+			cr.put(pl);
+			
+			
+		} catch (ResourceException re) {
+			System.err.println("Error when updating the playlist: " + cr.getResponse().getStatus());
+			success = false;
+		}
+		
+		return success;
+	}
+	
+	
+	public boolean deletePlaylist(String playlistId) {
+		ClientResource cr = null;
+		boolean success = true;
+		try {
+			cr = new ClientResource(uri + "/" + playlistId);
+			cr.setEntityBuffering(true);		// Needed for using RESTlet from JUnit tests
+			cr.delete();
+			
+		} catch (ResourceException re) {
+			System.err.println("Error when deleting the playlist: " + cr.getResponse().getStatus());
+			success = false;
+		}
+		
+		return success;
+	}*/
 }
