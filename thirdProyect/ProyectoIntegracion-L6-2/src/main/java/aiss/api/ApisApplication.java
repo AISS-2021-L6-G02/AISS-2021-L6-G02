@@ -19,7 +19,6 @@ public class ApisApplication extends Application{
 	public ApisApplication() {
 		singletons.add(SerieResource.getInstance());
 		singletons.add(BookResource.getInstance());
-		singletons.add(UserResource.getInstance());
 		
 	}
 

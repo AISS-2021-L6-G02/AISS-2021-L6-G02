@@ -3,6 +3,54 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>RastreGames</title>
+    <style type="text/css">
+    
+    	:root{
+    		--default-color-bg: #000000;
+    		--default-color-table: #9C9C9C;
+    		--default-color-bttn: #383838;
+    		--hover-color-bttn: #737373;
+    	}
+    	
+    	body{
+    		margin: auto;
+    		padding: auto;
+    		text-align: center;
+    		background: var(--default-color-bg);
+    		color: white;
+    		
+    	}
+    	
+    	table{
+    		margin: auto;
+    		background-color: var(--default-color-table);
+    		width: 80%;
+    		height: auto;
+    		font-size: 32px;
+    	}
+    	
+    	.t2{
+    		height: 500px;
+    	}
+    	tr{
+    		background-color: var(--default-color-bttn);
+    		border-bottom: 1px solid white;
+    		color: white;
+    	}
+    	
+    	a{
+    		color:white;
+    		text-decoration: none;
+    	}
+    	tr:hover {
+			background-color: var(--hover-color-bttn);
+		}
+		
+		.servlets:hover{
+			background-color: var(--default-color-bttn);
+		}
+		
+    </style>
   </head>
 
   <body>
@@ -12,8 +60,8 @@
         <td><a href="docs/index.html">API Documentation</a></td>
       </tr>
     </table>
-    <table>
-      <tr>
+    <table class="t2">
+      <tr class="servlets">
         <td colspan="2" style="font-weight:bold;">Available Servlets:</td>        
       </tr>
         <td><a href="api/genres">Game genres</a></td>
