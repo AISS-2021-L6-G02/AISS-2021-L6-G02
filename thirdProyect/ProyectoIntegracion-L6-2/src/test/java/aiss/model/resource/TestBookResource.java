@@ -69,5 +69,6 @@ public class TestBookResource {
 		assertEquals("The book's details have not been setted correctly", bookDetails, b.getDetails());
 		assertEquals("The book's statur has not been setted correctly", bookStatus, b.getStatus());
 		assertEquals("The book's genre has not been setted correctly", bookGenre, b.getGenre());
+		br.deleteBook(b.getId());
 	}
 }

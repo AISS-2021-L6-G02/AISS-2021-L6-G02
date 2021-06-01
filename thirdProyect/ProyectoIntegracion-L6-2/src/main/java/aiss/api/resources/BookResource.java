@@ -69,8 +69,19 @@ public class BookResource {
 		return false;
 	}
 	public boolean deleteBook(String id) {
-		//TODO
-		return false;
+		ClientResource cr = null;
+		boolean success = true;
+		try {
+			cr = new ClientResource(uri + "/" + id);
+			cr.setEntityBuffering(true);		// Needed for using RESTlet from JUnit tests
+			cr.delete();
+			
+		} catch (ResourceException re) {
+			System.err.println("Error when deleting the book: " + cr.getResponse().getStatus());
+			success = false;
+		}
+		
+		return success;
 	}
 	public BookResource() {
 		
