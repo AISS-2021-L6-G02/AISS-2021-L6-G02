@@ -25,7 +25,7 @@ public class TestFilmResource {
 	public void testGetAllFilms() {
 		Collection<Film> test = fr.getAllFilms();
 		assertNotNull("The collection of films is null", test);
-System.out.println("===========\ntestGetAllFilms\n=========");
+		System.out.println("===========\ntestGetAllFilms\n=========");
 		
 		System.out.println("Listing all films");
 		for(Film f: test) {

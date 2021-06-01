@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.ws.rs.core.Application;
 
 import aiss.api.resources.BookResource;
+import aiss.api.resources.LibraryResource;
 import aiss.api.resources.SerieResource;
 import aiss.api.resources.UserResource;
 
@@ -19,7 +20,6 @@ public class ApisApplication extends Application{
 	public ApisApplication() {
 		singletons.add(SerieResource.getInstance());
 		singletons.add(BookResource.getInstance());
-		
 	}
 
 	@Override
